@@ -1,0 +1,44 @@
+{
+    "table": {
+        "nom": "users",
+        "engine": "InnoDB",
+        "charset": "utf-8",
+        "ifNotExist": true,
+        "colonnes": [
+            {
+                "nom": "id",
+                "type": "int",
+                "length": 11,
+                "NOT_NULL": true,
+                "autoIncrement": true,
+                "index": ["PRIMARY KEY"]
+            },
+            {
+                "nom": "login",
+                "type": "varchar",
+                "length": 256,
+                "index": ["UNIQUE"]
+            },
+            {
+                "nom": "password",
+                "type": "varchar",
+                "length": 256
+            },
+            {
+                "nom": "email",
+                "type": "varchar",
+                "length": 256
+            },
+            {
+                "nom": "nom",
+                "type": "varchar",
+                "length": 256
+            },
+            {
+                "nom": "prenom",
+                "type": "varchar",
+                "length": 256
+            }
+        ]
+    }
+}
