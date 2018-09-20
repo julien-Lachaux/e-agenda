@@ -2,7 +2,7 @@
     "table": {
         "nom": "users",
         "engine": "InnoDB",
-        "charset": "utf-8",
+        "charset": "utf8",
         "ifNotExist": true,
         "colonnes": [
             {
@@ -16,7 +16,7 @@
             {
                 "nom": "login",
                 "type": "varchar",
-                "length": 256,
+                "length": 89,
                 "index": ["UNIQUE"]
             },
             {
@@ -27,17 +27,17 @@
             {
                 "nom": "email",
                 "type": "varchar",
-                "length": 256
+                "length": 89
             },
             {
                 "nom": "nom",
                 "type": "varchar",
-                "length": 256
+                "length": 89
             },
             {
                 "nom": "prenom",
                 "type": "varchar",
-                "length": 256
+                "length": 89
             }
         ]
     }
