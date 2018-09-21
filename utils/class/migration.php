@@ -1,8 +1,8 @@
 <?php
-require_once('cli_utils.php');
-require_once('cli_jsonVersSql.php');
+require_once('Utils.php');
+require_once('JsonVersSql.php');
 
-class cli_migration
+class Migration
 {
     private $cheminDossierConfig;
     private $cheminDossierMigration;
@@ -30,43 +30,43 @@ class cli_migration
      */
     public function preparer() {
         // on prepare la base
-        cli_utils::consoleLog("PREPARATION DE LA BASE POUR LA MIGRATION", "title");
-        $baseJson = cli_utils::recupererContenuFichier($this->cheminDossierConfig . "/@base.json");
+        Utils::consoleLog("PREPARATION DE LA BASE POUR LA MIGRATION", "title");
+        $baseJson = Utils::recupererContenuFichier($this->cheminDossierConfig . "/@base.json");
         if ($baseJson !== false) {
-            $base = cli_jsonVersSql::convertirBase($baseJson);
+            $base = JsonVersSql::convertirBase($baseJson);
             if ($base !== false) {
                 $this->requetesBase = $base["requete"];
-                cli_utils::consoleLog("OK: base {$base["nom"]}");
+                Utils::consoleLog("OK: base {$base["nom"]}");
             } else {
-                cli_utils::consoleLog("ERREUR: fichier json invalide");
+                Utils::consoleLog("ERREUR: fichier json invalide");
             }
         } else {
-            cli_utils::consoleLog("ERREUR: fichier de configuration introuvable");
+            Utils::consoleLog("ERREUR: fichier de configuration introuvable");
         }
 
         // on prepares les modules (tables + relationnels)
         if ($dossierSrc = opendir($this->cheminDossierModule)) {
-            cli_utils::consoleLog("PREPARATION DES MODULES POUR LA MIGRATION", "title");
+            Utils::consoleLog("PREPARATION DES MODULES POUR LA MIGRATION", "title");
 
             while(false !== ($sousDossierModule = readdir($dossierSrc))) {
                 if ($sousDossierModule !== '.' && $sousDossierModule !== '..' && $sousDossierModule !== '.DS_Store') {
                     $cheminTableJson = $this->cheminDossierModule . "/{$sousDossierModule}/@table.json";
-                    $tableJson = cli_utils::recupererContenuFichier($cheminTableJson);
+                    $tableJson = Utils::recupererContenuFichier($cheminTableJson);
 
                     
                     if ($tableJson !== false) {
-                        $requetesTable = cli_jsonVersSql::convertirTable($tableJson);
+                        $requetesTable = JsonVersSql::convertirTable($tableJson);
                         if ($requetesTable !== false) {
                             $this->requetesModules["tables"][] = $requetesTable["table"];
                             if ($requetesTable["relationnels"] !== []) {
                                 $this->requetesModules["relationnels"][] = $requetesTable["relationnels"];
                             }
-                            cli_utils::consoleLog("OK : module " . $sousDossierModule);
+                            Utils::consoleLog("OK : module " . $sousDossierModule);
                         } else {
-                            cli_utils::consoleLog("ERRUR : module " . $sousDossierModule . " -- json invalide");
+                            Utils::consoleLog("ERRUR : module " . $sousDossierModule . " -- json invalide");
                         }
                     } else {
-                        cli_utils::consoleLog("ERRUR : module " . $sousDossierModule . " -- json introuvable");
+                        Utils::consoleLog("ERRUR : module " . $sousDossierModule . " -- json introuvable");
                     }
                 }
             }
@@ -95,8 +95,8 @@ class cli_migration
         fwrite($fichierMigration, $migrationSql);
         fclose($fichierMigration);
 
-        cli_utils::consoleLog("MIGRATION PREPARER AVEC SUCCES", "title");
-        cli_utils::consoleLog("fichier de migration SQL generer au chemin : " . $this->cheminDossierMigration . "/@migration.sql\n");
+        Utils::consoleLog("MIGRATION PREPARER AVEC SUCCES", "title");
+        Utils::consoleLog("fichier de migration SQL generer au chemin : " . $this->cheminDossierMigration . "/@migration.sql\n");
     }
 
 }

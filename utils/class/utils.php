@@ -1,6 +1,6 @@
 <?php
 
-class cli_utils
+class Utils
 {
     /**
      * retourne les arguments du script cli mis en forme dans un tableau associatif
@@ -66,6 +66,22 @@ class cli_utils
     }
 
     /**
+     * var_dump formater avec pre
+     *
+     * @param Any $variable
+     * @param Boolean $exit
+     * @return void
+     */
+    static function debugPre($variable = "--DEBUG--", $exit = false) {
+        echo "<pre>\n\r";
+        var_dump($variable);
+        echo "</pre>\n\r";
+        if ($exit) {
+            exit(0);
+        }
+    }
+
+    /**
      * affiche un message dans la console
      *
      * @param String $message
@@ -89,5 +105,19 @@ class cli_utils
             }
             echo("\r\n");
         }
+    }
+
+    static function recupererEnvVar() {
+        $envFile = Utils::recupererContenuFichier(".env");
+        $envFileLine = explode("\n", $envFile);
+        $env = [];
+        foreach ($envFileLine as $lineNbr => $line) {
+            $envLine = explode("=", $line);
+            if (substr($envLine[0], 0, 1) !== "#") {
+                $env[$envLine[0]] = $envLine[1];
+            }
+        }
+
+        return $env;
     }
 }

@@ -1,6 +1,6 @@
 
 <?php
-class Route
+class Router
 {
 
     private $requete;
@@ -23,9 +23,6 @@ class Route
      * @return void
      */
     function __call($nom, $args) {
-        echo "<pre>";
-        var_dump($args);
-        echo "</pre>";
         list($route, $method) = $args;
         if (!in_array(strtoupper($nom), $this->supportedHttpMethods)) {
             $this->invalideMethodHandler();

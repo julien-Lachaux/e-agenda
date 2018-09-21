@@ -1,15 +1,14 @@
 <?php
-require_once('class/cli_utils.php');
-$cliParametre = cli_utils::recupererCliArgs($argv);
+require_once('class/Utils.php');
+$cliParametre = Utils::recupererCliArgs($argv);
 
 
 // definier quel script cli doit être appeler
-$cliClass = "cli_{$cliParametre['class']}";
 $cliFonction = $cliParametre['fonction'];
 $cliFonctionParametres = $cliParametre['arguments'];
 
 // appel du script demander
-require("class/{$cliClass}.php");
-$classe = new $cliClass();
+require("class/{$cliParametre['class']}.php");
+$classe = new $cliParametre['class']();
 $classe->{$cliFonction}($cliFonctionParametres);
 

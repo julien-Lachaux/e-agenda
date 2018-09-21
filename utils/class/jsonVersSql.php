@@ -1,7 +1,7 @@
 <?php
-require_once('cli_utils.php');
+require_once('Utils.php');
 
-class cli_jsonVersSql {
+class JsonVersSql {
 
     /**
      * convertit un json @table en sql
@@ -24,7 +24,7 @@ class cli_jsonVersSql {
             // ajout des colonnes
             foreach ($table->colonnes as $i => $colonne) {
 
-                if (cli_utils::existe($colonne, 'length')) {
+                if (Utils::existe($colonne, 'length')) {
                     $requeteSql .= "`{$colonne->nom}` {$colonne->type}({$colonne->length}) ";
                 } else if ($colonne->type === 'relationnel') {
                     $colonne->table = $table->nom;
@@ -181,30 +181,30 @@ class cli_jsonVersSql {
      */
     static function valideJson($json) {
         // on verifie que le json contient l'entrée table
-        if (cli_utils::existe($json, 'base')) {
+        if (Utils::existe($json, 'base')) {
 
             // on valide les informations sur la base
-            if (!cli_utils::existe($json->base, 'nom')) { return false; }
-            if (!cli_utils::existe($json->base, 'charset')) { return false; }
-            if (!cli_utils::existe($json->base, 'encodage')) { return false; }
+            if (!Utils::existe($json->base, 'nom')) { return false; }
+            if (!Utils::existe($json->base, 'charset')) { return false; }
+            if (!Utils::existe($json->base, 'encodage')) { return false; }
 
-        } else if (cli_utils::existe($json, 'table')) {
+        } else if (Utils::existe($json, 'table')) {
 
             // on valide les informations sur la table
-            if (!cli_utils::existe($json->table, 'nom')) { return false; }
-            if (!cli_utils::existe($json->table, 'engine')) { return false; }
-            if (!cli_utils::existe($json->table, 'charset')) { return false; }
-            if (!cli_utils::existe($json->table, 'ifNotExist')) { return false; }
-            if (!cli_utils::existe($json->table, 'colonnes')) { return false; }
+            if (!Utils::existe($json->table, 'nom')) { return false; }
+            if (!Utils::existe($json->table, 'engine')) { return false; }
+            if (!Utils::existe($json->table, 'charset')) { return false; }
+            if (!Utils::existe($json->table, 'ifNotExist')) { return false; }
+            if (!Utils::existe($json->table, 'colonnes')) { return false; }
     
             // on valide les informations sur les colonnes
             foreach ($json->table->colonnes as $key => $colonne) {
-                if (!cli_utils::existe($colonne, 'type')) { return false; }
-                if (!cli_utils::existe($colonne, 'nom') && $colonne->type !== 'relationnel') { return false; }
+                if (!Utils::existe($colonne, 'type')) { return false; }
+                if (!Utils::existe($colonne, 'nom') && $colonne->type !== 'relationnel') { return false; }
                 if ($colonne->type === 'relationnel') {
-                    if (!cli_utils::existe($colonne, 'tableCible')) { return false; }
-                    if (!cli_utils::existe($colonne, 'colonneCible')) { return false; }
-                    if (!cli_utils::existe($colonne, 'typeRelation')) { return false; }
+                    if (!Utils::existe($colonne, 'tableCible')) { return false; }
+                    if (!Utils::existe($colonne, 'colonneCible')) { return false; }
+                    if (!Utils::existe($colonne, 'typeRelation')) { return false; }
                     
                     $relations = ["OneToOne", "OneToMany", "ManyToOne" ,"ManyToMany"];
                     if (!array_search($colonne->typeRelation, $relations)) { return false; }

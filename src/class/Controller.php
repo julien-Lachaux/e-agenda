@@ -1,7 +1,9 @@
 <?php
+include_once 'ReponseInterface.php';
+
 abstract class Controller implements ReponseInterface   {
     
-    protected static function render($cheminDeLaVue) {
+    public static function render($cheminDeLaVue) {
         echo($cheminDeLaVue);
     }
     

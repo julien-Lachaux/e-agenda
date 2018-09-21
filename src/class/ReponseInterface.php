@@ -1,4 +1,4 @@
 <?php
 interface ReponseInterface {
-    public function render();
+    public static function render($cheminVue);
 }
