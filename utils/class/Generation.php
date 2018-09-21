@@ -34,6 +34,15 @@ class Generation
         foreach ($config["tables"] as $i => $table) {
             // on recupère le nom du depots à partir du nom de la table
             $nomDepot = ucfirst($table->nom);
+
+            // on genere les models
+            $fichierDepot = fopen($this->cheminDossierDepots . "/{$nomDepot}.php", "w+");
+
+            $nouveauDepot = $this->genererClassHeader($nomDepot, "Depot");
+            $nouveauDepot .= "}\n";
+            
+            fwrite($fichierDepot, $nouveauDepot);
+            fclose($fichierDepot);
         }
     }
 
