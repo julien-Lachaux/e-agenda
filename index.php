@@ -12,6 +12,6 @@ echo "<pre>";
 echo "</pre>";
 
 $router->get('/test', function() {
-    echo "<h1>nice</h1>";
-    return "<h1>nice</h1>";
-  });
+  echo "<h1>nice</h1>";
+  return "<h1>nice</h1>";
+});

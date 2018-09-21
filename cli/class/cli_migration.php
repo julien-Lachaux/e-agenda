@@ -3,13 +3,20 @@ require_once('cli_utils.php');
 
 class cli_migration
 {
-    function preparer($cibleArray) {
-        foreach ($cibleArray as $i => $cible) {
-            $this->convertirJsonVersSql($cible);
+    public function preparer() {
+        if($dossier = opendir(__DIR__ . '/../../src/modules')) {
+            echo "debut de la preparation des modules pour la migration \n";
+            while(false !== ($sousDossierModule = readdir($dossier))) {
+                if ($sousDossierModule !== '.' && $sousDossierModule !== '..' && $sousDossierModule !== '.DS_Store') {
+                    echo "module: " . $sousDossierModule . "\n";
+                    $this->convertirJsonVersSql($sousDossierModule);
+                }
+            }
+            echo "fin de la preparation des modules pour la migration \n";
         }
     }
 
-    function convertirJsonVersSql($module) {
+    private function convertirJsonVersSql($module) {
         $emplacementJson = __DIR__ . "/../../src/modules/{$module}/@table.json";
 
         $table = json_decode(utf8_encode(cli_utils::recupererContenuFichier($emplacementJson)), false)->table;
