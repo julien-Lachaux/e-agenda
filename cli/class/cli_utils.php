@@ -5,7 +5,7 @@ class cli_utils
     /**
      * retourne les arguments du script cli mis en forme dans un tableau associatif
      *
-     * @param [Array] $argv
+     * @param Array $argv
      * @return Array
      */
     static function recupererCliArgs($argv) {
@@ -26,7 +26,7 @@ class cli_utils
     /**
      * recupere le contenu du fichier a l'emplacement passer en parametre
      *
-     * @param [string] $emplacement
+     * @param String $emplacement
      * @return void
      */
     static function recupererContenuFichier($emplacement) {
@@ -38,8 +38,8 @@ class cli_utils
     /**
      * verifie si un element d'un object existe
      *
-     * @param [object] $object
-     * @param [string] $element
+     * @param Object $object
+     * @param String $element
      * @return Boolean
      */
     static function existe($object, $element) {
@@ -47,5 +47,47 @@ class cli_utils
             return false;
         } 
         return true;
+    }
+
+    /**
+     * var_dump formater
+     *
+     * @param Any $variable
+     * @param Boolean $exit
+     * @return void
+     */
+    static function debug($variable = "--DEBUG--", $exit = false) {
+        echo "\n\r";
+        var_dump($variable);
+        echo "\n\r";
+        if ($exit) {
+            exit(0);
+        }
+    }
+
+    /**
+     * affiche un message dans la console
+     *
+     * @param String $message
+     * @param String $special
+     * @return void
+     */
+    static function consoleLog($message = "", $special = NULL) {
+        if ($special === NULL && $message !== 'separateur') {
+            echo("{$message} \r\n");
+        } else if ($message === 'separateur') {
+            echo("\r\n====================================\r\n\r\n");
+        } else if ($special === 'title') {
+            echo("\r\n");
+            for ($i=0; $i < (strlen($message) + 4); $i++) { 
+                echo("=");
+            }
+            echo("\r\n");
+            echo("| {$message} |\r\n");
+            for ($i=0; $i < (strlen($message) + 4); $i++) { 
+                echo("=");
+            }
+            echo("\r\n");
+        }
     }
 }

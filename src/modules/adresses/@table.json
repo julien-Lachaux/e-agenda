@@ -1,0 +1,42 @@
+{
+    "table": {
+        "nom": "adresses",
+        "engine": "InnoDB",
+        "charset": "utf8",
+        "ifNotExist": true,
+        "colonnes": [
+            {
+                "nom": "id",
+                "type": "int",
+                "length": 11,
+                "NOT_NULL": true,
+                "autoIncrement": true,
+                "index": ["PRIMARY KEY"]
+            },
+            {
+                "nom": "ville",
+                "type": "varchar",
+                "length": 89
+            },
+            {
+                "nom": "code_postal",
+                "type": "varchar",
+                "length": 89
+            },
+            {
+                "nom": "adresses",
+                "type": "text"
+            },
+            {
+                "nom": "complement",
+                "type": "text"
+            },
+            {
+                "type": "relationnel",
+                "tableCible": "contact",
+                "colonneCible": "id",
+                "typeRelation": "ManyToOne"
+            }
+        ]
+    }
+}

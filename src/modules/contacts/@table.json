@@ -1,0 +1,39 @@
+{
+    "table": {
+        "nom": "contacts",
+        "engine": "InnoDB",
+        "charset": "utf8",
+        "ifNotExist": true,
+        "colonnes": [
+            {
+                "nom": "id",
+                "type": "int",
+                "length": 11,
+                "NOT_NULL": true,
+                "autoIncrement": true,
+                "index": ["PRIMARY KEY"]
+            },
+            {
+                "nom": "email",
+                "type": "varchar",
+                "length": 89
+            },
+            {
+                "nom": "nom",
+                "type": "varchar",
+                "length": 89
+            },
+            {
+                "nom": "prenom",
+                "type": "varchar",
+                "length": 89
+            },
+            {
+                "type": "relationnel",
+                "tableCible": "users",
+                "colonneCible": "id",
+                "typeRelation": "ManyToOne"
+            }
+        ]
+    }
+}

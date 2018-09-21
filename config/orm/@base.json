@@ -1,0 +1,7 @@
+{
+    "base": {
+        "nom": "e-agenda",
+        "charset": "utf8mb4",
+        "encodage": "utf8mb4_unicode_ci"
+    }
+}

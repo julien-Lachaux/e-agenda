@@ -10,7 +10,6 @@ $cliFonctionParametres = $cliParametre['arguments'];
 
 // appel du script demander
 require("class/{$cliClass}.php");
-
 $classe = new $cliClass();
 $classe->{$cliFonction}($cliFonctionParametres);
 
