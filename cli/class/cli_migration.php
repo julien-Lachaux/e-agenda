@@ -32,6 +32,7 @@ class cli_migration
         if ($baseJson !== false) {
             $base = cli_jsonVersSql::convertirBase($baseJson);
             if ($base !== false) {
+                $this->requetesBase = $base["requete"];
                 cli_utils::consoleLog("OK: base {$base["nom"]}");
             } else {
                 cli_utils::consoleLog("ERREUR: fichier json invalide");
@@ -54,7 +55,7 @@ class cli_migration
                         $requetesTable = cli_jsonVersSql::convertirTable($tableJson);
                         if ($requetesTable !== false) {
                             $this->requetesModules["tables"][] = $requetesTable["table"];
-                            if ($requetesTable["relationnels"] !== NULL) {
+                            if ($requetesTable["relationnels"] !== []) {
                                 $this->requetesModules["relationnels"][] = $requetesTable["relationnels"];
                             }
                             cli_utils::consoleLog("OK : module " . $sousDossierModule);
@@ -68,8 +69,7 @@ class cli_migration
             }
             closedir($dossierSrc);
         }
-        cli_utils::consoleLog();
-        // cli_utils::debug($this->requetesModules);
+        $this->ecrireFichierMigration();
     }
 
     /**
@@ -78,9 +78,22 @@ class cli_migration
      * @return void
      */
     private function ecrireFichierMigration() {
-        $fichierMigration = fopen(__DIR__ . "/../../migrations/{$table->nom}@table.sql", "w+");
-        fwrite($fichierMigration, "{$this->requetesBase}\n{$requetesTables}\n{$requetesRelationnels}\n");
+        $fichierMigration = fopen($this->cheminDossierMigration . "/@migration.sql", "w+");
+        $migrationSql = $this->requetesBase;
+
+        foreach ($this->requetesModules["tables"] as $table => $requete) {
+            $migrationSql .= $requete;
+        }
+        foreach ($this->requetesModules["relationnels"] as $table => $requetes) {
+            foreach ($requetes as $key => $requete) {
+                $migrationSql .= $requete;
+            }
+        }
+        fwrite($fichierMigration, $migrationSql);
         fclose($fichierMigration);
+
+        cli_utils::consoleLog("MIGRATION PREPARER AVEC SUCCES", "title");
+        cli_utils::consoleLog("fichier de migration SQL generer au chemin : " . $this->cheminDossierMigration . "/@migration.sql\n");
     }
 
 }

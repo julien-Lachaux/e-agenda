@@ -4,10 +4,10 @@ require_once('cli_utils.php');
 class cli_jsonVersSql {
 
     /**
-     * convertit un json en fichier sql
+     * convertit un json @table en sql
      *
-     * @param Object $jsonTable
-     * @return Boolean
+     * @param Object $tableJson
+     * @return Array|Boolean
      */
     static function convertirTable($tableJson) {
         $tableJson = json_decode(utf8_encode($tableJson), false);
@@ -33,14 +33,16 @@ class cli_jsonVersSql {
                     $requeteSql .= "`{$colonne->nom}` {$colonne->type} ";
                 }
 
-                if ($colonne->NOT_NULL === true) { $requeteSql .= "NOT NULL "; }
-                if ($colonne->autoIncrement === true) {
-                    $autoIncrement[] = $colonne->nom;
+                if ($colonne->type !== 'relationnel') {
+                    if ($colonne->NOT_NULL === true) { $requeteSql .= "NOT NULL "; }
+                    if ($colonne->autoIncrement === true) {
+                        $autoIncrement[] = $colonne->nom;
+                    }
+                    if ($colonne->index !== null) {
+                        $index[$colonne->nom] = $colonne->index;
+                    }
+                    $requeteSql .= ",\n";
                 }
-                if ($colonne->index !== null) {
-                    $index[$colonne->nom] = $colonne->index;
-                }
-                $requeteSql .= ",\n";
             }
             $requeteSql = substr($requeteSql, 0, -2);
             $requeteSql .= ") ENGINE={$table->engine} DEFAULT CHARSET={$table->charset}; \n";
@@ -49,19 +51,20 @@ class cli_jsonVersSql {
             $requeteSqlIndex = self::titreSql($table->nom, "Index pour la table");
             foreach ($index as $colonne => $indexList) {
                 foreach ($indexList as $key => $indexNom) {
-                    $requeteSqlIndex .= "ALTER TABLE `{$table->nom}` ADD {$indexNom}(`$colonne`); \n";
+                    $requeteSqlIndex .= "ALTER TABLE `{$table->nom}` ADD {$indexNom}(`$colonne`) ";
+                    $requeteSqlIndex .= ";\n";
                 }
             }
             
             // auto-increment
             $requeteSqlAutoIncrement = self::titreSql($table->nom, "Auto-increment pour la table");
             foreach ($autoIncrement as $i => $colonne) {
-                $requeteSqlAutoIncrement .= "ALTER TABLE `{$table->nom}` MODIFY `{$colonne}` int(11) NOT NULL AUTO_INCREMENT; \n";
+                $requeteSqlAutoIncrement .= "ALTER TABLE `{$table->nom}` MODIFY `{$colonne}` INT UNSIGNED NOT NULL AUTO_INCREMENT; \n";
             }
 
             $reponse = [
-                "table" => $requeteSql . $requeteSqlAutoIncrement,
-                "relationnels" => $requeteSqlRelationnel,
+                "table" => $requeteSql . $requeteSqlIndex . $requeteSqlAutoIncrement,
+                "relationnels" => $relationnel,
             ];
 
             return $reponse;
@@ -69,15 +72,20 @@ class cli_jsonVersSql {
         return false;
     }
 
+    /**
+     * convertit un json @table en sql
+     *
+     * @param Object $baseJson
+     * @return Array|Boolean
+     */
     static function convertirBase($baseJson) {
         $baseJson = json_decode(utf8_encode($baseJson), false);
         if  (self::valideJson($baseJson)) {
             $base = $baseJson->base;
 
-            $requeteSql    = "-- \n";
-            $requeteSql   .= "-- Base: {$base->nom} \n";
-            $requeteSql   .= "-- \n";
-            $requeteSql   .= "CREATE DATABASE IF NOT EXIST {$base->nom} SET {$base->charset} COLLATE {$base->encodage};";
+            $requeteSql    = self::titreSql($base->nom, "Base");
+            $requeteSql   .= "CREATE DATABASE `{$base->nom}` CHARACTER SET = {$base->charset} COLLATE = {$base->encodage};\n";
+            $requeteSql   .= "USE {$base->nom};\n";
 
             $reponse = [
                 "nom"       => $base->nom,
@@ -90,8 +98,13 @@ class cli_jsonVersSql {
         }
     }
 
+    /**
+     * convertit une relation en sql
+     *
+     * @param Object $relationJson
+     * @return Array|Boolean
+     */
     static function convertirRelationnel($relationJson) {
-        cli_utils::debug($relationJson);
         $table = $relationJson->table;
         $tableCible = $relationJson->tableCible;
         $colonneCible = $relationJson->colonneCible;
@@ -100,22 +113,22 @@ class cli_jsonVersSql {
         switch ($relationJson->typeRelation) {
             case 'OneToOne':
                 // ajout de la colonnes [cible]_id
-                $requeteSql = "ALTER TABLE {$table} ADD COLUMN `{$nomColonne}` INT NOT NULL;\n";
+                $requeteSql = "ALTER TABLE `{$table}` ADD COLUMN `{$nomColonne}` INT UNSIGNED NOT NULL;\n";
 
                 // ajout de la clé étrangère sur la colonnes [cible]_id
-                $requeteSql .= "ALTER TABLE {$table} ADD CONSTRAINT `FK_{$tableCible}_{$table}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`{$colonneCible}`);\n";
+                $requeteSql .= "ALTER TABLE `{$table}` ADD CONSTRAINT `FK_{$tableCible}_{$table}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`{$colonneCible}`) ON DELETE CASCADE ON UPDATE CASCADE;\n";
 
                 // ajout d'un index UNIQUE sur la colonnes [cible]_id 
-                $requeteSql .= "ALTER TABLE {$table} ADD CONSTRAINT `UNIQUE_{$table}_{$nomColonne}` UNIQUE KEY (`{$nomColonne}`);\n";
+                $requeteSql .= "ALTER TABLE `{$table}` ADD CONSTRAINT `UNIQUE_{$table}_{$nomColonne}` UNIQUE KEY (`{$nomColonne}`);\n";
 
                 break;
 
             case 'ManyToOne':
                 // ajout de la colonnes [cible]_id
-                $requeteSql = "ALTER TABLE {$table} ADD COLUMN `{$nomColonne}` INT NOT NULL;\n";
+                $requeteSql = "ALTER TABLE `{$table}` ADD COLUMN `{$nomColonne}` INT UNSIGNED NOT NULL;\n";
 
                 // ajout de la clé étrangère sur la colonnes [cible]_id
-                $requeteSql .= "ALTER TABLE {$table} ADD CONSTRAINT `FK_{$tableCible}_{$table}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`{$colonneCible}`);\n";
+                $requeteSql .= "ALTER TABLE `{$table}` ADD CONSTRAINT `FK_{$tableCible}_{$table}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`{$colonneCible}`) ON DELETE CASCADE ON UPDATE CASCADE;\n";
 
                 break;
 
@@ -124,16 +137,16 @@ class cli_jsonVersSql {
 
                 // creation de la table de liaison
                 $requeteSql = "CREATE TABLE `{$tableLiaison}` (";
-                $requeteSql .= "`{$table}_id` INT NOT NULL,";
-                $requeteSql .= "`{$nomColonne}` INT NOT NULL";
+                $requeteSql .= "`{$table}_id` INT UNSIGNED NOT NULL,";
+                $requeteSql .= "`{$nomColonne}` INT UNSIGNED NOT NULL";
                 $requeteSql .= ") ENGINE=InnoDB DEFAULT CHARSET='utf8';\n";
 
                 // ajout des clés étrangères
-                $requeteSql .= "ALTER TABLE {$tableLiaison} ADD CONSTRAINT `FK_{$table}_{$tableLiaison}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`id`);\n";
-                $requeteSql .= "ALTER TABLE {$tableLiaison} ADD CONSTRAINT `FK_{$tableCible}_{$tableLiaison}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`{$colonneCible}`);\n";
+                $requeteSql .= "ALTER TABLE `{$tableLiaison}` ADD CONSTRAINT `FK_{$table}_{$tableLiaison}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;\n";
+                $requeteSql .= "ALTER TABLE `{$tableLiaison}` ADD CONSTRAINT `FK_{$tableCible}_{$tableLiaison}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`{$colonneCible}`) ON DELETE CASCADE ON UPDATE CASCADE;\n";
 
                 // ajout d'un index UNIQUE sur la colonnes { $nomColonne }
-                $requeteSql .= "ALTER TABLE {$tableLiaison} ADD CONSTRAINT `UNIQUE_{$tableLiaison}_{$table}_id` UNIQUE KEY (`{$table}_id`);\n";
+                $requeteSql .= "ALTER TABLE `{$tableLiaison}` ADD CONSTRAINT `UNIQUE_{$tableLiaison}_{$table}_id` UNIQUE KEY (`{$table}_id`);\n";
 
                 break;
 
@@ -142,14 +155,14 @@ class cli_jsonVersSql {
 
                 // creation de la table de liaison
                 $requeteSql = "CREATE TABLE `{$tableLiaison}` (";
-                $requeteSql .= "`{$table}_id` INT NOT NULL,";
-                $requeteSql .= "`{$nomColonne}` INT NOT NULL";
+                $requeteSql .= "`{$table}_id` INT UNSIGNED NOT NULL,";
+                $requeteSql .= "`{$nomColonne}` INT UNSIGNED NOT NULL";
                 $requeteSql .= ") ENGINE=InnoDB DEFAULT CHARSET='utf8';\n";
 
                 // ajout des clés étrangères
-                $requeteSql .= "ALTER TABLE {$tableLiaison} ADD CONSTRAINT `FK_{$table}_{$tableLiaison}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`id`);\n";
-                $requeteSql .= "ALTER TABLE {$tableLiaison} ADD CONSTRAINT `FK_{$tableCible}_{$tableLiaison}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`{$colonneCible}`);\n";
-                
+                $requeteSql .= "ALTER TABLE `{$tableLiaison}` ADD CONSTRAINT `FK_{$table}_{$tableLiaison}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;\n";
+                $requeteSql .= "ALTER TABLE `{$tableLiaison} `ADD CONSTRAINT `FK_{$tableCible}_{$tableLiaison}` FOREIGN KEY (`{$nomColonne}`) REFERENCES `{$tableCible}`(`{$colonneCible}`) ON DELETE CASCADE ON UPDATE CASCADE;\n";
+
                 break;
             
             default:
@@ -206,12 +219,26 @@ class cli_jsonVersSql {
         return true;
     }
 
+    /**
+     * retourne un commentaire sql
+     *
+     * @param String $commentaire
+     * @return String
+     */
     static function commentaireSql($commentaire) {
         $commentaire = "-- {$commentaire}";
         return $commentaire;
     }
-    static function titreSql($titre, $type) {
-            $tire = "--\n-- {$type}: {$titre}\n--\n";
+
+    /**
+     * retourne un commentaire structuré pour faire un titre
+     *
+     * @param String $titre
+     * @param String $type
+     * @return String
+     */
+    static function titreSql($titre, $type = "Section") {
+            $titre = "--\n-- {$type}: {$titre}\n--\n";
             return $titre;
     }
 

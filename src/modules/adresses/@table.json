@@ -14,26 +14,32 @@
                 "index": ["PRIMARY KEY"]
             },
             {
+                "nom": "pays",
+                "type": "varchar",
+                "length": 89
+            },
+            {
                 "nom": "ville",
                 "type": "varchar",
                 "length": 89
             },
             {
-                "nom": "code_postal",
+                "nom": "codePostal",
                 "type": "varchar",
                 "length": 89
             },
             {
-                "nom": "adresses",
-                "type": "text"
+                "nom": "adresse",
+                "type": "varchar",
+                "length": 256
             },
             {
-                "nom": "complement",
+                "nom": "complementAdresse",
                 "type": "text"
             },
             {
                 "type": "relationnel",
-                "tableCible": "contact",
+                "tableCible": "contacts",
                 "colonneCible": "id",
                 "typeRelation": "ManyToOne"
             }
