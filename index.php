@@ -1,17 +1,9 @@
 <?php
 require 'src/class/Autoloader.php';
+require 'src/controllers/UsersController.php';
 Autoloader::register();
-
-echo "server up \n";
 
 $requete = new Requete();
 $router = new Router($requete);
 
-echo "<pre>";
-// var_dump($requete);
-echo "</pre>";
-
-$router->get('/test', function() {
-  echo "<h1>nice</h1>";
-  return "<h1>nice</h1>";
-});
+$router->get('/test', UsersController::test());

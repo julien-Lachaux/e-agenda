@@ -1,15 +1,30 @@
 
 <?php
-class Router
-{
+class Route {
+
   private $requete;
   private $supportedHttpMethods = ["GET", "POST"];
-  function __construct(requeteInterface $requete)
-  {
+
+  /**
+   * constructeur
+   *
+   * @param requeteInterface $requete
+   */
+  function __construct(requeteInterface $requete) {
    $this->requete = $requete;
   }
-  function __call($nom, $args)
-  {
+
+  /**
+   * Enregistre toute les routes déclarer
+   *
+   * @param [string] $nom
+   * @param [array] $args
+   * @return void
+   */
+  function __call($nom, $args) {
+    echo "<pre>";
+    var_dump($args);
+    echo "</pre>";
     list($route, $method) = $args;
     if(!in_array(strtoupper($nom), $this->supportedHttpMethods))
     {
@@ -17,12 +32,14 @@ class Router
     }
     $this->{strtolower($nom)}[$this->formatRoute($route)] = $method;
   }
+
   /**
-   * netoie la route
-   * @param route (string)
+   * formate la route
+   *
+   * @param [string] $route
+   * @return string
    */
-  private function formatRoute($route)
-  {
+  private function formatRoute($route) {
     $resultat = rtrim($route, '/');
     if ($resultat === '')
     {
@@ -30,31 +47,43 @@ class Router
     }
     return $resultat;
   }
-  private function invalideMethodHandler()
-  {
+
+  /**
+   * Renvoie le header HTTP 405 en cas de route non valide
+   *
+   * @return void
+   */
+  private function invalideMethodHandler() {
     header("{$this->requete->serverProtocol} 405 Method Not Allowed");
   }
-  private function defaultrequeteHandler()
-  {
+
+  /**
+   * Renvoie le header HTTP 404 en cas de route non defini
+   *
+   * @return void
+   */
+  private function defaultrequeteHandler() {
     header("{$this->requete->serverProtocol} 404 Not Found");
   }
+
   /**
    * Resoud la route
    */
-  function resoudre()
-  {
+  function resoudre() {
     $methodDictionary = $this->{strtolower($this->requete->requeteMethod)};
     $formatedRoute = $this->formatRoute($this->requete->requeteUri);
     $methode = $methodDictionary[$formatedRoute];
-    if(is_null($methode))
-    {
+    if(is_null($methode)) {
       $this->defaultrequeteHandler();
       return;
     }
     echo call_user_func_array($methode, array($this->requete));
   }
-  function __destruct()
-  {
+
+  /**
+   * Declanche la resolution de la route à la destuction de l'objct
+   */
+  function __destruct() {
     $this->resoudre();
   }
 }
