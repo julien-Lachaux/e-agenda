@@ -10,6 +10,9 @@ class cli_migration
     private $requetesBase;
     private $requetesModules;
 
+    /**
+     * Constructeur
+     */
     public function __construct() {
         $this->cheminDossierConfig = __DIR__ . "/../../config/orm";
         $this->cheminDossierMigration = __DIR__ . "/../../migrations";
