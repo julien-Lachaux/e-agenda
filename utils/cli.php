@@ -11,4 +11,3 @@ $cliFonctionParametres = $cliParametre['arguments'];
 require("class/{$cliParametre['class']}.php");
 $classe = new $cliParametre['class']();
 $classe->{$cliFonction}($cliFonctionParametres);
-
