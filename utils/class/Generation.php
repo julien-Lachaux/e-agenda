@@ -15,8 +15,6 @@ class Generation
     public function __construct() {
         $this->cheminDossierConfig = __DIR__ . "/../../config/orm";
         $this->cheminDossierModule = __DIR__ . "/../../src/modules";
-        $this->cheminDossierDepots = __DIR__ . "/../../src/depots";
-        $this->cheminDossierModels = __DIR__ . "/../../src/models";
     }
 
     public function generer() {
@@ -36,7 +34,7 @@ class Generation
             $nomDepot = ucfirst($table->nom);
 
             // on genere les models
-            $fichierDepot = fopen($this->cheminDossierDepots . "/{$nomDepot}.php", "w+");
+            $fichierDepot = fopen($this->cheminDossierModule . "/{$table->nom}/{$nomDepot}.php", "w+");
 
             $nouveauDepot = $this->genererClassHeader($nomDepot, "Depot");
             $nouveauDepot .= "}\n";
@@ -90,8 +88,8 @@ class Generation
                         break;
                 }
             }
-
             $models[] = (object) [
+                "module"    => $table->nom,
                 "nom"       => $nomModel,
                 "colonnes"  => $colonnes
             ];
@@ -99,7 +97,7 @@ class Generation
 
         // on genere les models
         foreach ($models as $model) {
-            $fichierModel = fopen($this->cheminDossierModels . "/{$model->nom}.php", "w+");
+            $fichierModel = fopen($this->cheminDossierModule . "/{$model->module}/{$model->nom}.php", "w+");
 
             $nouveauModel = $this->genererClassHeader($model->nom, "Model");
 
@@ -152,7 +150,9 @@ class Generation
     }
 
     private function genererClassHeader($nomClass, $abstract = false, $interface = false) {
-        $classHeader  = "<?php\n\n";
+        $classHeader  = "<?php\n";
+        if($abstract !== false) { $classHeader .= "require_once('src/class/{$abstract}.php');\n"; }
+        $classHeader .= "\n";
         $classHeader .= "class {$nomClass} ";
 
         if($abstract !== false) { $classHeader .= "extends {$abstract} "; }

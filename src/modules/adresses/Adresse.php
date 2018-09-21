@@ -1,6 +1,7 @@
 <?php
+require_once('src/class/Model.php');
 
-class Contact extends Model 
+class Adresse extends Model 
 {
 
 	private $id;

@@ -1,6 +1,7 @@
 <?php
+require_once('src/class/Model.php');
 
-class Adresse extends Model 
+class User extends Model 
 {
 
 	private $id;
