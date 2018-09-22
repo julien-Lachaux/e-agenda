@@ -28,7 +28,7 @@ class Router
         if (!in_array(strtoupper($nom), $this->supportedHttpMethods)) {
             $this->invalideMethodHandler();
         }
-        $this->{strtolower($nom)}[$this->formatRoute($route)] = $method;
+        $this->{strtolower($nom)}[$this->formatRoute($route)] = (object) $method;
     }
 
     /**
@@ -57,7 +57,7 @@ class Router
      * @return void
      */
     private function invalideMethodHandler() {
-        header("{$this->requete->serverProtocol} 405 Method Not Allowed");
+        header("{$this->requete->serverProtocol} 405 Route invalide");
     }
 
     /**
@@ -66,7 +66,7 @@ class Router
      * @return void
      */
     private function defaultrequeteHandler() {
-        header("{$this->requete->serverProtocol} 404 Not Found");
+        header("{$this->requete->serverProtocol} 404 Page introuvable");
     }
 
     /**
@@ -75,13 +75,20 @@ class Router
     function resoudre() {
         $methodDictionary = $this->{strtolower($this->requete->requestMethod)};
         $formatedRoute = $this->formatRoute($this->requete->requestUri);
-        $reponse = $methodDictionary[$formatedRoute];
-
-        if (is_null($reponse)) {
-            $this->defaultrequeteHandler();
-            return;
+        
+        if (!isset($methodDictionary[$formatedRoute])) {
+            if(isset($this->get["/erreur/404"])) {
+                $instruction404 = $this->get["/erreur/404"];
+                $reponse404 = $instruction404->controller->{$instruction404->methode}($this->requete);
+                echo $reponse404;
+            } else {
+                $this->defaultrequeteHandler();
+            }
+        } else {
+            $instruction = $methodDictionary[$formatedRoute];
+            $reponse = $instruction->controller->{$instruction->methode}($this->requete);
+            echo $reponse;
         }
-        echo $reponse;
     }
 
     /**

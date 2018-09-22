@@ -8,6 +8,7 @@ use Source\Router;
 use Source\Requete;
 use Source\Autoloader;
 use Modules\AutoloaderModules;
+use Modules\core\CoreController;
 use Modules\users\UsersController;
 
 // configuration de l'application
@@ -20,7 +21,31 @@ Utils::recupererEnvVar();
 // definitions des routes
 $requete = new Requete();
 $router = new Router($requete);
-$UsersController = new UsersController();
-$router->get('/', $UsersController->lister($requete));
-$router->get('/users/afficher', $UsersController->afficher($requete));
-$router->get('/users/lister', $UsersController->lister($requete));
+
+// routes core
+$Core = new CoreController();
+
+$router->get("/", [
+    "controller"    => $Core,
+    "methode"       => "accueil"
+]);
+
+// routes modules
+// users
+$Users = new UsersController();
+
+$router->get('/users/afficher', [
+    "controller" => $Users,
+    "methode"    => "afficher"
+]);
+
+$router->get('/users/lister', [
+    "controller" => $Users,
+    "methode"    => "lister"
+]);
+
+// routes erreurs
+$router->get("/erreur/404", [
+    "controller"    => $Core,
+    "methode"       => "erreur404"
+]);
