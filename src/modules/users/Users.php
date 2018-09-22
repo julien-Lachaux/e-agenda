@@ -1,5 +1,5 @@
 <?php
-require_once('src/class/Depot.php');
+require_once(__DIR__ . '/../../class/Depot.php');
 
 class Users extends Depot 
 {

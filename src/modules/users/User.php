@@ -1,5 +1,5 @@
 <?php
-require_once('src/class/Model.php');
+require_once(__DIR__ . '/../../class/Model.php');
 
 class User extends Model 
 {

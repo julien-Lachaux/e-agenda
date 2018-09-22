@@ -43,4 +43,9 @@ class Requete implements requeteInterface
     
     return $body;
   }
+  public function getUrlParams() {
+    $urlParams = explode("/", $this->requestUri);
+
+    return array_slice($urlParams, 3);
+  }
 }

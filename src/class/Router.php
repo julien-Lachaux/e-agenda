@@ -36,10 +36,16 @@ class Router
      * @param [string] $route
      * @return string
      */
-    private function formatRoute($route) {
+    private function formatRoute($route, $declaration = true) {
         $resultat = rtrim($route, '/');
         if ($resultat === '') {
             return '/';
+        }
+        $ulrParam = explode('/', $resultat);
+        if ($declaration && isset($ulrParam[2])) {
+            $resultat = "/{$ulrParam[1]}/{$ulrParam[2]}";
+        } else if ($declaration && isset($ulrParam[2]) === false) {
+            $resultat = "/{$ulrParam[1]}";
         }
         return $resultat;
     }
@@ -82,5 +88,9 @@ class Router
      */
     function __destruct() {
         $this->resoudre();
+    }
+
+    public function getRequete() {
+        return $this->requete;
     }
 }

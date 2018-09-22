@@ -108,7 +108,7 @@ class Utils
     }
 
     static function recupererEnvVar() {
-        $envFile = Utils::recupererContenuFichier(".env");
+        $envFile = Utils::recupererContenuFichier(__DIR__ . "/../../.env");
         $envFileLine = explode("\n", $envFile);
         $env = [];
         foreach ($envFileLine as $lineNbr => $line) {

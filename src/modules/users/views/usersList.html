@@ -1,0 +1,32 @@
+<style>
+    .users {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .user {
+        height: 15em;
+        width: 15em;
+        background: teal;
+        color: #fff;
+        margin: 1em;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+
+    }
+</style>
+<div class="users">
+    {{#data}}
+        <div class="user">
+            <div class="email">{{ email }}</div>
+            <div class="nom">{{ nom }}</div>
+            <div class="prenom">{{ prenom }}</div>
+            <div class="password">{{ password }}</div>
+        </div>
+    {{/data}}
+</div>

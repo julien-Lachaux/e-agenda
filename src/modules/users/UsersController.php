@@ -1,13 +1,13 @@
 <?php
-require_once('src/class/Controller.php');
-require_once('src/modules/users/User.php');
-require_once('src/modules/users/Users.php');
+require_once(__DIR__ . "/../../class/Controller.php");
+require_once('User.php');
+require_once('Users.php');
 
 class UsersController extends Controller 
 {
 	public $module = 'users';
 
-	public function creer($usersData) {
+	public function creer($requete) {
 		if (User::valider($usersData)) {
 			$User = new User($usersData);
 			$data = $User->creer();
@@ -21,23 +21,26 @@ class UsersController extends Controller
 		}
 	}
 
-	public function afficher($user_id) {
+	public function afficher($requete) {
+		$urlParams = $requete->getUrlParams();
+		$user_id = $urlParams[0];
 		$users = new Users();
-		$user_data = $users->indById($user_id);
+		$user_data = $users->findById($user_id);
+
 		if ($user_data === false) {
-			return $this->render("test", $user_data);
+			return $this->render("user", []);
 		} else {
-			return $this->render("test", $user_data);
+			return $this->render("user", $user_data);
 		}
 	}
 
-	public function lister() {
+	public function lister($requete) {
 		$users = new Users();
 		$users_data = $users->findAll();
 		if ($users_data === false) {
-			return $this->render("test", $users_data);
+			return $this->render('usersList', $users_data);
 		} else {
-			return $this->render("test", $users_data);
+			return $this->render('usersList', $users_data);
 		}
 	}
 
