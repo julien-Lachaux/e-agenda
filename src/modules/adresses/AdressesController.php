@@ -1,6 +1,6 @@
 <?php
 require_once('src/class/Depot.php');
 
-class Users extends Depot 
+class Adresses extends Depot 
 {
 }
