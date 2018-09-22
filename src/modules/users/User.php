@@ -4,6 +4,7 @@ require_once('src/class/Model.php');
 class User extends Model 
 {
 
+	private static $table = 'users';
 	private $id;
 	private $login;
 	private $password;

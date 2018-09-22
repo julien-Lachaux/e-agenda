@@ -24,11 +24,11 @@ abstract class Model
         if ($param == 'id') { return false; }
         
         if(is_string($valeur)) {
-            base::getInstance()->query("UPDATE {$this->_table} SET {$param}='{$valeur}' WHERE {$condition}");
+            Base::getInstance()->query("UPDATE {$this->_table} SET {$param}='{$valeur}' WHERE {$condition}");
         } else if (is_int($valeur)) {
-            base::getInstance()->query("UPDATE {$this->_table} SET {$param}={$valeur} WHERE {$condition}");
+            Base::getInstance()->query("UPDATE {$this->_table} SET {$param}={$valeur} WHERE {$condition}");
         } else {
-            base::getInstance()->query("UPDATE {$this->_table} SET {$param}=NULL WHERE {$condition}");
+            Base::getInstance()->query("UPDATE {$this->_table} SET {$param}=NULL WHERE {$condition}");
         }
 
         return true;

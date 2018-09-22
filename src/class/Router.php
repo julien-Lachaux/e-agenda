@@ -66,14 +66,15 @@ class Router
      * Resoud la route
      */
     function resoudre() {
-        $methodDictionary = $this->{strtolower($this->requete->requeteMethod)};
-        $formatedRoute = $this->formatRoute($this->requete->requeteUri);
-        $methode = $methodDictionary[$formatedRoute];
-        if (is_null($methode)) {
+        $methodDictionary = $this->{strtolower($this->requete->requestMethod)};
+        $formatedRoute = $this->formatRoute($this->requete->requestUri);
+        $reponse = $methodDictionary[$formatedRoute];
+
+        if (is_null($reponse)) {
             $this->defaultrequeteHandler();
             return;
         }
-        echo call_user_func_array($methode, array($this->requete));
+        echo $reponse;
     }
 
     /**

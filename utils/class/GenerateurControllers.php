@@ -96,7 +96,27 @@ class GenerateurControllers extends Generateur
         return $methodeLister;
     }
 
-    private function genererMethodeEditer($config) {}
+    private function genererMethodeEditer($config) {
+        // on formatte nos informations
+        $nomTable               = $config->nom;
+        $nomDepot               = ucfirst($nomTable);
+        $nomVariable            = $nomTable . "_data";
+        $cheminVue              = "CHEMIN VUE SUCCESS EDITER";
+        $cheminVueTErreurDonnee = "CHEMIN VUE ERREUR DONNEE EDITER";
+        $cheminVueErreurEdition = "CHEMIN VUE ERREUR EDITER";
+
+        // on genere la methode lister
+        $methodeEditer  = "\tstatic public function editer(\$newData) {\n";
+        $methodeEditer .= "\t\t\${$nomVariable} = {$nomDepot}::findAll();\n";
+        $methodeEditer .= "\t\tif (\${$nomVariable} === false) {\n";
+        $methodeEditer .= "\t\t\tself::render(\"{$cheminVueErreurEdition}\", \${$nomVariable});\n";
+        $methodeEditer .= "\t\t} else {\n";
+        $methodeEditer .= "\t\t\tself::render(\"{$cheminVue}\", \${$nomVariable});\n";
+        $methodeEditer .= "\t\t}\n";
+        $methodeEditer .= "\t}\n\n";
+
+        return $methodeEditer;
+    }
 
     private function genererMethodeSupprimer($config) {}
 }

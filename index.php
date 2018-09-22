@@ -10,5 +10,7 @@ Utils::recupererEnvVar();
 // definitions des routes
 $requete = new Requete();
 $router = new Router($requete);
+$UsersController = new UsersController();
 
-$router->get('/e-agenda', UsersController::creer());
+$router->get('/', $UsersController->lister());
+$router->get('/users/lister', $UsersController->lister());
