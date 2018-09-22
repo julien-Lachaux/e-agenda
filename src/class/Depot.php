@@ -2,25 +2,15 @@
 
 abstract class Depot {
 
-    protected $_db; // la base de donnees
-    protected $_table; // la table dans la base
-    
-    /**
-     * constructeur
-     *
-     * @param BaseInterface $db
-     */
-    public function __construct(BaseInterface $db) {
-        $this->_db = $db->getInstance();
-    }
+    protected $table; // la table dans la base
 
     /**
      * retourne toute les entrée de la table
      *
      * @return Array
      */
-    public function findAll() {
-        return $this->_db->query("SELECT * FROM {$this->_table}")->fetchArray();
+    public static function findAll() {
+        return Base::getInstance()->query("SELECT * FROM {$this->table}")->fetchArray();
     }
 
     /**
@@ -29,8 +19,8 @@ abstract class Depot {
      * @param Int $id
      * @return Object
      */
-    public function findById($id) {
-        return $this->_db->query("SELECT * FROM {$this->_table} WHERE id='{$id}'")->fetchObject();
+    public static function findById($id) {
+        return Base::getInstance()->query("SELECT * FROM {$this->table} WHERE id='{$id}'")->fetchObject();
     }
     
 }

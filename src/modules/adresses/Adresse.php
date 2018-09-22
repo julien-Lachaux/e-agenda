@@ -5,11 +5,12 @@ class Adresse extends Model
 {
 
 	private $id;
-	private $login;
-	private $password;
-	private $email;
-	private $nom;
-	private $prenom;
+	private $pays;
+	private $ville;
+	private $codePostal;
+	private $adresse;
+	private $complementAdresse;
+	private $contact_id;
 
 	/**
 	 * Retourne la valeur de id
@@ -31,97 +32,163 @@ class Adresse extends Model
 	}
 
 	/**
-	 * Retourne la valeur de login
+	 * Retourne la valeur de pays
 	 *
 	 * @return String
 	 */
-	public function getLogin($valeur) {
-		 return $this->login;
+	public function getPays($valeur) {
+		 return $this->pays;
 	}
 
 	/**
-	 * Affecte la valeur $valeur à login
+	 * Affecte la valeur $valeur à pays
 	 *
-	 * @param String $login
+	 * @param String $pays
 	 * @return String
 	 */
-	public function setLogin($valeur) {
-		$this->login = $valeur;
+	public function setPays($valeur) {
+		$this->pays = $valeur;
 	}
 
 	/**
-	 * Retourne la valeur de password
+	 * Retourne la valeur de ville
 	 *
 	 * @return String
 	 */
-	public function getPassword($valeur) {
-		 return $this->password;
+	public function getVille($valeur) {
+		 return $this->ville;
 	}
 
 	/**
-	 * Affecte la valeur $valeur à password
+	 * Affecte la valeur $valeur à ville
 	 *
-	 * @param String $password
+	 * @param String $ville
 	 * @return String
 	 */
-	public function setPassword($valeur) {
-		$this->password = $valeur;
+	public function setVille($valeur) {
+		$this->ville = $valeur;
 	}
 
 	/**
-	 * Retourne la valeur de email
+	 * Retourne la valeur de codePostal
 	 *
 	 * @return String
 	 */
-	public function getEmail($valeur) {
-		 return $this->email;
+	public function getCodePostal($valeur) {
+		 return $this->codePostal;
 	}
 
 	/**
-	 * Affecte la valeur $valeur à email
+	 * Affecte la valeur $valeur à codePostal
 	 *
-	 * @param String $email
+	 * @param String $codePostal
 	 * @return String
 	 */
-	public function setEmail($valeur) {
-		$this->email = $valeur;
+	public function setCodePostal($valeur) {
+		$this->codePostal = $valeur;
 	}
 
 	/**
-	 * Retourne la valeur de nom
+	 * Retourne la valeur de adresse
 	 *
 	 * @return String
 	 */
-	public function getNom($valeur) {
-		 return $this->nom;
+	public function getAdresse($valeur) {
+		 return $this->adresse;
 	}
 
 	/**
-	 * Affecte la valeur $valeur à nom
+	 * Affecte la valeur $valeur à adresse
 	 *
-	 * @param String $nom
+	 * @param String $adresse
 	 * @return String
 	 */
-	public function setNom($valeur) {
-		$this->nom = $valeur;
+	public function setAdresse($valeur) {
+		$this->adresse = $valeur;
 	}
 
 	/**
-	 * Retourne la valeur de prenom
+	 * Retourne la valeur de complementAdresse
 	 *
 	 * @return String
 	 */
-	public function getPrenom($valeur) {
-		 return $this->prenom;
+	public function getComplementAdresse($valeur) {
+		 return $this->complementAdresse;
 	}
 
 	/**
-	 * Affecte la valeur $valeur à prenom
+	 * Affecte la valeur $valeur à complementAdresse
 	 *
-	 * @param String $prenom
+	 * @param String $complementAdresse
 	 * @return String
 	 */
-	public function setPrenom($valeur) {
-		$this->prenom = $valeur;
+	public function setComplementAdresse($valeur) {
+		$this->complementAdresse = $valeur;
 	}
+
+	/**
+	 * Retourne la valeur de contact_id
+	 *
+	 * @return Void
+	 */
+	public function getContact_id($valeur) {
+		 return $this->contact_id;
+	}
+
+	/**
+	 * Affecte la valeur $valeur à contact_id
+	 *
+	 * @param Void $contact_id
+	 * @return Void
+	 */
+	public function setContact_id($valeur) {
+		$this->contact_id = $valeur;
+	}
+
+	/**
+	 * Valide les données de Adresse
+	 *
+	 * @param Object $AdresseData
+	 * @return Boolean
+	 */
+	public function valider($AdresseData) {
+		foreach ($AdresseData as $data) {
+			if (gettype($data) !== 'string'
+			 && gettype($data) !== 'integer'
+			 && gettype($data) !== 'boolean'
+			 && gettype($data) !== 'NULL') {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Retourne la valeur de Adresse
+	 *
+	 * @return Boolean
+	 */
+	public function creer() {
+		$colonnesString = "";
+		$valeursString = "";
+		$colonnes = get_object_vars($this);
+
+		foreach ($colonnes as $colonne => $valeur) {
+			$colonnesString .= "{$colonne}, ";
+			$valeursString .= "{$valeur}, ";
+		}
+
+		$colonnesString = substr($colonnesString, 0, -2);
+		$valeursString = substr($valeursString , 0, -2);
+
+		$creation = Base::getInstance()->query("INSERT INTO adresses ({$colonnesString}) VALUES({$valeursString})");
+
+		if ($creation === false) { return false; }
+
+		return true;
+	}
+	public function getContact() {
+		return Contacts::findById($this->id);
+	}
+
 }

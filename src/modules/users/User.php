@@ -47,7 +47,6 @@ class User extends Model
 	 */
 	public function setLogin($valeur) {
 		$this->login = $valeur;
-		return "machin";
 	}
 
 	/**
@@ -125,4 +124,51 @@ class User extends Model
 	public function setPrenom($valeur) {
 		$this->prenom = $valeur;
 	}
+
+	/**
+	 * Valide les données de User
+	 *
+	 * @param Object $UserData
+	 * @return Boolean
+	 */
+	public function valider($UserData) {
+		foreach ($UserData as $data) {
+			if (gettype($data) !== 'string'
+			 && gettype($data) !== 'integer'
+			 && gettype($data) !== 'boolean'
+			 && gettype($data) !== 'NULL') {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Retourne la valeur de User
+	 *
+	 * @return Boolean
+	 */
+	public function creer() {
+		$colonnesString = "";
+		$valeursString = "";
+		$colonnes = get_object_vars($this);
+
+		foreach ($colonnes as $colonne => $valeur) {
+			$colonnesString .= "{$colonne}, ";
+			$valeursString .= "{$valeur}, ";
+		}
+
+		$colonnesString = substr($colonnesString, 0, -2);
+		$valeursString = substr($valeursString , 0, -2);
+
+		$creation = Base::getInstance()->query("INSERT INTO users ({$colonnesString}) VALUES({$valeursString})");
+
+		if ($creation === false) { return false; }
+
+		return true;
+	}
+	public function getContacts() {
+		return Base::getInstance()->query("SELECT * FROM users INNER JOIN Contact ON user.id=Contact.users_id WHERE Contact.users_id=''")->fetchObject();
+	}
+
 }
