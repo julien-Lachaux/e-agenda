@@ -1,5 +1,7 @@
 <?php
-require_once(__DIR__ . '/../../class/Model.php');
+namespace Modules\users;
+
+use Source\Model;
 
 class User extends Model 
 {

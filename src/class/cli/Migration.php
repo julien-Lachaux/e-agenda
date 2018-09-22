@@ -1,6 +1,8 @@
 <?php
-require_once('Utils.php');
-require_once('JsonVersSql.php');
+namespace Source\cli;
+
+use Source\Utils;
+use Source\cli\convertisseurs\JsonVersSql;
 
 class Migration
 {

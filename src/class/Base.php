@@ -1,4 +1,8 @@
 <?php
+namespace Source;
+
+use PDO;
+use Source\interfaces\BaseInterface;
 
 class Base implements BaseInterface
 {

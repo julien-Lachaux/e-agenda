@@ -1,10 +1,12 @@
 <?php
-require_once('ReponseInterface.php');
-require_once(__DIR__ . "/../../utils/class/Utils.php");
-require_once(__DIR__ . "/../../vendor/mustache.php-master/src/Mustache/Autoloader.php");
-Mustache_Autoloader::register();
+namespace Source;
 
-abstract class Controller implements ReponseInterface   {
+use Mustache_Engine;
+use Mustache_Loader_FilesystemLoader;
+use Source\interfaces\ReponseInterface;
+
+abstract class Controller implements ReponseInterface
+{
     
     public $module;
     
@@ -13,7 +15,7 @@ abstract class Controller implements ReponseInterface   {
         $m = new Mustache_Engine(array(
             'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . "/../modules/{$this->module}/views", array('extension' => '.html'))
         ));
-
+        
         return $m->render($cheminDeLaVue, array('data' => $data));
     }
     

@@ -1,5 +1,7 @@
 <?php
-require_once('src/class/Model.php');
+namespace Modules\contacts;
+
+use Source\Model;
 
 class Contact extends Model 
 {

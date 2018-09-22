@@ -1,5 +1,7 @@
 <?php
-require_once('Utils.php');
+namespace Source\cli\convertisseurs;
+
+use Source\Utils;
 
 class JsonVersSql {
 

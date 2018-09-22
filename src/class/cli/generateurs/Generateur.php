@@ -1,4 +1,5 @@
 <?php
+namespace Source\cli\generateurs;
 
 abstract class Generateur {
 

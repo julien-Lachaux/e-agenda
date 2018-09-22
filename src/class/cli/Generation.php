@@ -1,10 +1,12 @@
 <?php
-require_once('Utils.php');
-require_once('JsonVersSql.php');
-require_once('Generateur.php');
-require_once('GenerateurDepots.php');
-require_once('GenerateurModels.php');
-require_once('GenerateurControllers.php');
+namespace Source\cli;
+
+use Source\Utils;
+use Source\cli\generateurs\Generateur;
+use Source\cli\convertisseurs\JsonVersSql;
+use Source\cli\generateurs\GenerateurDepots;
+use Source\cli\generateurs\GenerateurModels;
+use Source\cli\generateurs\GenerateurControllers;
 
 class Generation extends Generateur
 {

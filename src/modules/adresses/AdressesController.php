@@ -1,5 +1,7 @@
 <?php
-require_once('src/class/Controller.php');
+namespace Modules\adresses;
+
+use Source\Controller;
 
 class AdressesController extends Controller 
 {

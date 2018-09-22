@@ -1,6 +1,8 @@
 <?php
+namespace Source;
 
-abstract class Depot {
+abstract class Depot
+{
 
     protected static $table; // la table dans la base
 

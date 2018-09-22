@@ -1,5 +1,6 @@
-
 <?php
+namespace Source;
+
 class Router
 {
 
@@ -9,9 +10,9 @@ class Router
     /**
      * constructeur
      *
-     * @param requeteInterface $requete
+     * @param requete $requete
      */
-    function __construct(requeteInterface $requete) {
+    function __construct(requete $requete) {
         $this->requete = $requete;
     }
 

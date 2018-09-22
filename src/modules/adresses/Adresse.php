@@ -1,5 +1,7 @@
 <?php
-require_once('src/class/Model.php');
+namespace Modules\adresses;
+
+use Source\Model;
 
 class Adresse extends Model 
 {

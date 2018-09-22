@@ -1,7 +1,9 @@
 <?php
-require_once(__DIR__ . "/../../class/Controller.php");
-require_once('User.php');
-require_once('Users.php');
+namespace Modules\users;
+
+use Source\Controller;
+use Modules\users\User;
+use Modules\users\Users;
 
 class UsersController extends Controller 
 {
@@ -23,15 +25,29 @@ class UsersController extends Controller
 
 	public function afficher($requete) {
 		$urlParams = $requete->getUrlParams();
-		$user_id = $urlParams[0];
-		$users = new Users();
-		$user_data = $users->findById($user_id);
-
-		if ($user_data === false) {
-			return $this->render("user", []);
+		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
+			$user_id = $urlParams[0];
+			$users = new Users();
+			$user_data = $users->findById($user_id);
+			if ($user_data !== false) {
+				return $this->render("user", [$user_data]); // le user existe
+			} else {
+				return $this->render("erreurs", array(
+					"erreur" => [
+						"code" => 404,
+						"message" => "Utilisateur {$user_id} n'existe pas"
+					]
+				)); // le user n'existe pas
+			}
 		} else {
-			return $this->render("user", $user_data);
+			return $this->render("erreur", [
+				"erreur" => [
+					"code" => 404,
+					"message" => "Utilisateur {$user_id} n'existe pas"
+				]
+			]); // il manque l'id du user à afficher
 		}
+
 	}
 
 	public function lister($requete) {

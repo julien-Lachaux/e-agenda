@@ -1,5 +1,7 @@
 <?php
-require_once('src/class/Depot.php');
+namespace Modules\contacts;
+
+use Source\Depot;
 
 class Contacts extends Depot 
 {

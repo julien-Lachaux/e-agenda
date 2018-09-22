@@ -1,5 +1,7 @@
 <?php
-require_once('src/class/Depot.php');
+namespace Modules\adresses;
+
+use Source\Depot;
 
 class Adresses extends Depot 
 {

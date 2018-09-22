@@ -1,5 +1,7 @@
 <?php
-require_once('Generateur.php');
+namespace Source\cli\generateurs;
+
+use Source\cli\generateurs\Generateur;
 
 class GenerateurControllers extends Generateur
 {

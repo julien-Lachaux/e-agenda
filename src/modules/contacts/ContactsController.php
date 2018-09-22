@@ -1,5 +1,7 @@
 <?php
-require_once('src/class/Controller.php');
+namespace Modules\contacts;
+
+use Source\Controller;
 
 class ContactsController extends Controller 
 {

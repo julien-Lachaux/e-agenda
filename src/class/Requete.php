@@ -1,5 +1,8 @@
 <?php
-include_once 'RequeteInterface.php';
+namespace Source;
+
+use Source\interfaces\requeteInterface;
+
 class Requete implements requeteInterface
 {
   function __construct()
