@@ -1,19 +1,15 @@
 <?php
 
 abstract class Model
-{
-
-    protected $_db; // la base de donnees
-    
+{   
     /**
      * Constructeurs
      *
-     * @param BaseInterface $db
      */
-    public function __construct(BaseInterface $db, $params) {
-        $this->_db = $db->getInstance();
+    public function __construct($params) {
         foreach ($params as $param => $valeur) {
-            $this->{$param} = $valeur;
+            $setter = 'set' . ucfirst($param);
+            $this->$setter($valeur);
         }
     }
     
@@ -23,16 +19,16 @@ abstract class Model
      * @param String|Int $valeur valeur
      * @param String|Int $condition SQL string : WHERE condition
      */
-    private function set($param, $valeur, $condition) {
+    private function update($param, $valeur, $condition) {
         // on ne peut pas modifier l'id
         if ($param == 'id') { return false; }
         
         if(is_string($valeur)) {
-            $this->_db->query("UPDATE {$this->_table} SET {$param}='{$valeur}' WHERE {$condition}");
+            base::getInstance()->query("UPDATE {$this->_table} SET {$param}='{$valeur}' WHERE {$condition}");
         } else if (is_int($valeur)) {
-            $this->_db->query("UPDATE {$this->_table} SET {$param}={$valeur} WHERE {$condition}");
+            base::getInstance()->query("UPDATE {$this->_table} SET {$param}={$valeur} WHERE {$condition}");
         } else {
-            $this->_db->query("UPDATE {$this->_table} SET {$param}=NULL WHERE {$condition}");
+            base::getInstance()->query("UPDATE {$this->_table} SET {$param}=NULL WHERE {$condition}");
         }
 
         return true;

@@ -2,7 +2,7 @@
 
 interface BaseInterface {
 
-    public function getInstance();
-    public function query($requete);
+    public static function getInstance();
+    public static function query($requete);
 
 }

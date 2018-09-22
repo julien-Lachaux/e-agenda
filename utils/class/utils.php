@@ -114,10 +114,8 @@ class Utils
         foreach ($envFileLine as $lineNbr => $line) {
             $envLine = explode("=", $line);
             if (substr($envLine[0], 0, 1) !== "#") {
-                $env[$envLine[0]] = $envLine[1];
+                define($envLine[0], $envLine[1]);
             }
         }
-
-        return $env;
     }
 }

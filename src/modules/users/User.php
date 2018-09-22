@@ -47,6 +47,7 @@ class User extends Model
 	 */
 	public function setLogin($valeur) {
 		$this->login = $valeur;
+		return "machin";
 	}
 
 	/**
