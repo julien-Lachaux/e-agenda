@@ -3,6 +3,7 @@ require_once('Generateur.php');
 
 class GenerateurModels extends Generateur
 {
+
     public function genererModels($config) {
 
         $models = [];
@@ -181,4 +182,5 @@ class GenerateurModels extends Generateur
 
         return $methodesRelations;
     }
+    
 }

@@ -5,14 +5,33 @@ class ContactsController extends Controller
 {
 	static public function creer($contactsData) {
 		if (Contact::valider($contactsData)) {
-			$contact = new Contact($contactsData);
-			if ($contact->creer()) {
-				echo "contact creer avec success";
+			$Contact = new Contact($contactsData);
+			$data = $Contact->creer();
+			if ($data) {
+				self::render("CHEMIN VUE SUCCESS CREATION", $data);
 			} else {
-				echo "contact existe deja";
+				self::render("CHEMIN VUE EXISTE DEJA CREATION", $data);
 			}
 		} else {
-			echo "data invalide pour creer contact}";
+			self::render("CHEMIN VUE ERREUR DONNEE CREATION", $data);
+		}
+	}
+
+	static public function afficher($contact_id) {
+		$contact_data = Contacts::findById($contact_id);
+		if ($contact_data === false) {
+			self::render("CHEMIN VUE EXISTE PAS AFFICHER", $contact_data);
+		} else {
+			self::render("CHEMIN VUE AFFICHER", $contact_data);
+		}
+	}
+
+	static public function lister() {
+		$contacts_data = Contacts::findAll();
+		if ($contacts_data === false) {
+			self::render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $contacts_data);
+		} else {
+			self::render("CHEMIN VUE LISTE", $contacts_data);
 		}
 	}
 

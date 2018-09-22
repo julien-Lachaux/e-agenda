@@ -13,18 +13,18 @@ class Generation extends Generateur
         // on recupere les configurations de la base et des tables
         $config = $this->recupererConfig();
 
-        
-        // on generes les class php
+        // on generes les class Depot
         $generateurDepots = new GenerateurDepots();
-        $generateurModels = new GenerateurModels();
-        $generateurControllers = new GenerateurControllers();
         $generateurDepots->genererDepots($config);
+
+        // on generes les class Model
+        $generateurModels = new GenerateurModels();
         $generateurModels->genererModels($config);
+
+        // on generes les class Controller
+        $generateurControllers = new GenerateurControllers();
         $generateurControllers->genererControllers($config);
-
     }
-
-    
 
     private function recupererConfig() {
          // on recupere la configuration de la base
