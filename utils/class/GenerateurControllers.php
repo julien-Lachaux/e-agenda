@@ -35,12 +35,12 @@ class GenerateurControllers extends Generateur
         $methodeCreer .= "\t\tif ({$nomModel}::valider(\${$nomTable}Data)) {\n";
         $methodeCreer .= "\t\t\t\${$nomVariable} = new {$nomModel}(\${$nomTable}Data);\n";
         $methodeCreer .= "\t\t\tif (\${$nomVariable}->creer()) {\n";
-        $methodeCreer .= "\t\t\t\techo \"{$nomVariable} creer avec success\";\n";
+        $methodeCreer .= "\t\t\t\self::render(\"{$nomVariable} creer avec success\";\n";
         $methodeCreer .= "\t\t\t} else {\n";
-        $methodeCreer .= "\t\t\t\techo \"{$nomVariable} existe deja\";\n";
+        $methodeCreer .= "\t\t\t\self::render(\"{$nomVariable} existe deja\";\n";
         $methodeCreer .= "\t\t\t}\n";
         $methodeCreer .= "\t\t} else {\n";
-        $methodeCreer .= "\t\t\techo \"data invalide pour creer $nomVariable}\";\n";
+        $methodeCreer .= "\t\t\self::render(\"data invalide pour creer $nomVariable}\";\n";
         $methodeCreer .= "\t\t}\n";
         $methodeCreer .= "\t}\n\n";
 
