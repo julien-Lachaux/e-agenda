@@ -30,7 +30,7 @@ class UsersController extends Controller
 			$users = new Users();
 			$user_data = $users->findById($user_id);
 			if ($user_data !== false) {
-				return $this->render("user", [$user_data]); // le user existe
+				return $this->render("user", [ "user" => $user_data ]); // le user existe
 			} else {
 				return $this->render("erreurs", array(
 					"erreur" => [
@@ -57,6 +57,16 @@ class UsersController extends Controller
 			return $this->render('usersList', $users_data);
 		} else {
 			return $this->render('usersList', $users_data);
+		}
+	}
+
+	public function connexionFormulaire($requete) {
+		$users = new Users();
+		$users_data = $users->findAll();
+		if ($users_data === false) {
+			return $this->render('connexion', $users_data);
+		} else {
+			return $this->render('connexion', $users_data);
 		}
 	}
 

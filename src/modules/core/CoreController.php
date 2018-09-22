@@ -10,14 +10,29 @@ class CoreController extends Controller
     public function accueil($requete) {
         return $this->render('templates/base', [
             "page" => [
-                "nom" => "accueil",
-                "titre" => "Accueil",
-                "scripts" => [
-                    "main.js"
-                ],
-                "style" => [
-                    "main.css"
-                ]
+                "nom"       => "accueil",
+                "titre"     => "Accueil",
+                "scripts"   => [ "pages/accueil" ],
+            ]
+        ]);
+    }
+
+    public function users($requete) {
+        return $this->render('templates/base', [
+            "page" => [
+                "nom"       => "users",
+                "titre"     => "Les utilisateurs",
+                "scripts"   => [ "pages/users/liste" ],
+            ]
+        ]);
+    }
+
+    public function connexion($requete) {
+        return $this->render('templates/base', [
+            "page" => [
+                "nom"       => "connexion",
+                "titre"     => "Connectez-vous",
+                "scripts"   => [ "pages/users/connexion" ],
             ]
         ]);
     }
@@ -25,11 +40,9 @@ class CoreController extends Controller
     public function erreur404($requete) {
         return $this->render('erreurs/404', [
             "page" => [
-                "nom" => "erreur404",
-                "titre" => "Page Introuvable",
-                "style" => [
-                    "erreur.css"
-                ]
+                "nom"       => "erreur404",
+                "titre"     => "Page Introuvable",
+                "style"     => [ "erreur" ]
             ]
         ]);
     }

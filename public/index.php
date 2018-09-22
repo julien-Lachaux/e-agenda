@@ -30,6 +30,16 @@ $router->get("/", [
     "methode"       => "accueil"
 ]);
 
+$router->get("/connexion", [
+    "controller"    => $Core,
+    "methode"       => "connexion"
+]);
+
+$router->get("/users", [
+    "controller"    => $Core,
+    "methode"       => "connexion"
+]);
+
 // routes modules
 // users
 $Users = new UsersController();
@@ -42,6 +52,11 @@ $router->get('/users/afficher', [
 $router->get('/users/lister', [
     "controller" => $Users,
     "methode"    => "lister"
+]);
+
+$router->get('/users/connexionFormulaire', [
+    "controller" => $Users,
+    "methode"    => "connexionFormulaire"
 ]);
 
 // routes erreurs
