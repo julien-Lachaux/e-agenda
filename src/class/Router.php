@@ -108,16 +108,18 @@ class Router
         $routesJson = json_decode(utf8_encode(Utils::recupererContenuFichier(__DIR__ . "/../modules/{$nomModule}/@routes.json")), false);
         $controlleurs = [];
         foreach ($routesJson->routes as $routeJson) {
-            if(!isset($controller[$routeJson->controller])) {
-                require_once(__DIR__ . "/../modules/$nomModule/$routeJson->controller.php");
-                $controllerTexte = "\\modules\\$nomModule\\$routeJson->controller";
-                $controller[$routeJson->controller] = new $controllerTexte;
+            if ($routeJson->active) {
+                if (!isset($controller[$routeJson->controller])) {
+                    require_once(__DIR__ . "/../modules/$nomModule/$routeJson->controller.php");
+                    $controllerTexte = "\\modules\\$nomModule\\$routeJson->controller";
+                    $controller[$routeJson->controller] = new $controllerTexte;
+                }
+    
+                $this->{$routeJson->methodeHTTP}($routeJson->route, [
+                    "controller"    => $controller[$routeJson->controller],
+                    "methode"       => $routeJson->methode
+                ]);
             }
-
-            $this->{$routeJson->methodeHTTP}($routeJson->route, [
-                "controller"    => $controller[$routeJson->controller],
-                "methode"       => $routeJson->methode
-            ]);
         }
     }
 }
