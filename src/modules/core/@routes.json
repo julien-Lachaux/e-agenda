@@ -1,0 +1,28 @@
+{
+    "routes": [
+        {
+            "methodeHTTP": "get",
+            "route": "/",
+            "controller": "CoreController",
+            "methode": "accueil",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/accueil",
+            "controller": "CoreController",
+            "methode": "accueil",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/connexion",
+            "controller": "CoreController",
+            "methode": "connexion",
+            "active": true,
+            "connexionRequise": false
+        }
+    ]    
+}

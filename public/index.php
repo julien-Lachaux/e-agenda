@@ -21,46 +21,7 @@ Utils::recupererEnvVar();
 // definitions des routes
 $requete = new Requete();
 $router = new Router($requete);
-
-// routes core
-$Core = new CoreController();
-
-$router->get("/", [
-    "controller"    => $Core,
-    "methode"       => "accueil"
-]);
-
-$router->get("/connexion", [
-    "controller"    => $Core,
-    "methode"       => "connexion"
-]);
-
-$router->get("/users", [
-    "controller"    => $Core,
-    "methode"       => "connexion"
-]);
-
-// routes modules
-// users
-$Users = new UsersController();
-
-$router->get('/users/afficher', [
-    "controller" => $Users,
-    "methode"    => "afficher"
-]);
-
-$router->get('/users/lister', [
-    "controller" => $Users,
-    "methode"    => "lister"
-]);
-
-$router->get('/users/connexionFormulaire', [
-    "controller" => $Users,
-    "methode"    => "connexionFormulaire"
-]);
-
-// routes erreurs
-$router->get("/erreur/404", [
-    "controller"    => $Core,
-    "methode"       => "erreur404"
-]);
+$router->recupererRoutesModule("core");
+$router->recupererRoutesModule("users");
+// $router->recupererRoutesModule("contacts");
+// $router->recupererRoutesModule("adresses");

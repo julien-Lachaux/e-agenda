@@ -1,0 +1,28 @@
+{
+    "routes": [
+        {
+            "methodeHTTP": "get",
+            "route": "/users/afficher",
+            "controller": "UsersController",
+            "methode": "afficher",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/users/lister",
+            "controller": "UsersController",
+            "methode": "lister",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/users/connexionFormulaire",
+            "controller": "UsersController",
+            "methode": "connexionFormulaire",
+            "active": true,
+            "connexionRequise": false
+        }
+    ]    
+}

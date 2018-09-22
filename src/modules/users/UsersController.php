@@ -40,7 +40,7 @@ class UsersController extends Controller
 				)); // le user n'existe pas
 			}
 		} else {
-			return $this->render("erreur", [
+			return $this->render("erreurs", [
 				"erreur" => [
 					"code" => 404,
 					"message" => "Utilisateur {$user_id} n'existe pas"
