@@ -1,10 +1,9 @@
-{{#data}}
 <article class="connexion">
-    {{#erreur}}
+    {{#data.erreur}}
     <div class="erreur">
         <p class="message">{{ message }}</p>
     </div>
-    {{/erreur}}
+    {{/data.erreur}}
     <form method="POST" action="/utilisateurs/connexion" class="connexionForm">
         <input type="email" name="connexion_email" id="connexion_email">
         <input type="password" name="connexion_password" id="connexion_password">
@@ -12,4 +11,3 @@
         <input type="submit" value="Se Connecter">
     </form>
 </article>
-{{/data}}

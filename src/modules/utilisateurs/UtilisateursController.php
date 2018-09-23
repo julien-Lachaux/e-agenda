@@ -85,14 +85,22 @@ class UtilisateursController extends Controller
 		$utilisateur = Utilisateurs::findOne("login='{$utilisateurInformation->connexion_email}'");
 		if ($utilisateur !== false) {
 			if ($utilisateur->password === $utilisateurInformation->connexion_password) {
-				session_start ();
 				$_SESSION["utilisateur"] = $utilisateur;
-				Utils::debugPre($_SESSION["utilisateur"], 1);
 				header("Location: /contacts");
 			}
 			return $this->render("connexion", array(
 				"erreur" => ["message" => "mauvais password !"]
 			));
+		}
+		return $this->render("connexion", array(
+			"erreur" => ["message" => "email inconnue !"]
+		));
+	}
+
+	public function deconnexion($requete) {
+		if (isset($_SESSION["utilisateur"])) {
+			session_destroy();
+			header("Location: /connexion");
 		}
 		return $this->render("connexion", array(
 			"erreur" => ["message" => "email inconnue !"]

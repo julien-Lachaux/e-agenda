@@ -66,11 +66,19 @@
         },
         {
             "methodeHTTP": "get",
+            "route": "/utilisateurs/deconnexion",
+            "controller": "UtilisateursController",
+            "methode": "deconnexion",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
             "route": "/utilisateur/contacts",
             "controller": "UtilisateursController",
             "methode": "utilisateurContacts",
             "active": true,
-            "connexionRequise": false
+            "connexionRequise": true
         }
     ]    
 }

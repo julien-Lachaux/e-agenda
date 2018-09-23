@@ -79,7 +79,6 @@ class Router
     function resoudre() {
         $methodDictionary = $this->{strtolower($this->requete->requestMethod)};
         $formatedRoute = $this->formatRoute($this->requete->requestUri);
-        
         if (!isset($methodDictionary[$formatedRoute])) {
             if(isset($this->get["/erreur/404"])) {
                 $instruction404 = $this->get["/erreur/404"];
@@ -90,6 +89,9 @@ class Router
             }
         } else {
             $instruction = $methodDictionary[$formatedRoute];
+            if ($instruction->redirection != NULL) {
+                header("Location: {$instruction->redirection}");
+            }
             $reponse = $instruction->controller->{$instruction->methode}($this->requete);
             echo $reponse;
         }
@@ -112,6 +114,9 @@ class Router
         foreach ($routesJson->routes as $routeJson) {
             if ($routeJson->active) {
                 if ($routeJson->connexionRequise === true && !isset($_SESSION["utilisateur"])) {
+                    $this->{$routeJson->methodeHTTP}($routeJson->route, [
+                        "redirection"    => "/connexion"
+                    ]);
                     continue;
                 }
                 if (!isset($controller[$routeJson->controller])) {
