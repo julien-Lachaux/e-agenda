@@ -26,6 +26,14 @@
         },
         {
             "methodeHTTP": "get",
+            "route": "/contacts",
+            "controller": "CoreController",
+            "methode": "utilisateurContacts",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
             "route": "/erreur/404",
             "controller": "CoreController",
             "methode": "erreur404",

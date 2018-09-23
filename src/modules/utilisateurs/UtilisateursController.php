@@ -74,4 +74,16 @@ class UtilisateursController extends Controller
 		));
 	}
 
+	public function connexionFormulaire($requete) {
+		return $this->render("connexion", []);
+	}
+
+	public function connexion($requete) {
+		header("Location: /contacts");
+	}
+
+	public function utilisateurContacts() {
+		return $this->render("utilisateurContacts", []);
+	}
+
 }

@@ -22,6 +22,6 @@ Utils::recupererEnvVar();
 $requete = new Requete();
 $router = new Router($requete);
 $router->recupererRoutesModule("core");
-$router->recupererRoutesModule("users");
+$router->recupererRoutesModule("utilisateurs");
 // $router->recupererRoutesModule("contacts");
 // $router->recupererRoutesModule("adresses");

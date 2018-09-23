@@ -55,6 +55,22 @@
             "methode": "connexionFormulaire",
             "active": true,
             "connexionRequise": false
+        },
+        {
+            "methodeHTTP": "post",
+            "route": "/utilisateurs/connexion",
+            "controller": "UtilisateursController",
+            "methode": "connexion",
+            "active": true,
+            "connexionRequise": false
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/utilisateur/contacts",
+            "controller": "UtilisateursController",
+            "methode": "utilisateurContacts",
+            "active": true,
+            "connexionRequise": false
         }
     ]    
 }

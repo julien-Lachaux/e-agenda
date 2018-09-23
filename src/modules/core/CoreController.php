@@ -17,12 +17,12 @@ class CoreController extends Controller
         ]);
     }
 
-    public function users($requete) {
+    public function utilisateurs($requete) {
         return $this->render('templates/base', [
             "page" => [
-                "nom"       => "users",
+                "nom"       => "utilisateurs",
                 "titre"     => "Les utilisateurs",
-                "scripts"   => [ "pages/users/liste" ],
+                "scripts"   => [ "pages/utilisateurs/liste" ],
             ]
         ]);
     }
@@ -32,7 +32,17 @@ class CoreController extends Controller
             "page" => [
                 "nom"       => "connexion",
                 "titre"     => "Connectez-vous",
-                "scripts"   => [ "pages/users/connexion" ],
+                "scripts"   => [ "pages/utilisateurs/connexion" ],
+            ]
+        ]);
+    }
+
+    public function utilisateurContacts($requete) {
+        return $this->render('templates/base', [
+            "page" => [
+                "nom"       => "contacts",
+                "titre"     => "Mes Contacts",
+                "scripts"   => [ "pages/contacts/liste" ],
             ]
         ]);
     }
