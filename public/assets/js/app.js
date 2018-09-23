@@ -61,5 +61,15 @@ const app = {
         var hash = CheminComplet.substring(CheminComplet.lastIndexOf( "/" ) + 1)
 
         return hash
+    },
+
+    ajaxForm() {
+        let event = window.event
+        let form = app.serializeForm(event.srcElement)
+        let url = event.srcElement.baseURI
+        app.post(url, form, (response) => {
+            $('.contenu').html(response)
+        })
+        event.preventDefault()
     }
 }

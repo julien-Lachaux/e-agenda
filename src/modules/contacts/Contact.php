@@ -2,7 +2,9 @@
 
 namespace Modules\contacts;
 
+use Source\Base;
 use Source\Model;
+use Source\Utils;
 
 class Contact extends Model 
 {
@@ -90,8 +92,8 @@ class Contact extends Model
 	 *
 	 * @return Void
 	 */
-	public function getUser_id($valeur) {
-		 return $this->user_id;
+	public function getUtilisateurs_id($valeur) {
+		 return $this->utilisateurs_id;
 	}
 
 	/**
@@ -100,8 +102,8 @@ class Contact extends Model
 	 * @param Void $user_id
 	 * @return Void
 	 */
-	public function setUser_id($valeur) {
-		$this->user_id = $valeur;
+	public function setUtilisateurs_id($valeur) {
+		$this->utilisateurs_id = $valeur;
 	}
 
 	/**
@@ -134,17 +136,15 @@ class Contact extends Model
 
 		foreach ($colonnes as $colonne => $valeur) {
 			$colonnesString .= "{$colonne}, ";
-			$valeursString .= "{$valeur}, ";
+			$valeursString .= "'{$valeur}', ";
 		}
 
 		$colonnesString = substr($colonnesString, 0, -2);
 		$valeursString = substr($valeursString , 0, -2);
 
 		$creation = Base::getInstance()->query("INSERT INTO contacts ({$colonnesString}) VALUES({$valeursString})");
-
-		if ($creation === false) { return false; }
-
-		return true;
+	
+		return $creation ;
 	}
 
 	/**

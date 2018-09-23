@@ -18,18 +18,20 @@ class ContactsController extends Controller
 	 * @return String
 	 */
 	public function creer($requete) {
-		$contactsData = $requete->getBody();
+		$contactData = $requete->getBody();
 		if (Contact::valider($requete->getBody())) {
-			$Contact = new Contact($contactsData);
+			$contactData["utilisateurs_id"] = $_SESSION["utilisateur"]->id;
+			$Contact = new Contact($contactData);
 			$data = $Contact->creer();
 			if ($data !== false) {
-				return $this->render("creation", array("nouveaucontacts" => $data));
+				return $this->render("formulaire", array("creationReussi" => true)
+				);
 			}
-			return $this->render("creation", array(
+			return $this->render("formulaire", array(
 				"erreur" => ["message" => "contacts inconnue"]
 			));
 		}
-		return $this->render("creation", array(
+		return $this->render("formulaire", array(
 			"erreur" => ["message" => "id manquant"]
 		));
 	}
@@ -76,7 +78,7 @@ class ContactsController extends Controller
 	}
 
 	/**
-	 * Afficher la liste des users
+	 * Afficher la liste des contacts
 	 *
 	 * @param Object $requete
 	 * @return String
@@ -84,28 +86,42 @@ class ContactsController extends Controller
 	public function editer($requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
-			$user_id = $urlParams[0];
-			$Users = new Users();
-			$data = $Users->findById($user_id);
+			$id = $urlParams[0];
+			$Contacts = new Contacts();
+			$data = $Contacts->findById($id);
 
 			if ($data !== false) {
 				$formulaire = $requete->getBody();
-				$test = User::valider($formulaire);
+				$test = Contact::valider($formulaire);
 				if ($test !== false) {
 					$colonneEditer = [];
 					foreach($formulaire as $colonne => $valeur) {
 						if ($data->{$colonne} !== $valeur) {
 							$colonneEditer[] = array("nom" => "$colonne");
-							$test = User::update($colonne, $valeur, "id={$user_id}");
+							$test = Contact::update($colonne, $valeur, "id={$id}");
 						}
 					}
-					return $this->render("editionReussi", array("colonneEditer" => $colonneEditer)); // user editer avec succes
+					$contactMisAJour = $Contacts->findById($id);
+					return $this->render("formulaire", array(
+						"colonneEditer" => $colonneEditer,
+						"contact"		=> $contactMisAJour
+					)); // contact editer avec succes
 				}
-				return $this->render("usersList", $data); // formulaire invalide
+				return $this->render("formulaire", array(
+					"contact" => $formulaire,
+					"erreur" => [
+						"message" => "formulaire invalide"
+					])); // formulaire invalide
 			}
-			return $this->render("usersList", $data); // le user n'existe pas
+			return $this->render("formulaire", array(
+				"erreur" => [
+					"message" => "le contact n'existe pas"
+				])); // le contact n'existe pas
 		}
-		return $this->render("usersList", $data); // il manque l'id
+		return $this->render("formulaire", array(
+			"erreur" => [
+				"message" => "requete invalide"
+			])); // il manque l'id
 	}
 
 	/**
@@ -117,11 +133,11 @@ class ContactsController extends Controller
 	public function supprimer($requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
-			$user_id = $urlParams[0];
-			if(User::supprimer($user_id) !== false) {
+			$id = $urlParams[0];
+			if(Contact::supprimer($id) !== false) {
 				return $this->render("supprimer", array( // suppresion reussi
 					"reussite" => [
-						"id" => $user_id
+						"id" => $id
 					]
 				));
 			}

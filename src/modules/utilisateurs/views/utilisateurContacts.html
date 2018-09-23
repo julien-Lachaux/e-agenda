@@ -24,11 +24,12 @@
                     <td>{{ prenom }}</td>
                     <td>{{ email }}</td>
                     <td class="text-right">
-                        <a href="/contacts/editer/{{ id }}">Éditer</a>
-                        <a href="/contacts/supprimer/{{ id }}">Supprimer</a>
+                        <a class="btn btn-primary" href="/contacts/editer/{{ id }}">Éditer</a>
+                        <a class="btn btn-danger" href="/contacts/supprimer/{{ id }}">Supprimer</a>
                     </td>
                 </tr>
             {{/contacts}}
         </tbody>
     </table>
+    <a class="btn btn-primary" href="/contacts/creer">+</a>
 {{/data}}

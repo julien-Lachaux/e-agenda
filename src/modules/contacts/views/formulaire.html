@@ -1,17 +1,32 @@
-<form action="/contacts/editer" method="post">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="contactNom">Nom</label>
-            <input type="text" class="form-control" id="contactNom" placeholder="Nom" {{#data.contact}}value="{{nom}}"{{/data.contact}}>
+{{#data.colonneEditer}}
+    <div class="alert alert-success" role="alert">champ {{ nom }} modifié avec succes</div>
+{{/data.colonneEditer}}
+{{#data.erreur}}
+    <div class="alert alert-danger" role="alert">Erreur: {{ message }}</div>
+{{/data.erreur}}
+{{#data.creationReussi}}
+    <div class="alert alert-success" role="alert">Contact ajouter avec succes</div>
+    <a href="/contacts" class="btn btn-success" role="button">Retour au contacts</a>
+{{/data.creationReussi}}
+
+{{^data.creationReussi}}
+    <form action="/contacts/{{#data.contact}}editer{{/data.contact}}{{^data.contact}}creer{{/data.contact}}" method="post" onsubmit="app.ajaxForm();">
+        <div class="form-row">
+            {{#data.contact}}<input type="text" class="form-control" name="id" hidden value="{{ id }}">{{/data.contact}}
+            <div class="form-group col-md-6">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" name="nom" placeholder="Nom" {{#data.contact}}value="{{nom}}"{{/data.contact}}>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="prenom">Prenom</label>
+                <input type="text" class="form-control" name="prenom" placeholder="Prenom" {{#data.contact}}value="{{prenom}}"{{/data.contact}}>
+            </div>
         </div>
-        <div class="form-group col-md-6">
-            <label for="contactPrenom">Prenom</label>
-            <input type="text" class="form-control" id="contactPrenom" placeholder="Prenom" {{#data.contact}}value="{{prenom}}"{{/data.contact}}>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" name="email" placeholder="Email" {{#data.contact}}value="{{email}}"{{/data.contact}}>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="contactEmail">Email</label>
-        <input type="email" class="form-control" id="contactEmail" placeholder="Email" {{#data.contact}}value="{{email}}"{{/data.contact}}>
-    </div>
-    <button type="submit" class="btn btn-primary">Valider</button>
-</form>
+        <a href="/contacts" class="btn btn-danger" role="button">Annuler</a>
+        <button type="submit" class="btn btn-primary">Valider</button>
+    </form>
+{{/data.creationReussi}}

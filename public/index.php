@@ -8,8 +8,6 @@ use Source\Router;
 use Source\Requete;
 use Source\Autoloader;
 use Modules\AutoloaderModules;
-use Modules\core\CoreController;
-use Modules\users\UsersController;
 
 // configuration de l'application
 Autoloader::register();

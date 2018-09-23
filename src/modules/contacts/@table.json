@@ -30,7 +30,7 @@
             },
             {
                 "type": "relationnel",
-                "tableCible": "users",
+                "tableCible": "utilisateurs",
                 "colonneCible": "id",
                 "typeRelation": "ManyToOne"
             }
