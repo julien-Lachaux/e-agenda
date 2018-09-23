@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\contacts;
 
 use Source\Model;
@@ -6,11 +7,7 @@ use Source\Model;
 class Contact extends Model 
 {
 
-	private $id;
-	private $email;
-	private $nom;
-	private $prenom;
-	private $user_id;
+	protected static $table = 'contacts';
 
 	/**
 	 * Retourne la valeur de id
@@ -113,7 +110,7 @@ class Contact extends Model
 	 * @param Object $ContactData
 	 * @return Boolean
 	 */
-	public function valider($ContactData) {
+	public static function valider($ContactData) {
 		foreach ($ContactData as $data) {
 			if (gettype($data) !== 'string'
 			 && gettype($data) !== 'integer'
@@ -149,10 +146,22 @@ class Contact extends Model
 
 		return true;
 	}
+
+	/**
+	 * Retourne la liste des Adresses du contact
+	 *
+	 * @return Array
+	 */
 	public function getAdresses() {
-		return Base::getInstance()->query("SELECT * FROM contacts INNER JOIN Adresse ON contact.id=Adresse.contacts_id WHERE Adresse.contacts_id=''")->fetchObject();
+		return Base::getInstance()->query("SELECT * FROM contacts INNER JOIN Adresses ON contact.id=Adresses.contacts_id WHERE Adresses.contacts_id=''")->fetchObject();
 	}
 
+
+	/**
+	 * Retourne le User du contact
+	 *
+	 * @return Object
+	 */
 	public function getUser() {
 		return Users::findById($this->id);
 	}

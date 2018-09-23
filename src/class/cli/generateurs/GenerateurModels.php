@@ -1,6 +1,7 @@
 <?php
 namespace Source\cli\generateurs;
 
+use Source\Utils;
 use Source\cli\generateurs\Generateur;
 
 class GenerateurModels extends Generateur
@@ -62,10 +63,10 @@ class GenerateurModels extends Generateur
         foreach ($models as $model) {
             $fichierModel = fopen($this->cheminDossierModule . "/{$model->module}/{$model->nom}.php", "w+");
             
-            $nouveauModel = $this->genererClassHeader($model->nom, "Model");
+            $nouveauModel = $this->genererClassHeader($model->nom, $model->module, "Model");
             
             // on genere les attributs, les getters et les setters
-            $nouveauModel .= $this->genererAttribut($model->colonnes);
+            $nouveauModel .= $this->genererAttribut($model);
 
             foreach ($model->colonnes as $colonne) {
                 $nouveauModel .= $this->genererGetter($colonne);
@@ -81,12 +82,14 @@ class GenerateurModels extends Generateur
             
             fwrite($fichierModel, $nouveauModel);
             fclose($fichierModel);
+            Utils::consoleLog("Model generer avec succes: {$model->nom}");
         }
     }
 
-    private function genererAttribut($colonnes) {
+    private function genererAttribut($model) {
         $attribut = "\n";
-        foreach ($colonnes as $colonne) {
+        $attribut .= "\tprotected static \$table = '{$model->module}';\n";
+        foreach ($model->$colonnes as $colonne) {
             $attribut .= "\tprivate $" . $colonne->nom . ";\n";
         }
         return $attribut;
@@ -130,7 +133,7 @@ class GenerateurModels extends Generateur
             "type" => "Object",
             "nom" => $nomModel . "Data"
         ]], "Boolean");
-        $methodeValider .= "\tpublic function valider(\${$nomModel}Data) {\n";
+        $methodeValider .= "\tpublic static function valider(\${$nomModel}Data) {\n";
         $methodeValider .= "\t\tforeach (\${$nomModel}Data as \$data) {\n";
         $methodeValider .= "\t\t\tif (gettype(\$data) !== 'string'\n";
         $methodeValider .= "\t\t\t && gettype(\$data) !== 'integer'\n";
@@ -169,14 +172,18 @@ class GenerateurModels extends Generateur
             $table = strtolower($model);
             switch ($relation["type"]) {
                 case 'getOne':
+                    $methodesRelations .= "\n";
+                    $methodesRelations .= $this->genererCommentaireMethode("Retourne le {$relation['cible']} du {$table}", [], "Object");
                     $methodesRelations .= "\tpublic function {$relation['fonction']}() {\n";
                     $methodesRelations .= "\t\treturn {$relation['cible']}s::findById(\$this->id);\n";
                     $methodesRelations .= "\t}\n\n";
                     break;
 
                 case 'getMany':
+                    $methodesRelations .= "\n";
+                    $methodesRelations .= $this->genererCommentaireMethode("Retourne la liste des {$relation['cible']}s du {$table}", [], "Array");
                     $methodesRelations .= "\tpublic function {$relation['fonction']}() {\n";
-                    $methodesRelations .= "\t\treturn Base::getInstance()->query(\"SELECT * FROM {$table}s INNER JOIN {$relation['cible']} ON {$table}.id={$relation['cible']}.{$table}s_id WHERE {$relation['cible']}.{$table}s_id='{$this->id}'\")->fetchObject();\n";
+                    $methodesRelations .= "\t\treturn Base::getInstance()->query(\"SELECT * FROM {$table}s INNER JOIN {$relation['cible']}s ON {$table}.id={$relation['cible']}s.{$table}s_id WHERE {$relation['cible']}s.{$table}s_id='{$this->id}'\")->fetchObject();\n";
                     $methodesRelations .= "\t}\n\n";
                     break;
             }

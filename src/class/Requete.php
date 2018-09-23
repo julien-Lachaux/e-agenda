@@ -1,6 +1,7 @@
 <?php
 namespace Source;
 
+use Source\Utils;
 use Source\interfaces\requeteInterface;
 
 class Requete implements requeteInterface
@@ -30,11 +31,11 @@ class Requete implements requeteInterface
   }
   public function getBody()
   {
-    if($this->requeteMethod === "GET")
+    if($this->requestMethod === "GET")
     {
       return null;
     }
-    if ($this->requeteMethod == "POST")
+    if ($this->requestMethod == "POST")
     {
       $result = array();
       foreach($_POST as $key => $value)

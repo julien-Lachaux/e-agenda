@@ -1,6 +1,8 @@
 <?php
 namespace Source\cli\generateurs;
 
+use Source\Utils;
+
 abstract class Generateur {
 
     protected $cheminDossierConfig;
@@ -12,34 +14,45 @@ abstract class Generateur {
      * Constructeur
      */
     public function __construct() {
-        $this->cheminDossierConfig = __DIR__ . "/../../config/orm";
-        $this->cheminDossierModule = __DIR__ . "/../../src/modules";
+        $this->cheminDossierConfig = __DIR__ . "/../../../../config/orm";
+        $this->cheminDossierModule = __DIR__ . "/../../../modules";
     }
     
-    protected function genererClassHeader($nomClass, $abstract = false, $interface = false) {
-        $classHeader  = "<?php\n";
-        if($abstract !== false) { $classHeader .= "require_once('src/class/{$abstract}.php');\n"; }
-        $classHeader .= "\n";
-        $classHeader .= "class {$nomClass} ";
-
-        if($abstract !== false) { $classHeader .= "extends {$abstract} "; }
-        if($interface !== false) { $classHeader .= "implements {$interface} "; }
-
-        $classHeader .= "\n";
-        $classHeader .= "{\n";
+    protected function genererClassHeader($nomClass, $nomModule, $abstract = false, $interface = false, $dependances = false) {
+        $classHeader  = $this->ajouterLignePhp("<?php", 0, 2);
+        $classHeader .= $this->ajouterLignePhp("namespace Modules\\{$nomModule};", 0, 2);
+        if ($abstract !== false) { 
+            $classHeader .= $this->ajouterLignePhp("use Source\\{$abstract};");
+        }
+        if ($dependances !== false) {
+            foreach($dependances as $dependance) {
+                $classHeader .= $this->ajouterLignePhp("use {$dependance->source}\\{$dependance->nom};");
+            }
+        }
+        $classHeader .= $this->ajouterLignePhp("");
+        
+        $classHeaderDefinition = "class {$nomClass} ";
+        if ($abstract !== false) { $classHeaderDefinition .= "extends {$abstract} "; }
+        if ($interface !== false) { $classHeaderDefinition .= "implements {$interface} "; }
+        
+        $classHeader .= $this->ajouterLignePhp($classHeaderDefinition);
+        $classHeader .= $this->ajouterLignePhp("{");
 
         return $classHeader;
     }
 
     protected function genererCommentaireMethode($description, $params = [], $retour = NULL) {
-        $commentaire  = "\t/**\n";
-        $commentaire .= "\t * {$description}\n";
-        $commentaire .= "\t *\n";
+        $commentaire  = $this->ajouterLignePhp("/**", 1);
+        $commentaire .= $this->ajouterLignePhp(" * {$description}", 1);
+        $commentaire .= $this->ajouterLignePhp(" *", 1);
+
         foreach ($params as $param) {
-            $commentaire .= "\t * @param {$param->type} \${$param->nom}\n";
+            $commentaire .= $this->ajouterLignePhp(" * @param {$param->type} \${$param->nom}", 1);
         }
-        if ($retour !== NULL) { $commentaire .= "\t * @return {$retour}\n"; }
-        $commentaire .= "\t */\n";
+
+        if ($retour !== NULL) { $commentaire .= $this->ajouterLignePhp(" * @return {$retour}", 1); }
+
+        $commentaire .= $this->ajouterLignePhp(" */", 1);
 
         return $commentaire;
     }
@@ -66,5 +79,18 @@ abstract class Generateur {
         }
 
         return $phpType;
+    }
+
+    protected function ajouterLignePhp($ligne, $indentation = 0, $sautDeLigne = 1) {
+        $indentationTexte = "";
+        for ($i=0; $i < $indentation; $i++) { 
+            $indentationTexte .= "\t";
+        }
+        $sautDeLigneTexte = "";
+        for ($i=0; $i < $sautDeLigne; $i++) { 
+            $sautDeLigneTexte .= "\n";
+        }
+        $lignePhp = $indentationTexte . $ligne . $sautDeLigneTexte;
+        return $lignePhp;
     }
 }

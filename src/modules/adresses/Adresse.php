@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\adresses;
 
 use Source\Model;
@@ -6,13 +7,7 @@ use Source\Model;
 class Adresse extends Model 
 {
 
-	private $id;
-	private $pays;
-	private $ville;
-	private $codePostal;
-	private $adresse;
-	private $complementAdresse;
-	private $contact_id;
+	protected static $table = 'adresses';
 
 	/**
 	 * Retourne la valeur de id
@@ -153,7 +148,7 @@ class Adresse extends Model
 	 * @param Object $AdresseData
 	 * @return Boolean
 	 */
-	public function valider($AdresseData) {
+	public static function valider($AdresseData) {
 		foreach ($AdresseData as $data) {
 			if (gettype($data) !== 'string'
 			 && gettype($data) !== 'integer'
@@ -189,6 +184,12 @@ class Adresse extends Model
 
 		return true;
 	}
+
+	/**
+	 * Retourne le Contact du adresse
+	 *
+	 * @return Object
+	 */
 	public function getContact() {
 		return Contacts::findById($this->id);
 	}
