@@ -1,6 +1,6 @@
 {
     "table": {
-        "nom": "users",
+        "nom": "utilisateurs",
         "engine": "InnoDB",
         "charset": "utf8",
         "ifNotExist": true,
@@ -23,11 +23,6 @@
                 "nom": "password",
                 "type": "varchar",
                 "length": 256
-            },
-            {
-                "nom": "email",
-                "type": "varchar",
-                "length": 89
             },
             {
                 "nom": "nom",

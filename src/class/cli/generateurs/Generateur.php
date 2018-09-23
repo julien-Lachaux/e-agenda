@@ -18,17 +18,22 @@ abstract class Generateur {
         $this->cheminDossierModule = __DIR__ . "/../../../modules";
     }
     
-    protected function genererClassHeader($nomClass, $nomModule, $abstract = false, $interface = false) {
+    protected function genererClassHeader($nomClass, $nomModule, $abstract = false, $interface = false, $dependances = false) {
         $classHeader  = $this->ajouterLignePhp("<?php", 0, 2);
         $classHeader .= $this->ajouterLignePhp("namespace Modules\\{$nomModule};", 0, 2);
-        if($abstract !== false) { 
+        if ($abstract !== false) { 
             $classHeader .= $this->ajouterLignePhp("use Source\\{$abstract};");
+        }
+        if ($dependances !== false) {
+            foreach($dependances as $dependance) {
+                $classHeader .= $this->ajouterLignePhp("use {$dependance->source}\\{$dependance->nom};");
+            }
         }
         $classHeader .= $this->ajouterLignePhp("");
         
         $classHeaderDefinition = "class {$nomClass} ";
-        if($abstract !== false) { $classHeaderDefinition .= "extends {$abstract} "; }
-        if($interface !== false) { $classHeaderDefinition .= "implements {$interface} "; }
+        if ($abstract !== false) { $classHeaderDefinition .= "extends {$abstract} "; }
+        if ($interface !== false) { $classHeaderDefinition .= "implements {$interface} "; }
         
         $classHeader .= $this->ajouterLignePhp($classHeaderDefinition);
         $classHeader .= $this->ajouterLignePhp("{");

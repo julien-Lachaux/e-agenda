@@ -2,7 +2,6 @@
 namespace Source;
 
 use Source\Base;
-use Source\Utils;
 
 abstract class Model
 {   
@@ -30,15 +29,24 @@ abstract class Model
         // on ne peut pas modifier l'id
         if ($param == 'id') { return false; }
         $table = static::$table;
-        if(is_string($valeur)) {
+        if (is_string($valeur)) {
             Base::getInstance()->query("UPDATE {$table} SET {$param}='{$valeur}' WHERE {$condition}");
         } else if (is_int($valeur)) {
             Base::getInstance()->query("UPDATE {$table} SET {$param}={$valeur} WHERE {$condition}");
         } else {
             Base::getInstance()->query("UPDATE {$table} SET {$param}=NULL WHERE {$condition}");
         }
-
         return true;
+    }
+
+    public static function supprimer($id) {
+        $table = static::$table;
+        $test = Base::getInstance()->query("SELECT * FROM {$table} WHERE id={$id}");;
+        if ($test !== false) {
+            Base::getInstance()->query("DELETE FROM {$table} WHERE id={$id}");
+            return true;
+        }
+        return false;
     }
     
 }

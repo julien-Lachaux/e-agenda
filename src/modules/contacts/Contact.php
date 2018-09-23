@@ -7,11 +7,7 @@ use Source\Model;
 class Contact extends Model 
 {
 
-	private $id;
-	private $email;
-	private $nom;
-	private $prenom;
-	private $user_id;
+	protected static $table = 'contacts';
 
 	/**
 	 * Retourne la valeur de id
@@ -114,7 +110,7 @@ class Contact extends Model
 	 * @param Object $ContactData
 	 * @return Boolean
 	 */
-	public function valider($ContactData) {
+	public static function valider($ContactData) {
 		foreach ($ContactData as $data) {
 			if (gettype($data) !== 'string'
 			 && gettype($data) !== 'integer'

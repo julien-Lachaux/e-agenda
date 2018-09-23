@@ -7,13 +7,7 @@ use Source\Model;
 class Adresse extends Model 
 {
 
-	private $id;
-	private $pays;
-	private $ville;
-	private $codePostal;
-	private $adresse;
-	private $complementAdresse;
-	private $contact_id;
+	protected static $table = 'adresses';
 
 	/**
 	 * Retourne la valeur de id
@@ -154,7 +148,7 @@ class Adresse extends Model
 	 * @param Object $AdresseData
 	 * @return Boolean
 	 */
-	public function valider($AdresseData) {
+	public static function valider($AdresseData) {
 		foreach ($AdresseData as $data) {
 			if (gettype($data) !== 'string'
 			 && gettype($data) !== 'integer'

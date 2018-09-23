@@ -1,19 +1,13 @@
 <?php
 
-namespace Modules\users;
+namespace Modules\utilisateurs;
 
 use Source\Model;
 
-class User extends Model 
+class Utilisateur extends Model 
 {
 
-	protected static $table = 'users';
-	private $id;
-	private $login;
-	private $password;
-	private $email;
-	private $nom;
-	private $prenom;
+	protected static $table = 'utilisateurs';
 
 	/**
 	 * Retourne la valeur de id
@@ -73,25 +67,6 @@ class User extends Model
 	}
 
 	/**
-	 * Retourne la valeur de email
-	 *
-	 * @return String
-	 */
-	public function getEmail($valeur) {
-		 return $this->email;
-	}
-
-	/**
-	 * Affecte la valeur $valeur à email
-	 *
-	 * @param String $email
-	 * @return String
-	 */
-	public function setEmail($valeur) {
-		$this->email = $valeur;
-	}
-
-	/**
 	 * Retourne la valeur de nom
 	 *
 	 * @return String
@@ -130,13 +105,13 @@ class User extends Model
 	}
 
 	/**
-	 * Valide les données de User
+	 * Valide les données de Utilisateur
 	 *
-	 * @param Object $UserData
+	 * @param Object $UtilisateurData
 	 * @return Boolean
 	 */
-	public static function valider($UserData) {
-		foreach ($UserData as $data) {
+	public static function valider($UtilisateurData) {
+		foreach ($UtilisateurData as $data) {
 			if (gettype($data) !== 'string'
 			 && gettype($data) !== 'integer'
 			 && gettype($data) !== 'boolean'
@@ -148,7 +123,7 @@ class User extends Model
 	}
 
 	/**
-	 * Retourne la valeur de User
+	 * Retourne la valeur de Utilisateur
 	 *
 	 * @return Boolean
 	 */
@@ -165,20 +140,10 @@ class User extends Model
 		$colonnesString = substr($colonnesString, 0, -2);
 		$valeursString = substr($valeursString , 0, -2);
 
-		$creation = Base::getInstance()->query("INSERT INTO users ({$colonnesString}) VALUES({$valeursString})");
+		$creation = Base::getInstance()->query("INSERT INTO utilisateurs ({$colonnesString}) VALUES({$valeursString})");
 
 		if ($creation === false) { return false; }
 
 		return true;
 	}
-
-	/**
-	 * Retourne la liste des Contacts du user
-	 *
-	 * @return Array
-	 */
-	public function getContacts() {
-		return Base::getInstance()->query("SELECT * FROM users INNER JOIN Contacts ON user.id=Contacts.users_id WHERE Contacts.users_id=''")->fetchObject();
-	}
-
 }

@@ -3,6 +3,8 @@
 namespace Modules\contacts;
 
 use Source\Controller;
+use Modules\contacts\Contact;
+use Modules\contacts\Contacts;
 
 class ContactsController extends Controller 
 {
@@ -19,14 +21,16 @@ class ContactsController extends Controller
 		if (Contact::valider($requete->getBody())) {
 			$Contact = new Contact($contactsData);
 			$data = $Contact->creer();
-			if ($data) {
-				return $this->render("CHEMIN VUE SUCCESS CREATION", $data);
-			} else {
-				return $this->render("CHEMIN VUE EXISTE DEJA CREATION", $data);
+			if ($data !== false) {
+				return $this->render("creation", array("nouveaucontacts" => $data));
 			}
-		} else {
-			return $this->render("CHEMIN VUE ERREUR DONNEE CREATION", $data);
+			return $this->render("creation", array(
+				"erreur" => ["message" => "contacts inconnue"]
+			));
 		}
+		return $this->render("creation", array(
+			"erreur" => ["message" => "id manquant"]
+		));
 	}
 
 	/**
@@ -42,13 +46,15 @@ class ContactsController extends Controller
 			$Contacts = new Contacts();
 			$data = $Contacts->findById($contact_id);
 			if ($data !== false) {
-				return $this->render("CHEMIN VUE AFFICHER", $data);
-			} else {
-				return $this->render("CHEMIN VUE EXISTE PAS AFFICHER", $data);
+				return $this->render("affichage", array("contact" => $data));
 			}
-		} else {
-			return $this->render("CHEMIN VUE EXISTE PAS AFFICHER", $data);
+			return $this->render("affichage", array(
+				"erreur" => ["message" => "contact inconnue"]
+			));
 		}
+		return $this->render("affichage", array(
+			"erreur" => ["message" => "id manquant"]
+		));
 	}
 
 	/**
@@ -61,10 +67,11 @@ class ContactsController extends Controller
 		$Contacts = new Contacts();
 		$data = $Contacts->findAll();
 		if ($data !== false) {
-			return $this->render("CHEMIN VUE LISTE", $data);
-		} else {
-			return $this->render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $data);
+			return $this->render("lister", array("contacts" => $data));
 		}
+		return $this->render("lister", array(
+			"erreur" => ["message" => "aucun contacts"]
+		));
 	}
 
 }

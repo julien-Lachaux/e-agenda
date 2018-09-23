@@ -3,6 +3,7 @@
 namespace Modules\adresses;
 
 use Source\Controller;
+use Modules\adresses\Adresses;
 
 class AdressesController extends Controller 
 {
@@ -19,14 +20,16 @@ class AdressesController extends Controller
 		if (Adresse::valider($requete->getBody())) {
 			$Adresse = new Adresse($adressesData);
 			$data = $Adresse->creer();
-			if ($data) {
-				return $this->render("CHEMIN VUE SUCCESS CREATION", $data);
-			} else {
-				return $this->render("CHEMIN VUE EXISTE DEJA CREATION", $data);
+			if ($data !== false) {
+				return $this->render("creation", array("nouveauadresses" => $data));
 			}
-		} else {
-			return $this->render("CHEMIN VUE ERREUR DONNEE CREATION", $data);
+			return $this->render("creation", array(
+				"erreur" => ["message" => "adresses inconnue"]
+			));
 		}
+		return $this->render("creation", array(
+			"erreur" => ["message" => "id manquant"]
+		));
 	}
 
 	/**
@@ -42,13 +45,15 @@ class AdressesController extends Controller
 			$Adresses = new Adresses();
 			$data = $Adresses->findById($adresse_id);
 			if ($data !== false) {
-				return $this->render("CHEMIN VUE AFFICHER", $data);
-			} else {
-				return $this->render("CHEMIN VUE EXISTE PAS AFFICHER", $data);
+				return $this->render("affichage", array("adresse" => $data));
 			}
-		} else {
-			return $this->render("CHEMIN VUE EXISTE PAS AFFICHER", $data);
+			return $this->render("affichage", array(
+				"erreur" => ["message" => "adresse inconnue"]
+			));
 		}
+		return $this->render("affichage", array(
+			"erreur" => ["message" => "id manquant"]
+		));
 	}
 
 	/**
@@ -61,10 +66,11 @@ class AdressesController extends Controller
 		$Adresses = new Adresses();
 		$data = $Adresses->findAll();
 		if ($data !== false) {
-			return $this->render("CHEMIN VUE LISTE", $data);
-		} else {
-			return $this->render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $data);
+			return $this->render("lister", array("adresses" => $data));
 		}
+		return $this->render("lister", array(
+			"erreur" => ["message" => "aucun adresses"]
+		));
 	}
 
 }

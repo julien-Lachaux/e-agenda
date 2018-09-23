@@ -9,12 +9,23 @@ class GenerateurControllers extends Generateur
     public function genererControllers($config) {
         foreach ($config["tables"] as $i => $table) {
             // on recupère le nom du depots à partir du nom de la table
-            $nomController = ucfirst($table->nom) . "Controller";
+            $nomController  = ucfirst($table->nom) . "Controller";
+            $nomModel       = substr(ucfirst($table->nom), 0, -1);
+            $nomDepot       = ucfirst($table->nom);
 
             // on genere les models
             $fichierDepot = fopen($this->cheminDossierModule . "/{$table->nom}/{$nomController}.php", "w+");
 
-            $nouveauDepot = $this->genererClassHeader($nomController, $table->nom, "Controller");
+            $nouveauDepot = $this->genererClassHeader($nomController, $table->nom, "Controller", false, [
+                (object) [
+                    "source" => "Modules",
+                    "nom"    => "{$table->nom}\\{$nomModel}"
+                ],
+                (object) [
+                    "source" => "Modules",
+                    "nom"    => "{$table->nom}\\{$nomDepot}"
+                ]
+            ]);
 
             $nouveauDepot .= $this->ajouterLignePhp("public \$module = '{$table->nom}';", 1, 2);
 
@@ -37,9 +48,7 @@ class GenerateurControllers extends Generateur
         $nomTable               = $config->nom;
         $nomModel               = substr(ucfirst($nomTable), 0, -1);
         $nomController          = substr($nomTable, 0, -1);
-        $cheminVue              = "CHEMIN VUE SUCCESS CREATION";
-        $cheminVueErreurDonnee  = "CHEMIN VUE ERREUR DONNEE CREATION";
-        $cheminVueExisteDeja    = "CHEMIN VUE EXISTE DEJA CREATION";
+        $cheminVue              = "creation";
 
         // on genere le commentaire
         $this->ajouterLignePhp("", 1);
@@ -54,14 +63,16 @@ class GenerateurControllers extends Generateur
         $methodeCreer .= $this->ajouterLignePhp("if ({$nomModel}::valider(\$requete->getBody())) {", 2);
         $methodeCreer .= $this->ajouterLignePhp("\${$nomModel} = new {$nomModel}(\${$nomTable}Data);", 3);
         $methodeCreer .= $this->ajouterLignePhp("\$data = \${$nomModel}->creer();", 3);
-        $methodeCreer .= $this->ajouterLignePhp("if (\$data) {", 3);
-        $methodeCreer .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", \$data);", 4);
-        $methodeCreer .= $this->ajouterLignePhp("} else {", 3);
-        $methodeCreer .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVueExisteDeja}\", \$data);", 4);
+        $methodeCreer .= $this->ajouterLignePhp("if (\$data !== false) {", 3);
+        $methodeCreer .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", array(\"nouveau{$nomTable}\" => \$data));", 4);
         $methodeCreer .= $this->ajouterLignePhp("}", 3);
-        $methodeCreer .= $this->ajouterLignePhp("} else {", 2);
-        $methodeCreer .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVueErreurDonnee}\", \$data);", 3);
+        $methodeCreer .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", array(", 3);
+        $methodeCreer .= $this->ajouterLignePhp("\"erreur\" => [\"message\" => \"{$nomTable} inconnue\"]", 4);
+        $methodeCreer .= $this->ajouterLignePhp("));", 3);
         $methodeCreer .= $this->ajouterLignePhp("}", 2);
+        $methodeCreer .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", array(", 2);
+        $methodeCreer .= $this->ajouterLignePhp("\"erreur\" => [\"message\" => \"id manquant\"]", 3);
+        $methodeCreer .= $this->ajouterLignePhp("));", 2);
         $methodeCreer .= $this->ajouterLignePhp("}", 1, 2);
 
         return $methodeCreer;
@@ -74,8 +85,7 @@ class GenerateurControllers extends Generateur
         $nomDepot               = ucfirst($nomTable);
         $nomParametre           = substr($nomTable, 0, -1) . "_id";
         $nomVariable            = substr($nomTable, 0, -1) . "_data";
-        $cheminVue              = "CHEMIN VUE AFFICHER";
-        $cheminVueExistePas     = "CHEMIN VUE EXISTE PAS AFFICHER";
+        $cheminVue              = "affichage";
 
         // on genere le commentaire
         $methodeAfficher = $this->genererCommentaireMethode("Afficher les informations d'un {$nomTableSinguler}", [(object)[
@@ -91,13 +101,15 @@ class GenerateurControllers extends Generateur
         $methodeAfficher .= $this->ajouterLignePhp("\${$nomDepot} = new {$nomDepot}();", 3);
         $methodeAfficher .= $this->ajouterLignePhp("\$data = \${$nomDepot}->findById(\${$nomParametre});", 3);
         $methodeAfficher .= $this->ajouterLignePhp("if (\$data !== false) {", 3);
-        $methodeAfficher .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", \$data);", 4);
-        $methodeAfficher .= $this->ajouterLignePhp("} else {", 3);
-        $methodeAfficher .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVueExistePas}\", \$data);", 4);
+        $methodeAfficher .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", array(\"{$nomTableSinguler}\" => \$data));", 4);
         $methodeAfficher .= $this->ajouterLignePhp("}", 3);
-        $methodeAfficher .= $this->ajouterLignePhp("} else {", 2);
-        $methodeAfficher .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVueExistePas}\", \$data);", 3);
+        $methodeAfficher .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", array(", 3);
+        $methodeAfficher .= $this->ajouterLignePhp("\"erreur\" => [\"message\" => \"{$nomTableSinguler} inconnue\"]", 4);
+        $methodeAfficher .= $this->ajouterLignePhp("));", 3);
         $methodeAfficher .= $this->ajouterLignePhp("}", 2);
+        $methodeAfficher .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", array(", 2);
+        $methodeAfficher .= $this->ajouterLignePhp("\"erreur\" => [\"message\" => \"id manquant\"]", 3);
+        $methodeAfficher .= $this->ajouterLignePhp("));", 2);
         $methodeAfficher .= $this->ajouterLignePhp("}", 1, 2);
 
         return $methodeAfficher;
@@ -107,8 +119,7 @@ class GenerateurControllers extends Generateur
         // on formatte nos informations
         $nomTable               = $config->nom;
         $nomDepot               = ucfirst($nomTable);
-        $cheminVue              = "CHEMIN VUE LISTE";
-        $cheminVueTableVide     = "CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST";
+        $cheminVue              = "lister";
 
         // on genere le commentaire
         $methodeLister = $this->genererCommentaireMethode("Afficher la liste des {$nomTable}", [(object)[
@@ -121,10 +132,11 @@ class GenerateurControllers extends Generateur
         $methodeLister .= $this->ajouterLignePhp("\${$nomDepot} = new {$nomDepot}();", 2);
         $methodeLister .= $this->ajouterLignePhp("\$data = \${$nomDepot}->findAll();", 2);
         $methodeLister .= $this->ajouterLignePhp("if (\$data !== false) {", 2);
-        $methodeLister .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", \$data);", 3);
-        $methodeLister .= $this->ajouterLignePhp("} else {", 2);
-        $methodeLister .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVueTableVide}\", \$data);", 3);
+        $methodeLister .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", array(\"{$nomTable}\" => \$data));", 3);
         $methodeLister .= $this->ajouterLignePhp("}", 2);
+        $methodeLister .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", array(", 2);
+        $methodeLister .= $this->ajouterLignePhp("\"erreur\" => [\"message\" => \"aucun {$nomTable}\"]", 3);
+        $methodeLister .= $this->ajouterLignePhp("));", 2);
         $methodeLister .= $this->ajouterLignePhp("}", 1, 2);
         
         
@@ -133,26 +145,10 @@ class GenerateurControllers extends Generateur
     }
 
     private function genererMethodeEditer($config) {
-        // on formatte nos informations
-        $nomTable               = $config->nom;
-        $nomDepot               = ucfirst($nomTable);
-        $nomVariable            = $nomTable . "_data";
-        $cheminVue              = "CHEMIN VUE SUCCESS EDITER";
-        $cheminVueTErreurDonnee = "CHEMIN VUE ERREUR DONNEE EDITER";
-        $cheminVueErreurEdition = "CHEMIN VUE ERREUR EDITER";
-
-        // on genere la methode lister
-        $methodeEditer  = "\tstatic public function editer(\$newData) {\n";
-        $methodeEditer .= "\t\t\${$nomVariable} = {$nomDepot}::findAll();\n";
-        $methodeEditer .= "\t\tif (\${$nomVariable} === false) {\n";
-        $methodeEditer .= "\t\t\tself::render(\"{$cheminVueErreurEdition}\", \${$nomVariable});\n";
-        $methodeEditer .= "\t\t} else {\n";
-        $methodeEditer .= "\t\t\tself::render(\"{$cheminVue}\", \${$nomVariable});\n";
-        $methodeEditer .= "\t\t}\n";
-        $methodeEditer .= "\t}\n\n";
-
-        return $methodeEditer;
+        // TO DO
     }
 
-    private function genererMethodeSupprimer($config) {}
+    private function genererMethodeSupprimer($config) {
+        // TO DO
+    }
 }

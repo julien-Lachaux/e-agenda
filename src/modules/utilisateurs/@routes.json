@@ -26,6 +26,14 @@
         },
         {
             "methodeHTTP": "get",
+            "route": "/users/supprimer",
+            "controller": "UsersController",
+            "methode": "supprimer",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
             "route": "/users/connexionFormulaire",
             "controller": "UsersController",
             "methode": "connexionFormulaire",

@@ -66,7 +66,7 @@ class GenerateurModels extends Generateur
             $nouveauModel = $this->genererClassHeader($model->nom, $model->module, "Model");
             
             // on genere les attributs, les getters et les setters
-            $nouveauModel .= $this->genererAttribut($model->colonnes);
+            $nouveauModel .= $this->genererAttribut($model);
 
             foreach ($model->colonnes as $colonne) {
                 $nouveauModel .= $this->genererGetter($colonne);
@@ -86,9 +86,10 @@ class GenerateurModels extends Generateur
         }
     }
 
-    private function genererAttribut($colonnes) {
+    private function genererAttribut($model) {
         $attribut = "\n";
-        foreach ($colonnes as $colonne) {
+        $attribut .= "\tprotected static \$table = '{$model->module}';\n";
+        foreach ($model->$colonnes as $colonne) {
             $attribut .= "\tprivate $" . $colonne->nom . ";\n";
         }
         return $attribut;
