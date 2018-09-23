@@ -2,57 +2,49 @@
     "routes": [
         {
             "methodeHTTP": "get",
-            "route": "/utilisateurs/profile",
-            "controller": "UtilisateursController",
+            "route": "/Adresses/detail",
+            "controller": "AdressesController",
             "methode": "afficher",
             "active": true,
             "connexionRequise": true
         },
         {
             "methodeHTTP": "get",
-            "route": "/utilisateurs/liste",
-            "controller": "UtilisateursController",
+            "route": "/Adresses/liste",
+            "controller": "AdressesController",
             "methode": "lister",
             "active": true,
             "connexionRequise": true
         },
         {
             "methodeHTTP": "post",
-            "route": "/utilisateurs/editer",
-            "controller": "UtilisateursController",
+            "route": "/Adresses/editer",
+            "controller": "AdressesController",
             "methode": "editer",
             "active": true,
             "connexionRequise": true
         },
         {
             "methodeHTTP": "post",
-            "route": "/utilisateurs/creer",
-            "controller": "UtilisateursController",
+            "route": "/Adresses/creer",
+            "controller": "AdressesController",
             "methode": "creer",
             "active": true,
             "connexionRequise": true
         },
         {
             "methodeHTTP": "get",
-            "route": "/utilisateurs/supprimer",
-            "controller": "UtilisateursController",
+            "route": "/Adresses/supprimer",
+            "controller": "AdressesController",
             "methode": "supprimer",
             "active": true,
             "connexionRequise": true
         },
         {
             "methodeHTTP": "get",
-            "route": "/utilisateurs/formulaire",
-            "controller": "UtilisateursController",
+            "route": "/Adresses/formulaire",
+            "controller": "AdressesController",
             "methode": "formulaire",
-            "active": true,
-            "connexionRequise": false
-        },
-        {
-            "methodeHTTP": "get",
-            "route": "/utilisateurs/connexionFormulaire",
-            "controller": "UtilisateursController",
-            "methode": "connexionFormulaire",
             "active": true,
             "connexionRequise": false
         }
