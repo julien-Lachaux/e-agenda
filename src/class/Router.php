@@ -3,6 +3,8 @@ namespace Source;
 
 use Source\Utils;
 
+session_start();
+
 class Router
 {
 
@@ -109,6 +111,9 @@ class Router
         $controlleurs = [];
         foreach ($routesJson->routes as $routeJson) {
             if ($routeJson->active) {
+                if ($routeJson->connexionRequise === true && !isset($_SESSION["utilisateur"])) {
+                    continue;
+                }
                 if (!isset($controller[$routeJson->controller])) {
                     require_once(__DIR__ . "/../modules/$nomModule/$routeJson->controller.php");
                     $controllerTexte = "\\modules\\$nomModule\\$routeJson->controller";

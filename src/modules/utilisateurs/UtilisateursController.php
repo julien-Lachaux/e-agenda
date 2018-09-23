@@ -2,6 +2,7 @@
 
 namespace Modules\utilisateurs;
 
+use Source\Utils;
 use Source\Controller;
 use Modules\utilisateurs\Utilisateur;
 use Modules\utilisateurs\Utilisateurs;
@@ -79,7 +80,23 @@ class UtilisateursController extends Controller
 	}
 
 	public function connexion($requete) {
-		header("Location: /contacts");
+		$utilisateurInformation = (object) $requete->getBody();
+		
+		$utilisateur = Utilisateurs::findOne("login='{$utilisateurInformation->connexion_email}'");
+		if ($utilisateur !== false) {
+			if ($utilisateur->password === $utilisateurInformation->connexion_password) {
+				session_start ();
+				$_SESSION["utilisateur"] = $utilisateur;
+				Utils::debugPre($_SESSION["utilisateur"], 1);
+				header("Location: /contacts");
+			}
+			return $this->render("connexion", array(
+				"erreur" => ["message" => "mauvais password !"]
+			));
+		}
+		return $this->render("connexion", array(
+			"erreur" => ["message" => "email inconnue !"]
+		));
 	}
 
 	public function utilisateurContacts() {
