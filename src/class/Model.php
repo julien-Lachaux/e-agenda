@@ -1,8 +1,14 @@
 <?php
 namespace Source;
 
+use Source\Base;
+use Source\Utils;
+
 abstract class Model
 {   
+
+    protected static $table;
+
     /**
      * Constructeurs
      *
@@ -20,16 +26,16 @@ abstract class Model
      * @param String|Int $valeur valeur
      * @param String|Int $condition SQL string : WHERE condition
      */
-    private function update($param, $valeur, $condition) {
+    public static function update($param, $valeur, $condition) {
         // on ne peut pas modifier l'id
         if ($param == 'id') { return false; }
-        
+        $table = static::$table;
         if(is_string($valeur)) {
-            Base::getInstance()->query("UPDATE {$this->_table} SET {$param}='{$valeur}' WHERE {$condition}");
+            Base::getInstance()->query("UPDATE {$table} SET {$param}='{$valeur}' WHERE {$condition}");
         } else if (is_int($valeur)) {
-            Base::getInstance()->query("UPDATE {$this->_table} SET {$param}={$valeur} WHERE {$condition}");
+            Base::getInstance()->query("UPDATE {$table} SET {$param}={$valeur} WHERE {$condition}");
         } else {
-            Base::getInstance()->query("UPDATE {$this->_table} SET {$param}=NULL WHERE {$condition}");
+            Base::getInstance()->query("UPDATE {$table} SET {$param}=NULL WHERE {$condition}");
         }
 
         return true;

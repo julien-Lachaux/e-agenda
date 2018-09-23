@@ -1,11 +1,13 @@
 <?php
 
-namespace modules\contacts;
+namespace Modules\contacts;
 
 use Source\Controller;
 
 class ContactsController extends Controller 
 {
+	public $module = 'contacts';
+
 	/**
 	 * Creer un nouveau: contact
 	 *
@@ -58,10 +60,10 @@ class ContactsController extends Controller
 	public function lister($requete) {
 		$Contacts = new Contacts();
 		$data = $Contacts->findAll();
-		if ($data === false) {
-			return $this->render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $data);
-		} else {
+		if ($data !== false) {
 			return $this->render("CHEMIN VUE LISTE", $data);
+		} else {
+			return $this->render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $data);
 		}
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\adresses;
+namespace Modules\adresses;
 
 use Source\Model;
 

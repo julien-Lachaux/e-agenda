@@ -12,10 +12,11 @@ class GenerateurDepots extends Generateur
             $nomDepot = ucfirst($table->nom);
             
             // on genere les models
-            $fichierDepot = fopen($this->cheminDossierModule . "/{$table->nom}/{$nomDepot}.php", "w+");
-            
-            $nouveauDepot = $this->genererClassHeader($nomDepot, $table->nom, "Depot");
-            $nouveauDepot .= "}\n";
+            $fichierDepot   = fopen($this->cheminDossierModule . "/{$table->nom}/{$nomDepot}.php", "w+");
+            $nouveauDepot  = $this->genererClassHeader($nomDepot, $table->nom, "Depot");
+            $nouveauDepot .= $this->ajouterLignePhp("");
+            $nouveauDepot .= $this->ajouterLignePhp("protected static \$table = '{$table->nom}';", 1, 2);
+            $nouveauDepot .= $this->ajouterLignePhp("}");
             
             fwrite($fichierDepot, $nouveauDepot);
             fclose($fichierDepot);

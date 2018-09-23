@@ -1,12 +1,13 @@
 <?php
 
-namespace modules\users;
+namespace Modules\users;
 
 use Source\Model;
 
 class User extends Model 
 {
 
+	protected static $table = 'users';
 	private $id;
 	private $login;
 	private $password;
@@ -134,7 +135,7 @@ class User extends Model
 	 * @param Object $UserData
 	 * @return Boolean
 	 */
-	public function valider($UserData) {
+	public static function valider($UserData) {
 		foreach ($UserData as $data) {
 			if (gettype($data) !== 'string'
 			 && gettype($data) !== 'integer'

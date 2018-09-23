@@ -20,7 +20,7 @@ abstract class Generateur {
     
     protected function genererClassHeader($nomClass, $nomModule, $abstract = false, $interface = false) {
         $classHeader  = $this->ajouterLignePhp("<?php", 0, 2);
-        $classHeader .= $this->ajouterLignePhp("namespace modules\\{$nomModule};", 0, 2);
+        $classHeader .= $this->ajouterLignePhp("namespace Modules\\{$nomModule};", 0, 2);
         if($abstract !== false) { 
             $classHeader .= $this->ajouterLignePhp("use Source\\{$abstract};");
         }

@@ -17,6 +17,14 @@
             "connexionRequise": true
         },
         {
+            "methodeHTTP": "post",
+            "route": "/users/editer",
+            "controller": "UsersController",
+            "methode": "editer",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
             "methodeHTTP": "get",
             "route": "/users/connexionFormulaire",
             "controller": "UsersController",

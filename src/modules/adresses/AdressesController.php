@@ -1,11 +1,13 @@
 <?php
 
-namespace modules\adresses;
+namespace Modules\adresses;
 
 use Source\Controller;
 
 class AdressesController extends Controller 
 {
+	public $module = 'adresses';
+
 	/**
 	 * Creer un nouveau: adresse
 	 *
@@ -58,10 +60,10 @@ class AdressesController extends Controller
 	public function lister($requete) {
 		$Adresses = new Adresses();
 		$data = $Adresses->findAll();
-		if ($data === false) {
-			return $this->render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $data);
-		} else {
+		if ($data !== false) {
 			return $this->render("CHEMIN VUE LISTE", $data);
+		} else {
+			return $this->render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $data);
 		}
 	}
 

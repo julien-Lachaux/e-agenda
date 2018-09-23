@@ -132,7 +132,7 @@ class GenerateurModels extends Generateur
             "type" => "Object",
             "nom" => $nomModel . "Data"
         ]], "Boolean");
-        $methodeValider .= "\tpublic function valider(\${$nomModel}Data) {\n";
+        $methodeValider .= "\tpublic static function valider(\${$nomModel}Data) {\n";
         $methodeValider .= "\t\tforeach (\${$nomModel}Data as \$data) {\n";
         $methodeValider .= "\t\t\tif (gettype(\$data) !== 'string'\n";
         $methodeValider .= "\t\t\t && gettype(\$data) !== 'integer'\n";

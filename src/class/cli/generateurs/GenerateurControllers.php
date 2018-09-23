@@ -16,6 +16,8 @@ class GenerateurControllers extends Generateur
 
             $nouveauDepot = $this->genererClassHeader($nomController, $table->nom, "Controller");
 
+            $nouveauDepot .= $this->ajouterLignePhp("public \$module = '{$table->nom}';", 1, 2);
+
             $nouveauDepot .= $this->genererMethodeCreer($table);
             $nouveauDepot .= $this->genererMethodeAfficher($table);
             $nouveauDepot .= $this->genererMethodeLister($table);
@@ -118,10 +120,10 @@ class GenerateurControllers extends Generateur
         $methodeLister .= $this->ajouterLignePhp("public function lister(\$requete) {", 1);
         $methodeLister .= $this->ajouterLignePhp("\${$nomDepot} = new {$nomDepot}();", 2);
         $methodeLister .= $this->ajouterLignePhp("\$data = \${$nomDepot}->findAll();", 2);
-        $methodeLister .= $this->ajouterLignePhp("if (\$data === false) {", 2);
-        $methodeLister .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVueTableVide}\", \$data);", 3);
-        $methodeLister .= $this->ajouterLignePhp("} else {", 2);
+        $methodeLister .= $this->ajouterLignePhp("if (\$data !== false) {", 2);
         $methodeLister .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVue}\", \$data);", 3);
+        $methodeLister .= $this->ajouterLignePhp("} else {", 2);
+        $methodeLister .= $this->ajouterLignePhp("return \$this->render(\"{$cheminVueTableVide}\", \$data);", 3);
         $methodeLister .= $this->ajouterLignePhp("}", 2);
         $methodeLister .= $this->ajouterLignePhp("}", 1, 2);
         
