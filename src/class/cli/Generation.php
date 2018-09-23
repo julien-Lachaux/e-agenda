@@ -2,8 +2,8 @@
 namespace Source\cli;
 
 use Source\Utils;
-use Source\cli\generateurs\Generateur;
 use Source\cli\convertisseurs\JsonVersSql;
+use Source\cli\generateurs\Generateur;
 use Source\cli\generateurs\GenerateurDepots;
 use Source\cli\generateurs\GenerateurModels;
 use Source\cli\generateurs\GenerateurControllers;

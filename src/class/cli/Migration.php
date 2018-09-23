@@ -16,9 +16,9 @@ class Migration
      * Constructeur
      */
     public function __construct() {
-        $this->cheminDossierConfig = __DIR__ . "/../../config/orm";
-        $this->cheminDossierMigration = __DIR__ . "/../../migrations";
-        $this->cheminDossierModule = __DIR__ . "/../../src/modules";
+        $this->cheminDossierConfig = __DIR__ . "/../../../config/orm";
+        $this->cheminDossierMigration = __DIR__ . "/../../../migrations";
+        $this->cheminDossierModule = __DIR__ . "/../../../src/modules";
         $this->requetesModules = [
             "tables"        =>   [],
             "relationnels"  =>   []
@@ -51,7 +51,7 @@ class Migration
             Utils::consoleLog("PREPARATION DES MODULES POUR LA MIGRATION", "title");
 
             while(false !== ($sousDossierModule = readdir($dossierSrc))) {
-                if ($sousDossierModule !== '.' && $sousDossierModule !== '..' && $sousDossierModule !== '.DS_Store') {
+                if ($sousDossierModule !== '.' && $sousDossierModule !== '..' && $sousDossierModule !== '.DS_Store' && $sousDossierModule !== "core") {
                     $cheminTableJson = $this->cheminDossierModule . "/{$sousDossierModule}/@table.json";
                     $tableJson = Utils::recupererContenuFichier($cheminTableJson);
 

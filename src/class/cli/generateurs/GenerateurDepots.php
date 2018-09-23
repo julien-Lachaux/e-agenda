@@ -13,7 +13,7 @@ class GenerateurDepots extends Generateur
             // on genere les models
             $fichierDepot = fopen($this->cheminDossierModule . "/{$table->nom}/{$nomDepot}.php", "w+");
 
-            $nouveauDepot = $this->genererClassHeader($nomDepot, "Depot");
+            $nouveauDepot = $this->genererClassHeader($nomDepot, $table->nom, "Depot");
             $nouveauDepot .= "}\n";
             
             fwrite($fichierDepot, $nouveauDepot);

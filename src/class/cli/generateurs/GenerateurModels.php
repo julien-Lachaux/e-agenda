@@ -62,7 +62,7 @@ class GenerateurModels extends Generateur
         foreach ($models as $model) {
             $fichierModel = fopen($this->cheminDossierModule . "/{$model->module}/{$model->nom}.php", "w+");
             
-            $nouveauModel = $this->genererClassHeader($model->nom, "Model");
+            $nouveauModel = $this->genererClassHeader($model->nom, $model->module, "Model");
             
             // on genere les attributs, les getters et les setters
             $nouveauModel .= $this->genererAttribut($model->colonnes);
