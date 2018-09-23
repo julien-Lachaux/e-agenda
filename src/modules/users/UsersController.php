@@ -1,72 +1,67 @@
 <?php
-namespace Modules\users;
+
+namespace modules\users;
 
 use Source\Controller;
-use Modules\users\User;
-use Modules\users\Users;
 
 class UsersController extends Controller 
 {
-	public $module = 'users';
-
+	/**
+	 * Creer un nouveau: user
+	 *
+	 * @param Object $requete
+	 * @return String
+	 */
 	public function creer($requete) {
-		if (User::valider($usersData)) {
+		$usersData = $requete->getBody();
+		if (User::valider($requete->getBody())) {
 			$User = new User($usersData);
 			$data = $User->creer();
 			if ($data) {
-				return $this->render("test", $data);
+				return $this->render("CHEMIN VUE SUCCESS CREATION", $data);
 			} else {
-				return $this->render("test", $data);
+				return $this->render("CHEMIN VUE EXISTE DEJA CREATION", $data);
 			}
 		} else {
-			return $this->render("test", $data);
+			return $this->render("CHEMIN VUE ERREUR DONNEE CREATION", $data);
 		}
 	}
 
+	/**
+	 * Afficher les informations d'un user
+	 *
+	 * @param Object $requete
+	 * @return String
+	 */
 	public function afficher($requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$user_id = $urlParams[0];
-			$users = new Users();
-			$user_data = $users->findById($user_id);
-			if ($user_data !== false) {
-				return $this->render("user", [ "user" => $user_data ]); // le user existe
+			$Users = new Users();
+			$data = $Users->findById($user_id);
+			if ($data !== false) {
+				return $this->render("CHEMIN VUE AFFICHER", $data);
 			} else {
-				return $this->render("erreurs", array(
-					"erreur" => [
-						"code" => 404,
-						"message" => "Utilisateur {$user_id} n'existe pas"
-					]
-				)); // le user n'existe pas
+				return $this->render("CHEMIN VUE EXISTE PAS AFFICHER", $data);
 			}
 		} else {
-			return $this->render("erreurs", [
-				"erreur" => [
-					"code" => 404,
-					"message" => "Utilisateur {$user_id} n'existe pas"
-				]
-			]); // il manque l'id du user à afficher
+			return $this->render("CHEMIN VUE EXISTE PAS AFFICHER", $data);
 		}
-
 	}
 
+	/**
+	 * Afficher la liste des users
+	 *
+	 * @param Object $requete
+	 * @return String
+	 */
 	public function lister($requete) {
-		$users = new Users();
-		$users_data = $users->findAll();
-		if ($users_data === false) {
-			return $this->render('usersList', $users_data);
+		$Users = new Users();
+		$data = $Users->findAll();
+		if ($data === false) {
+			return $this->render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $data);
 		} else {
-			return $this->render('usersList', $users_data);
-		}
-	}
-
-	public function connexionFormulaire($requete) {
-		$users = new Users();
-		$users_data = $users->findAll();
-		if ($users_data === false) {
-			return $this->render('connexion', $users_data);
-		} else {
-			return $this->render('connexion', $users_data);
+			return $this->render("CHEMIN VUE LISTE", $data);
 		}
 	}
 

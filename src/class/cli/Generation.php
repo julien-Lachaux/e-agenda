@@ -12,55 +12,68 @@ class Generation extends Generateur
 {
 
     public function generer() {
+        Utils::consoleLog("DEBUT DE LA GENERATIONS DES CLASSES", "title");
+        
         // on recupere les configurations de la base et des tables
+        Utils::consoleLog("récuperation de la configuration...");
         $config = $this->recupererConfig();
-
+        
         // on generes les class Depot
+        Utils::consoleLog("GENERATION DES CLASSES DEPOTS", "title");
         $generateurDepots = new GenerateurDepots();
         $generateurDepots->genererDepots($config);
-
+        
         // on generes les class Model
+        Utils::consoleLog("GENERATION DES CLASSES MODELS", "title");
         $generateurModels = new GenerateurModels();
         $generateurModels->genererModels($config);
-
+        
         // on generes les class Controller
+        Utils::consoleLog("GENERATION DES CLASSES CONTROLLERS", "title");
         $generateurControllers = new GenerateurControllers();
         $generateurControllers->genererControllers($config);
+
+        Utils::consoleLog("FIN DE LA GENERATION", "title");
     }
 
     private function recupererConfig() {
-         // on recupere la configuration de la base
-         $baseJson = Utils::recupererContenuFichier($this->cheminDossierConfig . "/@base.json");
-         if ($baseJson !== false) {
-             $base = json_decode(utf8_encode($baseJson), false)->base;
-         } else {
-             Utils::consoleLog("ERREUR: fichier de configuration introuvable");
-         }
+        // on recupere la configuration de la base
+        $baseJson = Utils::recupererContenuFichier($this->cheminDossierConfig . "/@base.json");
+        if ($baseJson !== false) {
+            $base = json_decode(utf8_encode($baseJson), false)->base;
+        } else {
+            Utils::consoleLog("ERREUR: fichier de configuration introuvable");
+        }
  
-         $tables = [];
-         // on recupere les configurations des tables
-         if ($dossierSrc = opendir($this->cheminDossierModule)) {
-             while(false !== ($sousDossierModule = readdir($dossierSrc))) {
-                 if ($sousDossierModule !== '.' && $sousDossierModule !== '..' && $sousDossierModule !== '.DS_Store') {
-                     $cheminTableJson = $this->cheminDossierModule . "/{$sousDossierModule}/@table.json";
-                     $tableJson = Utils::recupererContenuFichier($cheminTableJson);
- 
-                     if ($tableJson !== false) {
-                         $table = json_decode(utf8_encode($tableJson), false)->table;
-                         $tables[$table->nom] = $table;
-                     } else {
-                         Utils::consoleLog("ERRUR : module " . $sousDossierModule . " -- json introuvable");
-                     }
-                 }
-             }
-             closedir($dossierSrc);
-         }
-         $config = [
-             "base"      => $base,
-             "tables"    => $tables
-         ];
+        // on recupere les configurations des tables
+        $tables = [];
+        if ($dossierSrc = opendir($this->cheminDossierModule)) {
+            while(false !== ($sousDossierModule = readdir($dossierSrc))) {
+                if ($sousDossierModule      !== '.'
+                    && $sousDossierModule   !== '..'
+                    && $sousDossierModule   !== '.DS_Store'
+                    && $sousDossierModule   !== 'core'
+                    && $sousDossierModule   !== 'AutoloaderModules.php') {
+                    $cheminTableJson = $this->cheminDossierModule . "/{$sousDossierModule}/@table.json";
+                    $tableJson = Utils::recupererContenuFichier($cheminTableJson);
 
-         return $config;
+                    if ($tableJson !== false) {
+                        $table = json_decode(utf8_encode($tableJson), false)->table;
+                        Utils::consoleLog("table OK: {$table->nom}");
+                        $tables[$table->nom] = $table;
+                    } else {
+                        Utils::consoleLog("ERREUR : module " . $sousDossierModule . " -- json introuvable");
+                    }
+                }
+            }
+            closedir($dossierSrc);
+        }
+        $config = [
+            "base"      => $base,
+            "tables"    => $tables
+        ];
+        Utils::consoleLog("configuration: charger !");
+        return $config;
     }
     
 }

@@ -1,5 +1,6 @@
 <?php
-namespace Modules\adresses;
+
+namespace modules\adresses;
 
 use Source\Model;
 
@@ -189,6 +190,12 @@ class Adresse extends Model
 
 		return true;
 	}
+
+	/**
+	 * Retourne le Contact du adresse
+	 *
+	 * @return Object
+	 */
 	public function getContact() {
 		return Contacts::findById($this->id);
 	}

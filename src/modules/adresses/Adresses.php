@@ -1,5 +1,6 @@
 <?php
-namespace Modules\adresses;
+
+namespace modules\adresses;
 
 use Source\Depot;
 

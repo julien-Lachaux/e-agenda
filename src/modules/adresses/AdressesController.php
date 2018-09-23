@@ -1,39 +1,67 @@
 <?php
-namespace Modules\adresses;
+
+namespace modules\adresses;
 
 use Source\Controller;
 
 class AdressesController extends Controller 
 {
-	static public function creer($adressesData) {
-		if (Adresse::valider($adressesData)) {
+	/**
+	 * Creer un nouveau: adresse
+	 *
+	 * @param Object $requete
+	 * @return String
+	 */
+	public function creer($requete) {
+		$adressesData = $requete->getBody();
+		if (Adresse::valider($requete->getBody())) {
 			$Adresse = new Adresse($adressesData);
 			$data = $Adresse->creer();
 			if ($data) {
-				self::render("CHEMIN VUE SUCCESS CREATION", $data);
+				return $this->render("CHEMIN VUE SUCCESS CREATION", $data);
 			} else {
-				self::render("CHEMIN VUE EXISTE DEJA CREATION", $data);
+				return $this->render("CHEMIN VUE EXISTE DEJA CREATION", $data);
 			}
 		} else {
-			self::render("CHEMIN VUE ERREUR DONNEE CREATION", $data);
+			return $this->render("CHEMIN VUE ERREUR DONNEE CREATION", $data);
 		}
 	}
 
-	static public function afficher($adresse_id) {
-		$adresse_data = Adresses::findById($adresse_id);
-		if ($adresse_data === false) {
-			self::render("CHEMIN VUE EXISTE PAS AFFICHER", $adresse_data);
+	/**
+	 * Afficher les informations d'un adresse
+	 *
+	 * @param Object $requete
+	 * @return String
+	 */
+	public function afficher($requete) {
+		$urlParams = $requete->getUrlParams();
+		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
+			$adresse_id = $urlParams[0];
+			$Adresses = new Adresses();
+			$data = $Adresses->findById($adresse_id);
+			if ($data !== false) {
+				return $this->render("CHEMIN VUE AFFICHER", $data);
+			} else {
+				return $this->render("CHEMIN VUE EXISTE PAS AFFICHER", $data);
+			}
 		} else {
-			self::render("CHEMIN VUE AFFICHER", $adresse_data);
+			return $this->render("CHEMIN VUE EXISTE PAS AFFICHER", $data);
 		}
 	}
 
-	static public function lister() {
-		$adresses_data = Adresses::findAll();
-		if ($adresses_data === false) {
-			self::render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $adresses_data);
+	/**
+	 * Afficher la liste des adresses
+	 *
+	 * @param Object $requete
+	 * @return String
+	 */
+	public function lister($requete) {
+		$Adresses = new Adresses();
+		$data = $Adresses->findAll();
+		if ($data === false) {
+			return $this->render("CHEMIN VUE AUCUNE ENTREE DANS LA BASE LIST", $data);
 		} else {
-			self::render("CHEMIN VUE LISTE", $adresses_data);
+			return $this->render("CHEMIN VUE LISTE", $data);
 		}
 	}
 

@@ -1,12 +1,12 @@
 <?php
-namespace Modules\users;
+
+namespace modules\users;
 
 use Source\Model;
 
 class User extends Model 
 {
 
-	private static $table = 'users';
 	private $id;
 	private $login;
 	private $password;
@@ -170,8 +170,14 @@ class User extends Model
 
 		return true;
 	}
+
+	/**
+	 * Retourne la liste des Contacts du user
+	 *
+	 * @return Array
+	 */
 	public function getContacts() {
-		return Base::getInstance()->query("SELECT * FROM users INNER JOIN Contact ON user.id=Contact.users_id WHERE Contact.users_id=''")->fetchObject();
+		return Base::getInstance()->query("SELECT * FROM users INNER JOIN Contacts ON user.id=Contacts.users_id WHERE Contacts.users_id=''")->fetchObject();
 	}
 
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Source\cli\generateurs;
 
+use Source\Utils;
 use Source\cli\generateurs\Generateur;
 
 class GenerateurModels extends Generateur
@@ -81,6 +82,7 @@ class GenerateurModels extends Generateur
             
             fwrite($fichierModel, $nouveauModel);
             fclose($fichierModel);
+            Utils::consoleLog("Model generer avec succes: {$model->nom}");
         }
     }
 
@@ -169,14 +171,18 @@ class GenerateurModels extends Generateur
             $table = strtolower($model);
             switch ($relation["type"]) {
                 case 'getOne':
+                    $methodesRelations .= "\n";
+                    $methodesRelations .= $this->genererCommentaireMethode("Retourne le {$relation['cible']} du {$table}", [], "Object");
                     $methodesRelations .= "\tpublic function {$relation['fonction']}() {\n";
                     $methodesRelations .= "\t\treturn {$relation['cible']}s::findById(\$this->id);\n";
                     $methodesRelations .= "\t}\n\n";
                     break;
 
                 case 'getMany':
+                    $methodesRelations .= "\n";
+                    $methodesRelations .= $this->genererCommentaireMethode("Retourne la liste des {$relation['cible']}s du {$table}", [], "Array");
                     $methodesRelations .= "\tpublic function {$relation['fonction']}() {\n";
-                    $methodesRelations .= "\t\treturn Base::getInstance()->query(\"SELECT * FROM {$table}s INNER JOIN {$relation['cible']} ON {$table}.id={$relation['cible']}.{$table}s_id WHERE {$relation['cible']}.{$table}s_id='{$this->id}'\")->fetchObject();\n";
+                    $methodesRelations .= "\t\treturn Base::getInstance()->query(\"SELECT * FROM {$table}s INNER JOIN {$relation['cible']}s ON {$table}.id={$relation['cible']}s.{$table}s_id WHERE {$relation['cible']}s.{$table}s_id='{$this->id}'\")->fetchObject();\n";
                     $methodesRelations .= "\t}\n\n";
                     break;
             }

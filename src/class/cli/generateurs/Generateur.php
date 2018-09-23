@@ -1,6 +1,8 @@
 <?php
 namespace Source\cli\generateurs;
 
+use Source\Utils;
+
 abstract class Generateur {
 
     protected $cheminDossierConfig;
@@ -12,12 +14,12 @@ abstract class Generateur {
      * Constructeur
      */
     public function __construct() {
-        $this->cheminDossierConfig = __DIR__ . "/../../config/orm";
-        $this->cheminDossierModule = __DIR__ . "/../../src/modules";
+        $this->cheminDossierConfig = __DIR__ . "/../../../../config/orm";
+        $this->cheminDossierModule = __DIR__ . "/../../../modules";
     }
     
     protected function genererClassHeader($nomClass, $nomModule, $abstract = false, $interface = false) {
-        $classHeader  = $this->ajouterLignePhp("<?php");
+        $classHeader  = $this->ajouterLignePhp("<?php", 0, 2);
         $classHeader .= $this->ajouterLignePhp("namespace modules\\{$nomModule};", 0, 2);
         if($abstract !== false) { 
             $classHeader .= $this->ajouterLignePhp("use Source\\{$abstract};");
@@ -77,14 +79,13 @@ abstract class Generateur {
     protected function ajouterLignePhp($ligne, $indentation = 0, $sautDeLigne = 1) {
         $indentationTexte = "";
         for ($i=0; $i < $indentation; $i++) { 
-            $indentationTexte .= '\t';
+            $indentationTexte .= "\t";
         }
-        $sautDeLigne = "";
+        $sautDeLigneTexte = "";
         for ($i=0; $i < $sautDeLigne; $i++) { 
-            $sautDeLigne .= '\n';
+            $sautDeLigneTexte .= "\n";
         }
-        $lignePhp = "{$indentationTexte}{$ligne}{$sautDeLigne}";
-
+        $lignePhp = $indentationTexte . $ligne . $sautDeLigneTexte;
         return $lignePhp;
     }
 }

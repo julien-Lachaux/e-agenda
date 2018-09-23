@@ -1,9 +1,9 @@
 <?php
-namespace Modules\users;
+
+namespace modules\users;
 
 use Source\Depot;
 
 class Users extends Depot 
 {
-    protected static $table = 'users';
 }

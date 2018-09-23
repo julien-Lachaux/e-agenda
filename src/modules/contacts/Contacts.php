@@ -1,5 +1,6 @@
 <?php
-namespace Modules\contacts;
+
+namespace modules\contacts;
 
 use Source\Depot;
 

@@ -1,5 +1,10 @@
 <?php
-require_once('class/Utils.php');
+require('src/class/Autoloader.php');
+
+use Source\Utils;
+use Source\Autoloader;
+
+Autoloader::register();
 $cliParametre = Utils::recupererCliArgs($argv);
 
 
@@ -8,6 +13,7 @@ $cliFonction = $cliParametre['fonction'];
 $cliFonctionParametres = $cliParametre['arguments'];
 
 // appel du script demander
-require("class/{$cliParametre['class']}.php");
-$classe = new $cliParametre['class']();
+require("class/cli/{$cliParametre['class']}.php");
+$appelClasse = "\\Source\\cli\\{$cliParametre['class']}";
+$classe = new $appelClasse;
 $classe->{$cliFonction}($cliFonctionParametres);
