@@ -23,5 +23,5 @@ $requete = new Requete();
 $router = new Router($requete);
 $router->recupererRoutesModule("core");
 $router->recupererRoutesModule("utilisateurs");
-// $router->recupererRoutesModule("contacts");
-// $router->recupererRoutesModule("adresses");
+$router->recupererRoutesModule("contacts");
+$router->recupererRoutesModule("adresses");

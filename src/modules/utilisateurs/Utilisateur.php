@@ -3,6 +3,7 @@
 namespace Modules\utilisateurs;
 
 use Source\Model;
+use Modules\contacts\Contacts;
 
 class Utilisateur extends Model 
 {
@@ -145,5 +146,14 @@ class Utilisateur extends Model
 		if ($creation === false) { return false; }
 
 		return true;
+	}
+
+	/**
+	 * Retourne la liste des contacts de l'utilisateur
+	 *
+	 * @return Array|Boolean
+	 */
+	public function getContacts() {
+		return Contacts::findMany("utilisateurs_id={$_SESSION['utilisateur']->id}");
 	}
 }

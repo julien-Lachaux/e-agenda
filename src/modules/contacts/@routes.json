@@ -2,14 +2,6 @@
     "routes": [
         {
             "methodeHTTP": "get",
-            "route": "/contacts/detail",
-            "controller": "ContactsController",
-            "methode": "afficher",
-            "active": true,
-            "connexionRequise": true
-        },
-        {
-            "methodeHTTP": "get",
             "route": "/contacts/liste",
             "controller": "ContactsController",
             "methode": "lister",
@@ -46,7 +38,7 @@
             "controller": "ContactsController",
             "methode": "formulaire",
             "active": true,
-            "connexionRequise": false
+            "connexionRequise": true
         }
     ]    
 }

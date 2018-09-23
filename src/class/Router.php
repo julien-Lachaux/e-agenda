@@ -89,7 +89,7 @@ class Router
             }
         } else {
             $instruction = $methodDictionary[$formatedRoute];
-            if ($instruction->redirection != NULL) {
+            if (isset($instruction->redirection)) {
                 header("Location: {$instruction->redirection}");
             }
             $reponse = $instruction->controller->{$instruction->methode}($this->requete);

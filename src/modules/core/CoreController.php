@@ -8,7 +8,7 @@ class CoreController extends Controller
     public $module = 'core';
     
     public function accueil($requete) {
-        return $this->render('templates/base', [
+        return $this->render('templates/avecNavbar', [
             "page" => [
                 "nom"       => "accueil",
                 "titre"     => "Accueil",
@@ -18,7 +18,7 @@ class CoreController extends Controller
     }
 
     public function utilisateurs($requete) {
-        return $this->render('templates/base', [
+        return $this->render('templates/avecNavbar', [
             "page" => [
                 "nom"       => "utilisateurs",
                 "titre"     => "Les utilisateurs",
@@ -38,11 +38,31 @@ class CoreController extends Controller
     }
 
     public function utilisateurContacts($requete) {
-        return $this->render('templates/base', [
+        return $this->render('templates/avecNavbar', [
             "page" => [
                 "nom"       => "contacts",
                 "titre"     => "Mes Contacts",
                 "scripts"   => [ "pages/contacts/liste" ],
+            ]
+        ]);
+    }
+
+    public function formulaireEditerContact($requete) {
+        return $this->render('templates/avecNavbar', [
+            "page" => [
+                "nom"       => "editerContact",
+                "titre"     => "Modifier un contact",
+                "scripts"   => [ "pages/contacts/formulaire" ],
+            ]
+        ]);
+    }
+
+    public function formulaireNouveauContact($requete) {
+        return $this->render('templates/avecNavbar', [
+            "page" => [
+                "nom"       => "nouveauContact",
+                "titre"     => "Ajouter un contact",
+                "scripts"   => [ "pages/contacts/formulaire" ],
             ]
         ]);
     }

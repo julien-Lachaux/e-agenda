@@ -46,7 +46,7 @@
             "controller": "UtilisateursController",
             "methode": "formulaire",
             "active": true,
-            "connexionRequise": false
+            "connexionRequise": true
         },
         {
             "methodeHTTP": "get",

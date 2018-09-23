@@ -1,0 +1,17 @@
+<form action="/contacts/editer" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="contactNom">Nom</label>
+            <input type="text" class="form-control" id="contactNom" placeholder="Nom" {{#data.contact}}value="{{nom}}"{{/data.contact}}>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="contactPrenom">Prenom</label>
+            <input type="text" class="form-control" id="contactPrenom" placeholder="Prenom" {{#data.contact}}value="{{prenom}}"{{/data.contact}}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="contactEmail">Email</label>
+        <input type="email" class="form-control" id="contactEmail" placeholder="Email" {{#data.contact}}value="{{email}}"{{/data.contact}}>
+    </div>
+    <button type="submit" class="btn btn-primary">Valider</button>
+</form>

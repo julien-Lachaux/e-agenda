@@ -34,6 +34,22 @@
         },
         {
             "methodeHTTP": "get",
+            "route": "/contacts/editer",
+            "controller": "CoreController",
+            "methode": "formulaireEditerContact",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/contacts/creer",
+            "controller": "CoreController",
+            "methode": "formulaireNouveauContact",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
             "route": "/erreur/404",
             "controller": "CoreController",
             "methode": "erreur404",
