@@ -1,0 +1,6 @@
+#alertes {
+    z-index: 1500;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

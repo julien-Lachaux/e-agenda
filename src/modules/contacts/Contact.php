@@ -153,7 +153,7 @@ class Contact extends Model
 	 * @return Array\Boolean
 	 */
 	public function getAdresses() {
-		$adresses = Base::getInstance()->query("SELECT * FROM adresses INNER JOIN contacts ON contacts.id=adresses.contacts_id WHERE adresses.contacts_id={$this->id}");
+		$adresses = Base::getInstance()->query("SELECT * FROM adresses WHERE adresses.contacts_id={$this->id}");
 		if ($adresses !== false) {
 			return $adresses->fetchAll();
 		}

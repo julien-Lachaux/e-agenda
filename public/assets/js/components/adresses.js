@@ -58,14 +58,29 @@ const adresses = {
 
     retourAuContact() {
         let contactId = $("#contactId").val()
-        console.log("demo")
-        this.contactAdressesListe("#contactAdresses", contactId)
         let modalContact = $("#modalContact")
         let modalAdresse = $("#modalAdresse")
+
+        this.contactAdressesListe("#contactAdresses", contactId)
         modalAdresse.modal("hide")
         modalAdresse.remove()
         $(".modal-backdrop").remove()
         modalContact.modal("show")
+    },
+
+    supprimerAdresse(adresseId) {
+        app.get("/adresses/supprimer/" + adresseId, (reponse) => {
+            let contactId = $("#contactId").val()
+            
+            this.contactAdressesListe("#contactAdresses", contactId)
+            $("#alertes").html(reponse)
+            setTimeout(() => {
+                $("#alerteAdresse").alert("close")
+                setTimeout(() => {
+                    $("#alerteAdresse").remove()
+                }, 2000);
+            }, 5000);
+        })
     }
 
 }
