@@ -179,4 +179,43 @@ class UtilisateursController extends Controller
 		));
 	}
 
+	/**
+	 * Edite l'utilisateur actuellement connecté
+	 *
+	 * @param Object $requete
+	 * @return String
+	 */
+	public function editerUtilisateurActuel($requete) {
+		$utilisateurActuel = $_SESSION["utilisateur"];
+		$utilisateurActuelId = $utilisateurActuel->id;
+		$formulaire = $requete->getBody();
+
+		if ($formulaire !== NULL) {
+			$test = Utilisateur::valider($formulaire);
+			if ($test !== false) {
+				foreach($formulaire as $colonne => $valeur) {
+					if ($utilisateurActuel->{$colonne} !== $valeur) {
+						if (!($colonne === 'password' && empty($valeur))) {
+							$test = Utilisateur::update($colonne, $valeur, "id={$utilisateurActuelId}");
+						}
+					}
+				}
+				$Utilisateurs = new Utilisateurs();
+				$utilisateurEditer = $Utilisateurs->findById($utilisateurActuelId);
+				$_SESSION["utilisateur"] = $utilisateurEditer;
+				return $this->render("profile", array(
+					"editionReussi" => true,
+					"utilisateur"	=> $utilisateurEditer
+				)); // user editer avec succes
+			}
+			return $this->render("profile", array(
+				"utilisateur"	=> $utilisateurActuel
+			)); 
+		} else {
+			return $this->render("profile", array(
+				"utilisateur"	=> $utilisateurActuel
+			)); 
+		}
+	}
+
 }

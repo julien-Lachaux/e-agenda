@@ -79,6 +79,22 @@
             "methode": "utilisateurContacts",
             "active": true,
             "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/utilisateurs/editerUtilisateurActuel",
+            "controller": "UtilisateursController",
+            "methode": "editerUtilisateurActuel",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "post",
+            "route": "/utilisateurs/editerUtilisateurActuel",
+            "controller": "UtilisateursController",
+            "methode": "editerUtilisateurActuel",
+            "active": true,
+            "connexionRequise": true
         }
     ]    
 }

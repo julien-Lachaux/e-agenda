@@ -26,6 +26,14 @@
         },
         {
             "methodeHTTP": "get",
+            "route": "/profile",
+            "controller": "PagesController",
+            "methode": "utilisateurProfile",
+            "active": true,
+            "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
             "route": "/erreur/404",
             "controller": "PagesController",
             "methode": "erreur404",

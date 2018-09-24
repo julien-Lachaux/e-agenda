@@ -51,6 +51,18 @@ class PagesController extends Controller
         ]);
     }
 
+    public function utilisateurProfile($requete) {
+        return $this->render('templates/avecNavbar', [
+            "page" => [
+                "nom"       => "profile",
+                "titre"     => "Mes informations",
+                "scripts"   => [ 
+                    "pages/utilisateurs/profile"
+                ],
+            ]
+        ]);
+    }
+
     public function erreur404($requete) {
         return $this->render('erreurs/404', [
             "page" => [

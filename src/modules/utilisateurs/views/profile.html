@@ -1,0 +1,24 @@
+{{#data.utilisateur}}
+    <form action="/utilisateurs/editerUtilisateurActuel" method="post" id="formProfile">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" name="nom" placeholder="Nom" value="{{ nom }}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="prenom">Prenom</label>
+                <input type="text" class="form-control" name="prenom" placeholder="Prenom" value="{{prenom}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Login</label>
+            <input type="email" class="form-control" name="login" placeholder="Login (doit être un email valide)" value="{{login}}">
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" class="form-control" name="password" placeholder="Mot de passe">
+        </div>
+        <a type="button" class="btn btn-outline-dark" href="/contacts">Annuler</a>
+        <button type="button" class="btn btn-primary" onclick="app.ajaxForm('#formProfile', (reponse) => {$('.contenu').html(reponse)});">Valider</button>
+    </form>
+{{/data.utilisateur}}
