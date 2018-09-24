@@ -150,10 +150,14 @@ class Contact extends Model
 	/**
 	 * Retourne la liste des Adresses du contact
 	 *
-	 * @return Array
+	 * @return Array\Boolean
 	 */
 	public function getAdresses() {
-		return Base::getInstance()->query("SELECT * FROM contacts INNER JOIN Adresses ON contact.id=Adresses.contacts_id WHERE Adresses.contacts_id=''")->fetchObject();
+		$adresses = Base::getInstance()->query("SELECT * FROM adresses INNER JOIN contacts ON contacts.id=adresses.contacts_id WHERE adresses.contacts_id={$this->id}");
+		if ($adresses !== false) {
+			return $adresses->fetchAll();
+		}
+		return false;
 	}
 
 

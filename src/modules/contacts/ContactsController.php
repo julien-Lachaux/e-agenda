@@ -94,16 +94,14 @@ class ContactsController extends Controller
 				$formulaire = $requete->getBody();
 				$test = Contact::valider($formulaire);
 				if ($test !== false) {
-					$colonneEditer = [];
 					foreach($formulaire as $colonne => $valeur) {
 						if ($data->{$colonne} !== $valeur) {
-							$colonneEditer[] = array("nom" => "$colonne");
 							$test = Contact::update($colonne, $valeur, "id={$id}");
 						}
 					}
 					$contactMisAJour = $Contacts->findById($id);
 					return $this->render("formulaire", array(
-						"colonneEditer" => $colonneEditer,
+						"editionReussi" => true,
 						"contact"		=> $contactMisAJour
 					)); // contact editer avec succes
 				}
@@ -159,6 +157,8 @@ class ContactsController extends Controller
 			$Contacts = new Contacts();
 			$data = $Contacts->findById($id);
 			if ($data !== false) {
+				$contact = new Contact($data);
+				$data->adresses = $contact->getAdresses();
 				return $this->render("formulaire", array("contact" => $data));
 			}
 		}

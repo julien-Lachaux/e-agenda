@@ -24,12 +24,12 @@
                     <td>{{ prenom }}</td>
                     <td>{{ email }}</td>
                     <td class="text-right">
-                        <a class="btn btn-primary" href="/contacts/editer/{{ id }}">Éditer</a>
-                        <a class="btn btn-danger" href="/contacts/supprimer/{{ id }}">Supprimer</a>
+                        <button class="btn btn-primary" onclick="contacts.editerContactModal({{ id }});">Éditer</button>
+                        <button class="btn btn-danger" onclick="contacts.supprimerContact({{ id }});">Supprimer</button>
                     </td>
                 </tr>
             {{/contacts}}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="/contacts/creer">+</a>
+    <button class="btn btn-primary" onclick="contacts.nouveauContactModal();">+</button>
 {{/data}}

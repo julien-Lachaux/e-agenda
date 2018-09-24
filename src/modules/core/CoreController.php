@@ -42,7 +42,10 @@ class CoreController extends Controller
             "page" => [
                 "nom"       => "contacts",
                 "titre"     => "Mes Contacts",
-                "scripts"   => [ "pages/contacts/liste" ],
+                "scripts"   => [ 
+                    "components/contacts",
+                    "pages/contacts/liste"
+                ],
             ]
         ]);
     }
@@ -52,16 +55,6 @@ class CoreController extends Controller
             "page" => [
                 "nom"       => "editerContact",
                 "titre"     => "Modifier un contact",
-                "scripts"   => [ "pages/contacts/formulaire" ],
-            ]
-        ]);
-    }
-
-    public function formulaireNouveauContact($requete) {
-        return $this->render('templates/avecNavbar', [
-            "page" => [
-                "nom"       => "nouveauContact",
-                "titre"     => "Ajouter un contact",
                 "scripts"   => [ "pages/contacts/formulaire" ],
             ]
         ]);

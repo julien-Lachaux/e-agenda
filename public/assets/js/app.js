@@ -63,13 +63,12 @@ const app = {
         return hash
     },
 
-    ajaxForm() {
-        let event = window.event
-        let form = app.serializeForm(event.srcElement)
-        let url = event.srcElement.baseURI
-        app.post(url, form, (response) => {
-            $('.contenu').html(response)
+    ajaxForm(formSelecteur, callback = (reponse) => {}) {
+        let form = $(formSelecteur)
+        let url = form.attr("action")
+        let methode = form.attr("method")
+        app[methode](url, app.serializeForm(form), (reponse) => {
+            callback(reponse);
         })
-        event.preventDefault()
     }
 }

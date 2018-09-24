@@ -1,32 +1,102 @@
-{{#data.colonneEditer}}
-    <div class="alert alert-success" role="alert">champ {{ nom }} modifié avec succes</div>
-{{/data.colonneEditer}}
+{{#data.editionReussi}}
+    <div class="modal fade" role="dialog" id="modalContact">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-align-center">Contact editer avec succès</p>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="contacts.nouveauContactCreer();">Retour au contacts</button>
+            </div>
+        </div>
+    </div>
+{{/data.editionReussi}}
+
 {{#data.erreur}}
-    <div class="alert alert-danger" role="alert">Erreur: {{ message }}</div>
+    <div class="modal fade" role="dialog" id="modalContact">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-align-center">Erreur: {{ message }}</p>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="contacts.nouveauContactCreer();">Retour au contacts</button>
+            </div>
+        </div>
+    </div>
 {{/data.erreur}}
+
 {{#data.creationReussi}}
-    <div class="alert alert-success" role="alert">Contact ajouter avec succes</div>
-    <a href="/contacts" class="btn btn-success" role="button">Retour au contacts</a>
+    <div class="modal fade" role="dialog" id="modalContact">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-align-center">Contact ajouter avec succes</p>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="contacts.nouveauContactCreer();">Retour au contacts</button>
+            </div>
+        </div>
+    </div>
 {{/data.creationReussi}}
 
 {{^data.creationReussi}}
-    <form action="/contacts/{{#data.contact}}editer{{/data.contact}}{{^data.contact}}creer{{/data.contact}}" method="post" onsubmit="app.ajaxForm();">
-        <div class="form-row">
-            {{#data.contact}}<input type="text" class="form-control" name="id" hidden value="{{ id }}">{{/data.contact}}
-            <div class="form-group col-md-6">
-                <label for="nom">Nom</label>
-                <input type="text" class="form-control" name="nom" placeholder="Nom" {{#data.contact}}value="{{nom}}"{{/data.contact}}>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="prenom">Prenom</label>
-                <input type="text" class="form-control" name="prenom" placeholder="Prenom" {{#data.contact}}value="{{prenom}}"{{/data.contact}}>
+    <div class="modal fade" role="dialog" id="modalContact">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{#data.contact}}Editer Un Contact{{/data.contact}}{{^data.contact}}Nouveau Contact{{/data.contact}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/contacts/{{#data.contact}}editer/{{ id }}{{/data.contact}}{{^data.contact}}creer{{/data.contact}}" method="post" id="formContact">
+                        <div class="form-row">
+                            {{#data.contact}}<input type="text" class="form-control" name="id" hidden value="{{ id }}">{{/data.contact}}
+                            <div class="form-group col-md-6">
+                                <label for="nom">Nom</label>
+                                <input type="text" class="form-control" name="nom" placeholder="Nom" {{#data.contact}}value="{{nom}}"{{/data.contact}}>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="prenom">Prenom</label>
+                                <input type="text" class="form-control" name="prenom" placeholder="Prenom" {{#data.contact}}value="{{prenom}}"{{/data.contact}}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Email" {{#data.contact}}value="{{email}}"{{/data.contact}}>
+                        </div>
+                    </form>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" colspan="6" class="text-center">Adresses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#data.contact.adresses}}
+                                <tr>
+                                    <th scope="row">{{ pays }}</th>
+                                    <td>{{ ville }}</td>
+                                    <td>{{ codePostal }}</td>
+                                    <td>{{ adresse }}</td>
+                                    <td>{{ complementAdresse }}</td>
+                                    <td class="text-right">
+                                        <a class="btn btn-primary" href="/adresses/editer/{{ id }}">Éditer</a>
+                                        <a class="btn btn-danger" href="/adresses/supprimer/{{ id }}">Supprimer</a>
+                                    </td>
+                                </tr>
+                            {{/data.contact.adresses}}
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary" href="/adresses/creer">+</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="{{#data.contact}}contacts.editerContact(){{/data.contact}}{{^data.contact}}contacts.nouveauContact(){{/data.contact}};">Valider</button>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" name="email" placeholder="Email" {{#data.contact}}value="{{email}}"{{/data.contact}}>
-        </div>
-        <a href="/contacts" class="btn btn-danger" role="button">Annuler</a>
-        <button type="submit" class="btn btn-primary">Valider</button>
-    </form>
+    </div>
 {{/data.creationReussi}}
