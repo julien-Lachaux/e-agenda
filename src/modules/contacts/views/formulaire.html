@@ -42,7 +42,7 @@
 
 {{^data.creationReussi}}
     <div class="modal fade" role="dialog" id="modalContact">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{#data.contact}}Editer Un Contact{{/data.contact}}{{^data.contact}}Nouveau Contact{{/data.contact}}</h5>
@@ -83,14 +83,14 @@
                                     <td>{{ adresse }}</td>
                                     <td>{{ complementAdresse }}</td>
                                     <td class="text-right">
-                                        <a class="btn btn-primary" href="/adresses/editer/{{ id }}">Éditer</a>
-                                        <a class="btn btn-danger" href="/adresses/supprimer/{{ id }}">Supprimer</a>
+                                        <button class="btn btn-primary" onclick=""><span class="oi oi-pencil"></span></button>
+                                        <button class="btn btn-danger" onclick=""><span class="oi oi-trash"></span></button>
                                     </td>
                                 </tr>
                             {{/data.contact.adresses}}
                         </tbody>
                     </table>
-                    <a class="btn btn-primary" href="/adresses/creer">+</a>
+                    <button class="btn btn-primary d-block mx-auto" onclick=""><span class="oi oi-plus"></span></button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
