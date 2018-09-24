@@ -1,0 +1,72 @@
+{{#data.erreur}}
+    <div class="modal fade" role="dialog" id="modalContact" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-align-center">Erreur: {{ message }}</p>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="adresses.retourAuContact();">Retour au contact</button>
+            </div>
+        </div>
+    </div>
+{{/data.erreur}}
+
+{{#data.creationReussi}}
+    <div class="modal fade" role="dialog" id="modalContact" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-align-center">Adresse ajouter avec succes</p>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="adresses.retourAuContact();">Retour au contact</button>
+            </div>
+        </div>
+    </div>
+{{/data.creationReussi}}
+
+<div class="modal fade" role="dialog" id="modalAdresse" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{#data.adresse}}Editer Une Adresse{{/data.adresse}}{{^data.adresse}}Nouvelle Adresse{{/data.adresse}}</h5>
+                <button type="button" class="close" onclick="adresses.retourAuContact();" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/adresses/{{#data.adresse}}editer/{{ id }}{{/data.adresse}}{{^data.adresse}}creer{{/data.adresse}}" method="post" id="formAdresse">
+                    <div class="form-row">
+                        {{#data.adresse}}<input type="text" class="form-control" name="id" hidden value="{{ id }}">{{/data.adresse}}
+                        <input type="text" class="form-control" name="contacts_id" hidden>
+                        <div class="form-group col-md-4">
+                            <label for="pays">Pays</label>
+                            <input type="text" class="form-control" name="pays" placeholder="Pays" {{#data.adresse}}value="{{ pays }}"{{/data.adresse}}>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="codePostal">Code Postale</label>
+                            <input type="text" class="form-control" name="codePostal" placeholder="code postale" {{#data.adresse}}value="{{ codePostal }}"{{/data.adresse}}>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="ville">Ville</label>
+                            <input type="text" class="form-control" name="ville" placeholder="Ville" {{#data.adresse}}value="{{ ville }}"{{/data.adresse}}>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresse</label>
+                        <input type="text" class="form-control" name="adresse" placeholder="Adresse" {{#data.adresse}}value="{{ adresse }}"{{/data.adresse}}>
+                    </div>
+                    <div class="form-group">
+                        <label for="complementAdresse">Complement d'adresse</label>
+                        <textarea class="form-control" name="complementAdresse" rows="3">{{#data.adresse}}{{ complementAdresse }}{{/data.adresse}}</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="adresses.retourAuContact();">Annuler</button>
+                <button type="button" class="btn btn-primary" onclick="{{#data.adresse}}adresses.editerAdresse(){{/data.adresse}}{{^data.adresse}}adresses.nouvelleAdresse(){{/data.adresse}};">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>

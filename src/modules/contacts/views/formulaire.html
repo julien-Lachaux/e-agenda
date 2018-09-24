@@ -1,5 +1,5 @@
 {{#data.editionReussi}}
-    <div class="modal fade" role="dialog" id="modalContact">
+    <div class="modal fade" role="dialog" id="modalContact" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -13,7 +13,7 @@
 {{/data.editionReussi}}
 
 {{#data.erreur}}
-    <div class="modal fade" role="dialog" id="modalContact">
+    <div class="modal fade" role="dialog" id="modalContact" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -27,7 +27,7 @@
 {{/data.erreur}}
 
 {{#data.creationReussi}}
-    <div class="modal fade" role="dialog" id="modalContact">
+    <div class="modal fade" role="dialog" id="modalContact" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -41,7 +41,7 @@
 {{/data.creationReussi}}
 
 {{^data.creationReussi}}
-    <div class="modal fade" role="dialog" id="modalContact">
+    <div class="modal fade" role="dialog" id="modalContact" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -53,7 +53,7 @@
                 <div class="modal-body">
                     <form action="/contacts/{{#data.contact}}editer/{{ id }}{{/data.contact}}{{^data.contact}}creer{{/data.contact}}" method="post" id="formContact">
                         <div class="form-row">
-                            {{#data.contact}}<input type="text" class="form-control" name="id" hidden value="{{ id }}">{{/data.contact}}
+                            {{#data.contact}}<input type="text" class="form-control" name="id" id="contactId" hidden value="{{ id }}">{{/data.contact}}
                             <div class="form-group col-md-6">
                                 <label for="nom">Nom</label>
                                 <input type="text" class="form-control" name="nom" placeholder="Nom" {{#data.contact}}value="{{nom}}"{{/data.contact}}>
@@ -68,29 +68,9 @@
                             <input type="email" class="form-control" name="email" placeholder="Email" {{#data.contact}}value="{{email}}"{{/data.contact}}>
                         </div>
                     </form>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col" colspan="6" class="text-center">Adresses</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#data.contact.adresses}}
-                                <tr>
-                                    <th scope="row">{{ pays }}</th>
-                                    <td>{{ ville }}</td>
-                                    <td>{{ codePostal }}</td>
-                                    <td>{{ adresse }}</td>
-                                    <td>{{ complementAdresse }}</td>
-                                    <td class="text-right">
-                                        <button class="btn btn-primary" onclick=""><span class="oi oi-pencil"></span></button>
-                                        <button class="btn btn-danger" onclick=""><span class="oi oi-trash"></span></button>
-                                    </td>
-                                </tr>
-                            {{/data.contact.adresses}}
-                        </tbody>
-                    </table>
-                    <button class="btn btn-primary d-block mx-auto" onclick=""><span class="oi oi-plus"></span></button>
+
+                    <div id="contactAdresses"></div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>

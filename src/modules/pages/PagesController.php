@@ -44,18 +44,9 @@ class PagesController extends Controller
                 "titre"     => "Mes Contacts",
                 "scripts"   => [ 
                     "components/contacts",
+                    "components/adresses",
                     "pages/contacts/liste"
                 ],
-            ]
-        ]);
-    }
-
-    public function formulaireEditerContact($requete) {
-        return $this->render('templates/avecNavbar', [
-            "page" => [
-                "nom"       => "editerContact",
-                "titre"     => "Modifier un contact",
-                "scripts"   => [ "pages/contacts/formulaire" ],
             ]
         ]);
     }

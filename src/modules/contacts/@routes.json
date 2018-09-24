@@ -39,6 +39,14 @@
             "methode": "formulaire",
             "active": true,
             "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/contact/adresses",
+            "controller": "ContactsController",
+            "methode": "contactAdresses",
+            "active": true,
+            "connexionRequise": true
         }
     ]    
 }

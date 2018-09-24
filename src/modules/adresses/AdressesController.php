@@ -2,7 +2,9 @@
 
 namespace Modules\adresses;
 
+use Source\Utils;
 use Source\Controller;
+use Modules\adresses\Adresse;
 use Modules\adresses\Adresses;
 
 class AdressesController extends Controller 
@@ -16,18 +18,19 @@ class AdressesController extends Controller
 	 * @return String
 	 */
 	public function creer($requete) {
-		$adressesData = $requete->getBody();
+		$adresseData = $requete->getBody();
 		if (Adresse::valider($requete->getBody())) {
-			$Adresse = new Adresse($adressesData);
+			$Adresse = new Adresse($adresseData);
 			$data = $Adresse->creer();
 			if ($data !== false) {
-				return $this->render("creation", array("nouveauadresses" => $data));
+				return $this->render("formulaire", array("creationReussi" => true)
+				);
 			}
-			return $this->render("creation", array(
-				"erreur" => ["message" => "adresses inconnue"]
+			return $this->render("formulaire", array(
+				"erreur" => ["message" => "formulaire invalide"]
 			));
 		}
-		return $this->render("creation", array(
+		return $this->render("formulaire", array(
 			"erreur" => ["message" => "id manquant"]
 		));
 	}
@@ -74,7 +77,7 @@ class AdressesController extends Controller
 	}
 
 	/**
-	 * Afficher la liste des users
+	 * Afficher la liste des adresses
 	 *
 	 * @param Object $requete
 	 * @return String
@@ -82,28 +85,43 @@ class AdressesController extends Controller
 	public function editer($requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
-			$user_id = $urlParams[0];
-			$Users = new Users();
-			$data = $Users->findById($user_id);
+			$adresse_id = $urlParams[0];
+			$Adresses = new Adresses();
+			$data = $Adresses->findById($adresse_id);
 
 			if ($data !== false) {
 				$formulaire = $requete->getBody();
-				$test = User::valider($formulaire);
+				$test = Adresse::valider($formulaire);
 				if ($test !== false) {
-					$colonneEditer = [];
 					foreach($formulaire as $colonne => $valeur) {
 						if ($data->{$colonne} !== $valeur) {
-							$colonneEditer[] = array("nom" => "$colonne");
-							$test = User::update($colonne, $valeur, "id={$user_id}");
+							$test = Adresse::update($colonne, $valeur, "id={$adresse_id}");
 						}
 					}
-					return $this->render("editionReussi", array("colonneEditer" => $colonneEditer)); // user editer avec succes
+					$adresseMisAJour = $Adresses->findById($adresse_id);
+					return $this->render("formulaire", array(
+						"editionReussi" => true,
+						"adresse"		=> $adresseMisAJour
+					)); // adresse editer avec succes
 				}
-				return $this->render("usersList", $data); // formulaire invalide
+				return $this->render("formulaire", array(
+					"adresse" => $formulaire,
+					"erreur" => [
+						"message" => "formulaire invalide"
+					]
+				)); // formulaire invalide
 			}
-			return $this->render("usersList", $data); // le user n'existe pas
+			return $this->render("formulaire", array(
+				"erreur" => [
+					"message" => "adresse introuvable"
+				]
+			));  // l'adresse n'existe pas
 		}
-		return $this->render("usersList", $data); // il manque l'id
+		return $this->render("formulaire", array(
+			"erreur" => [
+				"message" => "requete invalide"
+			]
+		)); // il manque l'id
 	}
 
 	/**
@@ -116,7 +134,7 @@ class AdressesController extends Controller
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$id = $urlParams[0];
-			if(User::supprimer($id) !== false) {
+			if(Adresse::supprimer($id) !== false) {
 				return $this->render("supprimer", array( // suppresion reussi
 					"reussite" => [
 						"id" => $id
@@ -132,6 +150,20 @@ class AdressesController extends Controller
 				"message" => "id manquant" // pas d'id dans la requete
 			]
 		));
+	}
+
+	public function formulaire($requete) {
+		$urlParams = $requete->getUrlParams();
+		if (isset($urlParams[0]) && is_numeric($urlParams[0])) { // c'est une edition
+			$id = $urlParams[0];
+			$Adresses = new Adresses();
+			$data = $Adresses->findById($id);
+			if ($data !== false) {
+				return $this->render("formulaire", array("adresse" => $data));
+			}
+		}
+		// sinon c'est une creation
+		return $this->render("formulaire", []);
 	}
 
 }

@@ -1,0 +1,23 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" colspan="6" class="text-center">Adresses</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#data.adresses}}
+            <tr>
+                <th scope="row">{{ pays }}</th>
+                <td>{{ ville }}</td>
+                <td>{{ codePostal }}</td>
+                <td>{{ adresse }}</td>
+                <td>{{ complementAdresse }}</td>
+                <td class="text-right">
+                    <button class="btn btn-primary" onclick="adresses.editerAdresseModal({{ id }})"><span class="oi oi-pencil"></span></button>
+                    <button class="btn btn-danger" onclick="adresses.supprimerAddresse({{ id }})"><span class="oi oi-trash"></span></button>
+                </td>
+            </tr>
+        {{/data.adresses}}
+    </tbody>
+</table>
+<button class="btn btn-primary d-block mx-auto" onclick="adresses.nouvelleAdresseModal();"><span class="oi oi-plus"></span></button>

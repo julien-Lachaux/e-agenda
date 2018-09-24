@@ -2,7 +2,7 @@
     "routes": [
         {
             "methodeHTTP": "get",
-            "route": "/Adresses/detail",
+            "route": "/adresses/detail",
             "controller": "AdressesController",
             "methode": "afficher",
             "active": true,
@@ -10,7 +10,7 @@
         },
         {
             "methodeHTTP": "get",
-            "route": "/Adresses/liste",
+            "route": "/adresses/liste",
             "controller": "AdressesController",
             "methode": "lister",
             "active": true,
@@ -18,7 +18,7 @@
         },
         {
             "methodeHTTP": "post",
-            "route": "/Adresses/editer",
+            "route": "/adresses/editer",
             "controller": "AdressesController",
             "methode": "editer",
             "active": true,
@@ -26,7 +26,7 @@
         },
         {
             "methodeHTTP": "post",
-            "route": "/Adresses/creer",
+            "route": "/adresses/creer",
             "controller": "AdressesController",
             "methode": "creer",
             "active": true,
@@ -34,7 +34,7 @@
         },
         {
             "methodeHTTP": "get",
-            "route": "/Adresses/supprimer",
+            "route": "/adresses/supprimer",
             "controller": "AdressesController",
             "methode": "supprimer",
             "active": true,
@@ -42,7 +42,7 @@
         },
         {
             "methodeHTTP": "get",
-            "route": "/Adresses/formulaire",
+            "route": "/adresses/formulaire",
             "controller": "AdressesController",
             "methode": "formulaire",
             "active": true,

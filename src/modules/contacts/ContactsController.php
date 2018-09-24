@@ -109,7 +109,7 @@ class ContactsController extends Controller
 					"contact" => $formulaire,
 					"erreur" => [
 						"message" => "formulaire invalide"
-					])); // formulaire invalide
+				])); // formulaire invalide
 			}
 			return $this->render("formulaire", array(
 				"erreur" => [
@@ -164,6 +164,30 @@ class ContactsController extends Controller
 		}
 		// sinon c'est une creation
 		return $this->render("formulaire", []);
+	}
+
+	public function contactAdresses($requete) {
+		$urlParams = $requete->getUrlParams();
+		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
+			$contactId = $urlParams[0];
+			$Contacts = new Contacts();
+			$contactData = $Contacts->findById($contactId);
+
+			if ($contactData !== false) {
+				$contact = new Contact($contactData);
+				$contactAdresses = $contact->getAdresses();
+				return $this->render("contactAdresses", array(
+					"contactId" => $contactId,
+					"adresses" => $contactAdresses
+				));
+			}
+			return $this->render("contactAdresses", array(
+				"erreur" => ["message" => "Aucune Adresses"]
+			));
+		}
+		return $this->render("contactAdresses", array(
+			"erreur" => ["message" => "Contact inconnue"]
+		));
 	}
 
 }

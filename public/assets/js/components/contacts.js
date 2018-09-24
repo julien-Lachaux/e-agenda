@@ -2,47 +2,48 @@ const contacts = {
 
     nouveauContactModal() {
         let modals = $("#modals")
-        app.get('/contacts/formulaire', (reponse) => {
+        app.get("/contacts/formulaire", (reponse) => {
             modals.html(reponse)
-            $('#modalContact').modal('show')
+            $("#modalContact").modal("show")
         })
     },
 
     nouveauContact() {
         let modals = $("#modals")
-        let modal = $('#modalContact')
+        let modal = $("#modalContact")
         app.ajaxForm("#formContact", (reponse) => {
             modal.remove()
-            $('.modal-backdrop').remove()
+            $(".modal-backdrop").remove()
             modals.html(reponse)
-            modal = $('#modalContact')
-            modal.modal('show')
+            modal = $("#modalContact")
+            modal.modal("show")
         })
     },
 
     nouveauContactCreer() {
         app.get("/utilisateur/contacts", (reponse) => {
-            $('.contenu').html(reponse)
+            $(".contenu").html(reponse)
         })
     },
 
     editerContactModal(contactId) {
         let modals = $("#modals")
-        app.get('/contacts/formulaire/' + contactId, (reponse) => {
+        app.get("/contacts/formulaire/" + contactId, (reponse) => {
             modals.html(reponse)
-            $('#modalContact').modal('show')
+            adresses.contactAdressesListe("#contactAdresses", contactId)
+            $("#modalContact").modal("show")
         })
     },
 
     editerContact() {
         let modals = $("#modals")
-        let modal = $('#modalContact')
+        let modal = $("#modalContact")
         app.ajaxForm("#formContact", (reponse) => {
             modal.remove()
-            $('.modal-backdrop').remove()
+            $(".modal-backdrop").remove()
             modals.html(reponse)
-            modal = $('#modalContact')
-            modal.modal('show')
+            modal = $("#modalContact")
+            modal.modal("show")
         })
     },
 
@@ -50,12 +51,12 @@ const contacts = {
         app.get("/contacts/supprimer/" + contactId, (reponse) => {
 
             app.get("/utilisateur/contacts", (sousReponse) => {
-                $('.contenu').html(sousReponse)
-                $('#alertes').html(reponse)
+                $(".contenu").html(sousReponse)
+                $("#alertes").html(reponse)
                 setTimeout(() => {
-                    $('#alerteContact').alert('close')
+                    $("#alerteContact").alert("close")
                     setTimeout(() => {
-                        $('#alerteContact').remove()
+                        $("#alerteContact").remove()
                     }, 2000);
                 }, 5000);
             })

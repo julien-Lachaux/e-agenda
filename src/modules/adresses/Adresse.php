@@ -2,7 +2,9 @@
 
 namespace Modules\adresses;
 
+use Source\Base;
 use Source\Model;
+use Source\Utils;
 
 class Adresse extends Model 
 {
@@ -128,8 +130,8 @@ class Adresse extends Model
 	 *
 	 * @return Void
 	 */
-	public function getContact_id($valeur) {
-		 return $this->contact_id;
+	public function getContacts_id($valeur) {
+		 return $this->contacts_id;
 	}
 
 	/**
@@ -138,8 +140,8 @@ class Adresse extends Model
 	 * @param Void $contact_id
 	 * @return Void
 	 */
-	public function setContact_id($valeur) {
-		$this->contact_id = $valeur;
+	public function setContacts_id($valeur) {
+		$this->contacts_id = $valeur;
 	}
 
 	/**
@@ -172,7 +174,7 @@ class Adresse extends Model
 
 		foreach ($colonnes as $colonne => $valeur) {
 			$colonnesString .= "{$colonne}, ";
-			$valeursString .= "{$valeur}, ";
+			$valeursString .= "\"{$valeur}\", ";
 		}
 
 		$colonnesString = substr($colonnesString, 0, -2);
