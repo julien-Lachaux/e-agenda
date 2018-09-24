@@ -1,11 +1,11 @@
 <?php
-namespace Modules\core;
+namespace Modules\pages;
 
 use Source\Controller;
 
-class CoreController extends Controller 
+class PagesController extends Controller 
 {
-    public $module = 'core';
+    public $module = 'pages';
     
     public function accueil($requete) {
         return $this->render('templates/avecNavbar', [

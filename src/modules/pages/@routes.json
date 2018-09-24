@@ -3,7 +3,7 @@
         {
             "methodeHTTP": "get",
             "route": "/",
-            "controller": "CoreController",
+            "controller": "PagesController",
             "methode": "accueil",
             "active": true,
             "connexionRequise": true
@@ -11,7 +11,7 @@
         {
             "methodeHTTP": "get",
             "route": "/accueil",
-            "controller": "CoreController",
+            "controller": "PagesController",
             "methode": "accueil",
             "active": true,
             "connexionRequise": true
@@ -19,7 +19,7 @@
         {
             "methodeHTTP": "get",
             "route": "/connexion",
-            "controller": "CoreController",
+            "controller": "PagesController",
             "methode": "connexion",
             "active": true,
             "connexionRequise": false
@@ -27,7 +27,7 @@
         {
             "methodeHTTP": "get",
             "route": "/contacts",
-            "controller": "CoreController",
+            "controller": "PagesController",
             "methode": "utilisateurContacts",
             "active": true,
             "connexionRequise": true
@@ -35,7 +35,7 @@
         {
             "methodeHTTP": "get",
             "route": "/erreur/404",
-            "controller": "CoreController",
+            "controller": "PagesController",
             "methode": "erreur404",
             "active": true,
             "connexionRequise": false

@@ -19,7 +19,7 @@ Utils::recupererEnvVar();
 // definitions des routes
 $requete = new Requete();
 $router = new Router($requete);
-$router->recupererRoutesModule("core");
+$router->recupererRoutesModule("pages");
 $router->recupererRoutesModule("utilisateurs");
 $router->recupererRoutesModule("contacts");
 $router->recupererRoutesModule("adresses");

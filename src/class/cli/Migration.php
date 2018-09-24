@@ -51,7 +51,7 @@ class Migration
             Utils::consoleLog("PREPARATION DES MODULES POUR LA MIGRATION", "title");
 
             while(false !== ($sousDossierModule = readdir($dossierSrc))) {
-                if ($sousDossierModule !== '.' && $sousDossierModule !== '..' && $sousDossierModule !== '.DS_Store' && $sousDossierModule !== "core") {
+                if ($sousDossierModule !== '.' && $sousDossierModule !== '..' && $sousDossierModule !== '.DS_Store' && $sousDossierModule !== "pages") {
                     $cheminTableJson = $this->cheminDossierModule . "/{$sousDossierModule}/@table.json";
                     $tableJson = Utils::recupererContenuFichier($cheminTableJson);
 

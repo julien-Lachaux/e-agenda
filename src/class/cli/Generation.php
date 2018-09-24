@@ -52,7 +52,7 @@ class Generation extends Generateur
                 if ($sousDossierModule      !== '.'
                     && $sousDossierModule   !== '..'
                     && $sousDossierModule   !== '.DS_Store'
-                    && $sousDossierModule   !== 'core'
+                    && $sousDossierModule   !== 'pages'
                     && $sousDossierModule   !== 'AutoloaderModules.php') {
                     $cheminTableJson = $this->cheminDossierModule . "/{$sousDossierModule}/@table.json";
                     $tableJson = Utils::recupererContenuFichier($cheminTableJson);
