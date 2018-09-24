@@ -10,14 +10,6 @@
         },
         {
             "methodeHTTP": "get",
-            "route": "/accueil",
-            "controller": "PagesController",
-            "methode": "accueil",
-            "active": true,
-            "connexionRequise": true
-        },
-        {
-            "methodeHTTP": "get",
             "route": "/connexion",
             "controller": "PagesController",
             "methode": "connexion",
