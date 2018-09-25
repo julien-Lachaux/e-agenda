@@ -3,7 +3,10 @@
         {
             "methodeHTTP": "get",
             "route": "/",
-            "redirection": "/contacts"
+            "controller": "PagesController",
+            "methode": "utilisateurContacts",
+            "active": true,
+            "connexionRequise": true
         },
         {
             "methodeHTTP": "get",
