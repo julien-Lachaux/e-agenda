@@ -37,14 +37,14 @@ Et voila c'est déjà fini
 Amélioration à venir
 --------------------
 
-- [] Ajouter une historisation des migrations
-- [] Ajouter la generation des commandes revert pour les migrations
-- [] Ajouter la commande migrations revert à l'utilitaire de migration cli
-- [] Passer le generateur de php et de mysql en template moustache
-- [] Ajouter un générateur de module
-- [] Ajouter un utilitaire cli pour gérer les modules
-- [] Ajouter generateur de views pour un backoffice CRUD automatique
-- [] Ajouter generateur de modules user spécifique
-- [] Ajouter generateur de routes pour le CRUD des modules
-- [] Ajouter generateur de routes pour les pages du backoffice CRUD automatique
-- [] Ajouter un générateur de documentation interactives pour les modules
+- [ ] Ajouter une historisation des migrations
+- [ ] Ajouter la generation des commandes revert pour les migrations
+- [ ] Ajouter la commande migrations revert à l'utilitaire de migration cli 
+- [ ] Passer le generateur de php et de mysql en template moustache
+- [ ] Ajouter un générateur de module
+- [ ] Ajouter un utilitaire cli pour gérer les modules
+- [ ] Ajouter generateur de views pour un backoffice CRUD automatique
+- [ ] Ajouter generateur de modules user spécifique
+- [ ] Ajouter generateur de routes pour le CRUD des modules
+- [ ] Ajouter generateur de routes pour les pages du backoffice CRUD aut omatique
+- [ ] Ajouter un générateur de documentation interactives pour les modules
