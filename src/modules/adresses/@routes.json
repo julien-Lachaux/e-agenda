@@ -46,7 +46,7 @@
             "controller": "AdressesController",
             "methode": "formulaire",
             "active": true,
-            "connexionRequise": false
+            "connexionRequise": true
         }
     ]    
 }

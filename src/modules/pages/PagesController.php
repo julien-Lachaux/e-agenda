@@ -1,6 +1,7 @@
 <?php
 namespace Modules\pages;
 
+use Source\Requete;
 use Source\Controller;
 
 class PagesController extends Controller 

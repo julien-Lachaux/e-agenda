@@ -41,6 +41,8 @@ Amélioration à venir
 - [ ] Ajouter la generation des commandes revert pour les migrations
 - [ ] Ajouter la commande migrations revert à l'utilitaire de migration cli 
 - [ ] Passer le generateur de php et de mysql en template moustache
+- [ ] Ajouter un générateur de test unitaire phpunit
+- [ ] Passer à php 7.2
 - [ ] Ajouter un générateur de module
 - [ ] Ajouter un utilitaire cli pour gérer les modules
 - [ ] Ajouter generateur de views pour un backoffice CRUD automatique

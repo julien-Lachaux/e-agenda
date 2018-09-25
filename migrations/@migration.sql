@@ -1,8 +1,8 @@
 --
--- Base: e_agenda
+-- Base: e_agenda_DEMO
 --
-CREATE DATABASE `e_agenda` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-USE e_agenda;
+CREATE DATABASE `e_agenda_DEMO` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+USE e_agenda_DEMO;
 --
 -- Table: adresses
 --
@@ -36,24 +36,23 @@ ALTER TABLE `contacts` ADD PRIMARY KEY(`id`) ;
 --
 ALTER TABLE `contacts` MODIFY `id` INT UNSIGNED NOT NULL AUTO_INCREMENT; 
 --
--- Table: users
+-- Table: utilisateurs
 --
-CREATE TABLE `users` (`id` int(11) NOT NULL ,
+CREATE TABLE `utilisateurs` (`id` int(11) NOT NULL ,
 `login` varchar(89) ,
-`password` varchar(256) ,
-`email` varchar(89) ,
+`password` varchar(128) ,
 `nom` varchar(89) ,
 `prenom` varchar(89) ) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 --
--- Index pour la table: users
+-- Index pour la table: utilisateurs
 --
-ALTER TABLE `users` ADD PRIMARY KEY(`id`) ;
-ALTER TABLE `users` ADD UNIQUE(`login`) ;
+ALTER TABLE `utilisateurs` ADD PRIMARY KEY(`id`) ;
+ALTER TABLE `utilisateurs` ADD UNIQUE(`login`) ;
 --
--- Auto-increment pour la table: users
+-- Auto-increment pour la table: utilisateurs
 --
-ALTER TABLE `users` MODIFY `id` INT UNSIGNED NOT NULL AUTO_INCREMENT; 
+ALTER TABLE `utilisateurs` MODIFY `id` INT UNSIGNED NOT NULL AUTO_INCREMENT; 
 ALTER TABLE `adresses` ADD COLUMN `contacts_id` INT UNSIGNED NOT NULL;
 ALTER TABLE `adresses` ADD CONSTRAINT `FK_contacts_adresses` FOREIGN KEY (`contacts_id`) REFERENCES `contacts`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `contacts` ADD COLUMN `users_id` INT UNSIGNED NOT NULL;
-ALTER TABLE `contacts` ADD CONSTRAINT `FK_users_contacts` FOREIGN KEY (`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `contacts` ADD COLUMN `utilisateurs_id` INT UNSIGNED NOT NULL;
+ALTER TABLE `contacts` ADD CONSTRAINT `FK_utilisateurs_contacts` FOREIGN KEY (`utilisateurs_id`) REFERENCES `utilisateurs`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -3,6 +3,7 @@
 namespace Modules\contacts;
 
 use Source\Utils;
+use Source\Requete;
 use Source\Controller;
 use Modules\contacts\Contact;
 use Modules\contacts\Contacts;

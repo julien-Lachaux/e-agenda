@@ -1,6 +1,7 @@
 <?php
 namespace Source\cli;
 
+use Source\Base;
 use Source\Utils;
 use Source\cli\convertisseurs\JsonVersSql;
 
@@ -99,6 +100,18 @@ class Migration
 
         Utils::consoleLog("MIGRATION PREPARER AVEC SUCCES", "title");
         Utils::consoleLog("fichier de migration SQL generer au chemin : " . $this->cheminDossierMigration . "/@migration.sql\n");
+    }
+
+    public function effectuer() {
+        Utils::consoleLog("Lancement de la migration", "title");
+        $requetesMigration = Utils::recupererContenuFichier($this->cheminDossierMigration . "/@migration.sql");
+        $migration = Base::getInstance()->query($requetesMigration);
+
+        if ($migration !== false) {
+            Utils::consoleLog("migration reussi", "title");
+        } else {
+            Utils::consoleLog("echec de la migration", "title");
+        }
     }
 
 }
