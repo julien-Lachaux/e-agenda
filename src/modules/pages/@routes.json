@@ -2,6 +2,11 @@
     "routes": [
         {
             "methodeHTTP": "get",
+            "route": "/",
+            "redirection": "/contacts"
+        },
+        {
+            "methodeHTTP": "get",
             "route": "/contacts",
             "controller": "PagesController",
             "methode": "utilisateurContacts",
