@@ -84,7 +84,7 @@ class UtilisateursController extends Controller
 		
 		$utilisateur = Utilisateurs::findOne("login='{$utilisateurInformation->connexion_email}'");
 		if ($utilisateur !== false) {
-			if ($utilisateur->password === hash('sha512', $utilisateurInformation->connexion_password)) {
+			if (password_verify($utilisateurInformation->connexion_password, $utilisateur->password)) {
 				$_SESSION["utilisateur"] = $utilisateur;
 				header("Location: /contacts");
 			}
@@ -196,7 +196,7 @@ class UtilisateursController extends Controller
 				foreach($formulaire as $colonne => $valeur) {
 					if (!($colonne === 'password' && empty($valeur))) {
 						if ($colonne === 'password') {
-							$valeur = hash('sha512', $valeur);
+							$valeur = password_hash($valeur, PASSWORD_DEFAULT);
 						}
 						if ($utilisateurActuel->{$colonne} !== $valeur) {
 							$test = Utilisateur::update($colonne, $valeur, "id={$utilisateurActuelId}");
