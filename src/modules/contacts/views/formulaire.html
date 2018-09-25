@@ -64,8 +64,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="input-group mb-3">
+                                <input type="email" class="form-control" name="email" placeholder="Email" id="contact-email" aria-describedby="email-validateur" {{#data.contact}}value="{{email}}"{{/data.contact}} required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="email-validateur" onclick="contacts.validerEmail();">Vérifier l'email</span>
+                                </div>
+                            </div>
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" placeholder="Email" {{#data.contact}}value="{{email}}"{{/data.contact}}>
                         </div>
                     </form>
 

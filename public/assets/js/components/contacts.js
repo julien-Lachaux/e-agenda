@@ -61,6 +61,23 @@ const contacts = {
                 }, 5000);
             })
         })
+    },
+
+    validerEmail() {
+        let contactEmailInput = $("#contact-email");
+        let emailAValider = contactEmailInput.val();
+        app.post("/validateurs/email", { email: emailAValider }, (reponse) => {
+            if (reponse.erreur === undefined) {
+                if (reponse.emailValide) {
+                    contactEmailInput.addClass("is-valid")
+                } else {
+                    contactEmailInput.addClass("is-invalid")
+                }
+            } else {
+                console.log(reponse.erreur);
+                contactEmailInput.addClass("is-invalid")
+            }
+        })
     }
 
 }
