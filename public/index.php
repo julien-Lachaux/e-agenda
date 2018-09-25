@@ -1,7 +1,7 @@
 <?php
 require(__DIR__ . "/../src/class/Autoloader.php");
 require(__DIR__ . "/../src/modules/AutoloaderModules.php");
-require(__DIR__ . "/../vendor/mustache.php-master/src/Mustache/Autoloader.php");
+require(__DIR__ . "/../vendor/mustache/mustache/src/Mustache/Autoloader.php");
 
 use Source\Utils;
 use Source\Router;
