@@ -22,7 +22,7 @@
             {
                 "nom": "password",
                 "type": "varchar",
-                "length": 256
+                "length": 128
             },
             {
                 "nom": "nom",
