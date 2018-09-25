@@ -1,27 +1,48 @@
+{{#data.inscriptionReussi}}
+    <div class="alert alert-success alert-dismissible fade show position-absolute position-absolute w-100" role="alert" id="alerteAdresse">
+        <p>Félicitations vous êtes inscrit {{ utilisateur.login }} !!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{{/data.inscriptionReussi}}
+
+{{#data.connexionReussi}}
+    <script>document.location.href="/contacts"</script>
+{{/data.connexionReussi}}
+
+{{#data.erreur}}
+    <div class="alert alert-danger alert-dismissible fade show position-absolute position-absolute w-100" role="alert" id="alerteAdresse">
+        <h4 class="alert-heading">Erreur</h4>
+        <p>{{message}}</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{{/data.erreur}}
+
 <div class="w-100 h-100 d-flex flex-row justify-content-center align-items-center">
     <div class="card shadow w-50 p-5">
         <div class="card-body p-0 m-2">
             <div class="row">
                 <div class="col-sm-6 d-flex flex-row justify-content-center align-items-center">
-                    <img src="/assets/img/Leboncoin_fr-Logo.png" class="img-fluid d-block" alt="Responsive image">
+                    <div>
+                        <h1><strong class="text-primary">E</strong>-Contact</h1>
+                        <p>Le carnet d'adresses <strong class="text-primary">php</strong></p>
+                    </div>
                 </div>
                 <div class="col-sm-6 text-center">
-                    {{#data.erreur}}
-                        <div class="erreur">
-                            <p class="message">{{ message }}</p>
-                        </div>
-                    {{/data.erreur}}
                     <p class="font-weight-bold px-5 pb-3 mx-auto border-bottom border-dark d-inline-block">Connexion</p>
-                    <form method="POST" action="/utilisateurs/connexion" class="p-2">
+                    <form method="post" action="/utilisateurs/connexion" class="p-2" id="connexionForm">
                         <div class="form-group">
                             <label for="connexion_email" class="text-left">Login</label>
-                            <input type="email" name="connexion_email" class="form-control form-control-sm" id="connexion_email" placeholder="Adresse email">
+                            <input type="email" name="connexion_email" class="form-control form-control-sm" id="connexion_email" placeholder="Adresse email" {{#inscriptionReussi}}value="{{ utilisateur.login }}"{{/inscriptionReussi}}>
                         </div>
                         <div class="form-group">
                             <label for="connexion_password" class="text-left">Password</label>
                             <input type="password" name="connexion_password" class="form-control form-control-sm" id="connexion_password" placeholder="Mot de passe">
                         </div>
-                        <input type="submit" class="btn btn-primary w-100 d-block" value="Se Connecter">
+                        <button type="button" class="btn btn-primary w-100 d-block" onclick="app.ajaxForm('#connexionForm', (reponse) => {$('.contenu').html(reponse)});">Se Connecter</button
                     </form>
                 </div>
             </div>

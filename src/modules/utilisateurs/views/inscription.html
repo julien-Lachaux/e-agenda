@@ -1,0 +1,46 @@
+{{#data.erreur}}
+    <div class="alert alert-danger alert-dismissible fade show position-absolute w-100" role="alert" id="erreurInscription">
+        <h4 class="alert-heading">Erreur</h4>
+        <p>{{message}}</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{{/data.erreur}}
+
+<div class="w-100 h-100 d-flex flex-row justify-content-center align-items-center">
+    <div class="card shadow w-50 p-5">
+        <div class="card-body p-0 m-2">
+            <div class="row">
+                <div class="col-sm-4 d-flex flex-row justify-content-center align-items-center">
+                    <div class="border-right border-dark h-50 d-flex flex-row justify-content-center align-items-center">
+                        <p class="font-weight-bold px-5 pb-3 mx-auto d-inline-block">Inscription</p>
+                    </div>
+                </div>
+                <div class="col-sm-8 text-center">
+                    <form method="post" action="/utilisateurs/inscription" class="py-2 px-5 text-left" id="inscriptionForm">
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label for="nom" class="text-left">Nom</label>
+                                <input type="text" name="nom" class="form-control form-control-sm" id="nom" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="prenom" class="text-left">Prenom</label>
+                                <input type="text" name="prenom" class="form-control form-control-sm" id="prenom" placeholder="Prenom">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="login" class="text-left">Login</label>
+                            <input type="email" name="login" class="form-control form-control-sm" id="login" placeholder="Login ( email valide ! )">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="text-left">Password</label>
+                            <input type="password" name="password" class="form-control form-control-sm" id="password" placeholder="Mot de passe">
+                        </div>
+                        <button type="button" class="btn btn-primary w-100 d-block" onclick="app.ajaxForm('#inscriptionForm', (reponse) => {$('.contenu').html(reponse)});">S'inscrire</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -50,9 +50,25 @@
         },
         {
             "methodeHTTP": "get",
+            "route": "/utilisateurs/inscriptionFormulaire",
+            "controller": "UtilisateursController",
+            "methode": "inscriptionFormulaire",
+            "active": true,
+            "connexionRequise": false
+        },
+        {
+            "methodeHTTP": "get",
             "route": "/utilisateurs/connexionFormulaire",
             "controller": "UtilisateursController",
             "methode": "connexionFormulaire",
+            "active": true,
+            "connexionRequise": false
+        },
+        {
+            "methodeHTTP": "post",
+            "route": "/utilisateurs/inscription",
+            "controller": "UtilisateursController",
+            "methode": "inscription",
             "active": true,
             "connexionRequise": false
         },

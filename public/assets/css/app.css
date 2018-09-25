@@ -9,3 +9,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+.text-sm {
+    font-size: .8em !important;
+}

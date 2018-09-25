@@ -5,6 +5,7 @@ namespace Modules\utilisateurs;
 use Source\Utils;
 use Source\Requete;
 use Source\Controller;
+use Modules\contacts\Contact;
 use Modules\utilisateurs\Utilisateur;
 use Modules\utilisateurs\Utilisateurs;
 
@@ -87,6 +88,16 @@ class UtilisateursController extends Controller
 	}
 
 	/**
+	 * renvoi le formulaire d'inscription
+	 *
+	 * @param Requete $requete
+	 * @return HTML
+	 */
+	public function inscriptionFormulaire(Requete $requete) {
+		return $this->render("inscription", []);
+	}
+
+	/**
 	 * connecte l'utilisateur
 	 *
 	 * @param Requete $requete
@@ -99,7 +110,9 @@ class UtilisateursController extends Controller
 		if ($utilisateur !== false) {
 			if (password_verify($utilisateurInformation->connexion_password, $utilisateur->password)) {
 				$_SESSION["utilisateur"] = $utilisateur;
-				header("Location: /contacts");
+				return $this->render("connexion", array(
+					"connexionReussi" => true
+				));
 			}
 			return $this->render("connexion", array(
 				"erreur" => ["message" => "mauvais password !"]
@@ -107,6 +120,40 @@ class UtilisateursController extends Controller
 		}
 		return $this->render("connexion", array(
 			"erreur" => ["message" => "email inconnue !"]
+		));
+	}
+
+	/**
+	 * inscrit l'utilisateur
+	 *
+	 * @param Requete $requete
+	 * @return HTML
+	 */
+	public function inscription(Requete $requete) {
+		$utilisateurInformation = (object) $requete->getBody();
+		$utilisateur = Utilisateurs::findOne("login='{$utilisateurInformation->login}'");
+		if ($utilisateur === false) {
+			if (Utilisateur::valider($utilisateurInformation)) {
+				$Utilisateur = new Utilisateur($utilisateurInformation);
+
+				if ($Utilisateur->creer()) {
+					return $this->render("connexion", array(
+						"inscriptionReussi" => [ "utilisateur" => $Utilisateur ]
+					));	
+				}
+
+				return $this->render("inscription", array(
+					"erreur" => ["message" => "Informations manquantes"]
+				));
+			}
+
+			return $this->render("inscription", array(
+				"erreur" => ["message" => "informations invalide"]
+			));
+		}
+
+		return $this->render("inscription", array(
+			"erreur" => ["message" => "le login est deja utilisé"]
 		));
 	}
 
@@ -135,6 +182,11 @@ class UtilisateursController extends Controller
 	public function utilisateurContacts(Requete $requete) {
 		$utilisateur = new Utilisateur($_SESSION["utilisateur"]);
 		$contacts = $utilisateur->getContacts();
+
+		foreach($contacts as $index => $contact) {
+			$contactModel = new Contact($contact);
+			$contacts[$index]["adresses"] = $contactModel->getAdresses();
+		}
 		if ($contacts !== false) {
 			return $this->render("utilisateurContacts", array("contacts" => $contacts));
 		}

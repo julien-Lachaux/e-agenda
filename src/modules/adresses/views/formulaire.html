@@ -6,7 +6,7 @@
                     <p class="text-align-center">Erreur: {{ message }}</p>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="adresses.retourAuContact();">Retour au contact</button>
+                <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal" onclick="adresses.retourAuContact();">Retour au contact</button>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
                     <p class="text-align-center">Adresse ajouter avec succes</p>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="adresses.retourAuContact();">Retour au contact</button>
+                <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal" onclick="adresses.retourAuContact();">Retour au contact</button>
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="adresses.retourAuContact();">Annuler</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="adresses.retourAuContact();">Annuler</button>
                 <button type="button" class="btn btn-primary" onclick="{{#data.adresse}}adresses.editerAdresse(){{/data.adresse}}{{^data.adresse}}adresses.nouvelleAdresse(){{/data.adresse}};">Valider</button>
             </div>
         </div>

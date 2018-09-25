@@ -2,6 +2,7 @@
 
 namespace Modules\contacts;
 
+use PDO;
 use Source\Base;
 use Source\Model;
 use Source\Utils;
@@ -155,7 +156,7 @@ class Contact extends Model
 	public function getAdresses() {
 		$adresses = Base::getInstance()->query("SELECT * FROM adresses WHERE adresses.contacts_id={$this->id}");
 		if ($adresses !== false) {
-			return $adresses->fetchAll();
+			return $adresses->fetchAll(PDO::FETCH_ASSOC);
 		}
 		return false;
 	}

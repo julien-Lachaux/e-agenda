@@ -7,19 +7,19 @@ use Source\Controller;
 class PagesController extends Controller 
 {
     public $module = 'pages';
-    
+
     /**
-     * renvoie la page d'accueil
+     * renvoie la pge d'inscription
      *
      * @param Requete $requete
      * @return HTML
      */
-    public function accueil(Requete $requete) {
-        return $this->render('templates/avecNavbar', [
+    public function inscription(Requete $requete) {
+        return $this->render('templates/base', [
             "page" => [
-                "nom"       => "accueil",
-                "titre"     => "Accueil",
-                "scripts"   => [ "pages/accueil" ],
+                "nom"       => "inscription",
+                "titre"     => "Inscrivez-vous",
+                "scripts"   => [ "pages/utilisateurs/inscription" ],
             ]
         ]);
     }

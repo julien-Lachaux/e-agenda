@@ -2,7 +2,9 @@
 
 namespace Modules\utilisateurs;
 
+use Source\Base;
 use Source\Model;
+use Source\Utils;
 use Modules\contacts\Contacts;
 
 class Utilisateur extends Model 
@@ -135,7 +137,10 @@ class Utilisateur extends Model
 
 		foreach ($colonnes as $colonne => $valeur) {
 			$colonnesString .= "{$colonne}, ";
-			$valeursString .= "{$valeur}, ";
+			if ($colonne === "password") {
+				$valeur = password_hash($valeur, PASSWORD_DEFAULT);
+			}
+			$valeursString .= "'{$valeur}', ";
 		}
 
 		$colonnesString = substr($colonnesString, 0, -2);

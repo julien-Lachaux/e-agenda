@@ -2,22 +2,6 @@
     "routes": [
         {
             "methodeHTTP": "get",
-            "route": "/",
-            "controller": "PagesController",
-            "methode": "accueil",
-            "active": true,
-            "connexionRequise": true
-        },
-        {
-            "methodeHTTP": "get",
-            "route": "/connexion",
-            "controller": "PagesController",
-            "methode": "connexion",
-            "active": true,
-            "connexionRequise": false
-        },
-        {
-            "methodeHTTP": "get",
             "route": "/contacts",
             "controller": "PagesController",
             "methode": "utilisateurContacts",
@@ -31,6 +15,22 @@
             "methode": "utilisateurProfile",
             "active": true,
             "connexionRequise": true
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/connexion",
+            "controller": "PagesController",
+            "methode": "connexion",
+            "active": true,
+            "connexionRequise": false
+        },
+        {
+            "methodeHTTP": "get",
+            "route": "/inscription",
+            "controller": "PagesController",
+            "methode": "inscription",
+            "active": true,
+            "connexionRequise": false
         },
         {
             "methodeHTTP": "get",

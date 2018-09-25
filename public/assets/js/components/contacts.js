@@ -88,13 +88,18 @@ const contacts = {
      */
     validerEmail() {
         let contactEmailInput = $("#contact-email");
+        let emailValidateurBtn = $("#email-validateur");
         let emailAValider = contactEmailInput.val();
         app.post("/validateurs/email", { email: emailAValider }, (reponse) => {
             if (reponse.erreur === undefined) {
                 if (reponse.emailValide) {
                     contactEmailInput.addClass("is-valid")
+                    emailValidateurBtn.removeClass("btn-outline-dark")
+                    emailValidateurBtn.addClass("btn-outline-success")
                 } else {
                     contactEmailInput.addClass("is-invalid")
+                    emailValidateurBtn.removeClass("btn-outline-dark")
+                    emailValidateurBtn.addClass("btn-outline-danger")
                 }
             } else {
                 console.log(reponse.erreur);

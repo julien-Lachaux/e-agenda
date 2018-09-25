@@ -1,6 +1,7 @@
 <?php
 namespace Source;
 
+use \PDO;
 use Source\Base;
 use Source\Utils;
 
@@ -18,7 +19,7 @@ abstract class Depot
         $table = static::$table;
         $all = Base::getInstance()->query("SELECT * FROM {$table}");
         if ($all !== false) {
-            return $all->fetchAll();
+            return $all->fetchAll(PDO::FETCH_ASSOC);
         } 
         return false;
     }
@@ -67,7 +68,7 @@ abstract class Depot
 
         $many = Base::getInstance()->query($requete);
         if ($many !== false) {
-            return $many->fetchAll();
+            return $many->fetchAll(PDO::FETCH_ASSOC);
         } 
         return false;
     }
