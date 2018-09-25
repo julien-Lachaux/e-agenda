@@ -1,11 +1,18 @@
 {
     "name": "julienlachaux/htdocs",
+    "description": "test de compétences pour le bon coin",
     "authors": [
         {
             "name": "julien-Lachaux",
             "email": "lachauxwebdev@gmail.com"
         }
     ],
+    "autoload": {
+        "classmap": [
+            "src/class/",
+            "src/modules/"
+        ]
+    },
     "require": {
         "mustache/mustache": "^2.12"
     },

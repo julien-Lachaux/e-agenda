@@ -23,3 +23,4 @@ $router->recupererRoutesModule("pages");
 $router->recupererRoutesModule("utilisateurs");
 $router->recupererRoutesModule("contacts");
 $router->recupererRoutesModule("adresses");
+$router->recupererRoutesModule("validateur");

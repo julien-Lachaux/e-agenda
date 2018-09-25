@@ -6,9 +6,19 @@ use Source\interfaces\requeteInterface;
 
 class Requete implements requeteInterface
 {
-  function __construct()
+
+  private $requeteManuel = false;
+
+  function __construct($requeteManuel)
   {
-    $this->bootstrapSelf();
+    if ($requeteManuel === NULL) {
+      $this->bootstrapSelf();
+    } else {
+      $this->requeteManuel = true;
+      foreach ($requeteManuel as $paramNom => $paramValeur) {
+        $this->{$paramNom} = $paramValeur;
+      }
+    }
   }
   private function bootstrapSelf()
   {
@@ -38,9 +48,10 @@ class Requete implements requeteInterface
     if ($this->requestMethod == "POST")
     {
       $result = array();
-      foreach($_POST as $key => $value)
+      $body = ($this->requeteManuel === true) ? $this->body : $_POST;
+      foreach($body as $key => $value)
       {
-        $result[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+        $result[$key] = ($this->requeteManuel === true) ? $value : filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
       }
       return $result;
     }

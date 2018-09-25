@@ -1,0 +1,12 @@
+{
+    "routes": [
+        {
+            "methodeHTTP": "post",
+            "route": "/validateurs/email",
+            "controller": "ValidateursController",
+            "methode": "afficher",
+            "active": true,
+            "connexionRequise": true
+        }
+    ]
+}
