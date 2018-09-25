@@ -14,11 +14,13 @@ Autoloader::register();
 AutoloaderModules::register();
 Mustache_Autoloader::register();
 
+// recupération des variables d'environnement
 Utils::recupererEnvVar();
 
-// definitions des routes
+// récupérations des routes
 $requete = new Requete();
 $router = new Router($requete);
+
 $router->recupererRoutesModule("pages");
 $router->recupererRoutesModule("utilisateurs");
 $router->recupererRoutesModule("contacts");

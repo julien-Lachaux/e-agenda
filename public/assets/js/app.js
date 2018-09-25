@@ -1,7 +1,6 @@
 const app = {
 
     /**
-     * get
      * @description effectue une requete ajax get avec la gestion d'erreur
      * @param {string} url url à appelé en ajax
      * @param {funtion} callback fonction de callback
@@ -16,7 +15,6 @@ const app = {
     },
 
     /**
-     * post
      * @description effectue une requete ajax post avec la gestion d'erreur
      * @param {strin} url url à appelé en ajax
      * @param {object} data data envoyé avec la requete POST
@@ -29,7 +27,6 @@ const app = {
     },
 
     /**
-     * serializeForm
      * @description serialize un formulaire en un tableau clé - valeur
      * @param {string} form selecteur css pour cibler le formulaire a serializer
      */
@@ -44,7 +41,6 @@ const app = {
     },
 
     /**
-     * ajaxError
      * @description affiche un message d'erreur en cas d'echec q'un appel ajax
      * @param {object} error 
      */
@@ -53,7 +49,6 @@ const app = {
     },
 
     /**
-     * getCurrentPage
      * @description recupere la page courante dans l'url
      */
     getCurrentPage() {
@@ -63,6 +58,10 @@ const app = {
         return hash
     },
 
+    /**
+     * @param {string} formSelecteur 
+     * @param {function} callback 
+     */
     ajaxForm(formSelecteur, callback = (reponse) => {}) {
         let form = $(formSelecteur)
         let url = form.attr("action")

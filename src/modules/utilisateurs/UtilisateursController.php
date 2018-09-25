@@ -3,6 +3,7 @@
 namespace Modules\utilisateurs;
 
 use Source\Utils;
+use Source\Requete;
 use Source\Controller;
 use Modules\utilisateurs\Utilisateur;
 use Modules\utilisateurs\Utilisateurs;
@@ -14,10 +15,10 @@ class UtilisateursController extends Controller
 	/**
 	 * Creer un nouveau: utilisateur
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function creer($requete) {
+	public function creer(Requete $requete) {
 		$utilisateursData = $requete->getBody();
 		if (Utilisateur::valider($requete->getBody())) {
 			$Utilisateur = new Utilisateur($utilisateursData);
@@ -37,10 +38,10 @@ class UtilisateursController extends Controller
 	/**
 	 * Afficher les informations d'un utilisateur
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function afficher($requete) {
+	public function afficher(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$utilisateur_id = $urlParams[0];
@@ -61,10 +62,10 @@ class UtilisateursController extends Controller
 	/**
 	 * Afficher la liste des utilisateurs
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function lister($requete) {
+	public function lister(Requete $requete) {
 		$Utilisateurs = new Utilisateurs();
 		$data = $Utilisateurs->findAll();
 		if ($data !== false) {
@@ -75,11 +76,23 @@ class UtilisateursController extends Controller
 		));
 	}
 
-	public function connexionFormulaire($requete) {
+	/**
+	 * renvoi le formulaire de connexion
+	 *
+	 * @param Requete $requete
+	 * @return HTML
+	 */
+	public function connexionFormulaire(Requete $requete) {
 		return $this->render("connexion", []);
 	}
 
-	public function connexion($requete) {
+	/**
+	 * connecte l'utilisateur
+	 *
+	 * @param Requete $requete
+	 * @return HTML
+	 */
+	public function connexion(Requete $requete) {
 		$utilisateurInformation = (object) $requete->getBody();
 		
 		$utilisateur = Utilisateurs::findOne("login='{$utilisateurInformation->connexion_email}'");
@@ -97,7 +110,13 @@ class UtilisateursController extends Controller
 		));
 	}
 
-	public function deconnexion($requete) {
+	/**
+	 * deconnecte l'utilisateur
+	 *
+	 * @param Requete $requete
+	 * @return HTML
+	 */
+	public function deconnexion(Requete $requete) {
 		if (isset($_SESSION["utilisateur"])) {
 			session_destroy();
 			header("Location: /connexion");
@@ -107,7 +126,13 @@ class UtilisateursController extends Controller
 		));
 	}
 
-	public function utilisateurContacts($requete) {
+	/**
+	 * renvoie les contacts d'un utlisateurs
+	 *
+	 * @param Requete $requete
+	 * @return HTML
+	 */
+	public function utilisateurContacts(Requete $requete) {
 		$utilisateur = new Utilisateur($_SESSION["utilisateur"]);
 		$contacts = $utilisateur->getContacts();
 		if ($contacts !== false) {
@@ -121,10 +146,10 @@ class UtilisateursController extends Controller
 	/**
 	 * Afficher la liste des users
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function editer($requete) {
+	public function editer(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$user_id = $urlParams[0];
@@ -154,10 +179,10 @@ class UtilisateursController extends Controller
 	/**
 	 * Supprime un utilisateur
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function supprimer($requete) {
+	public function supprimer(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$user_id = $urlParams[0];
@@ -182,10 +207,10 @@ class UtilisateursController extends Controller
 	/**
 	 * Edite l'utilisateur actuellement connecté
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function editerUtilisateurActuel($requete) {
+	public function editerUtilisateurActuel(Requete $requete) {
 		$utilisateurActuel = $_SESSION["utilisateur"];
 		$utilisateurActuelId = $utilisateurActuel->id;
 		$formulaire = $requete->getBody();

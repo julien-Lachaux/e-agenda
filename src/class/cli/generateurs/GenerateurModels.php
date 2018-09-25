@@ -7,6 +7,12 @@ use Source\cli\generateurs\Generateur;
 class GenerateurModels extends Generateur
 {
 
+    /**
+     * genère un model pour un module
+     *
+     * @param Array $config
+     * @return void
+     */
     public function genererModels($config) {
 
         $models = [];
@@ -86,6 +92,12 @@ class GenerateurModels extends Generateur
         }
     }
 
+    /**
+     * genère les attribut pour le model
+     *
+     * @param Object $model
+     * @return void
+     */
     private function genererAttribut($model) {
         $attribut = "\n";
         $attribut .= "\tprotected static \$table = '{$model->module}';\n";
@@ -95,6 +107,12 @@ class GenerateurModels extends Generateur
         return $attribut;
     }
 
+    /**
+     * genère les setters
+     *
+     * @param Object $colonne
+     * @return void
+     */
     private function genererSetter($colonne) {
         $nomMethode = ucfirst($colonne->nom);
         $setter = "\n";
@@ -111,6 +129,12 @@ class GenerateurModels extends Generateur
         return $setter;
     }
 
+    /**
+     * genère les getters
+     *
+     * @param Object $colonne
+     * @return void
+     */
     private function genererGetter($colonne) {
         $nomMethode = ucfirst($colonne->nom);
         $retourGetterType = $this->convertirTypeSqlVersPhp($colonne->type);
@@ -124,6 +148,12 @@ class GenerateurModels extends Generateur
         return $getter;
     }
 
+    /**
+     * genère les mthodes du model
+     *
+     * @param String $nomModel
+     * @return void
+     */
     private function genererMethodesModel($nomModel) {
 
         $nomTable = strtolower($nomModel) . "s";
@@ -165,6 +195,13 @@ class GenerateurModels extends Generateur
         return $methodeValider . $methodeCreer;
     }
 
+    /**
+     * genère les methodes relationnels du model
+     *
+     * @param String $model
+     * @param Array $relation
+     * @return void
+     */
     private function genererMethodesRelationnelsModel($model, $relation) {
         $methodesRelations = "";
 

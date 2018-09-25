@@ -6,6 +6,13 @@ use Source\cli\generateurs\Generateur;
 
 class GenerateurControllers extends Generateur
 {
+
+    /**
+     * genère un controllers pour un module
+     *
+     * @param Array $config
+     * @return void
+     */
     public function genererControllers($config) {
         foreach ($config["tables"] as $i => $table) {
             // on recupère le nom du depots à partir du nom de la table
@@ -43,6 +50,12 @@ class GenerateurControllers extends Generateur
         }
     }
 
+    /**
+     * genère la methode créer d'un controller
+     *
+     * @param [type] $config
+     * @return void
+     */
     private function genererMethodeCreer($config) {
         // on formatte nos informations
         $nomTable               = $config->nom;
@@ -78,6 +91,12 @@ class GenerateurControllers extends Generateur
         return $methodeCreer;
     }        
 
+    /**
+     * genère la methode affiicher d'un controller
+     *
+     * @param Array $config
+     * @return void
+     */
     private function genererMethodeAfficher($config) {
         // on formatte nos informations
         $nomTable               = $config->nom;
@@ -115,6 +134,12 @@ class GenerateurControllers extends Generateur
         return $methodeAfficher;
     }
 
+    /**
+     * genère la methode lister d'un controller
+     *
+     * @param Array $config
+     * @return void
+     */
     private function genererMethodeLister($config) {
         // on formatte nos informations
         $nomTable               = $config->nom;
@@ -144,10 +169,22 @@ class GenerateurControllers extends Generateur
         return $methodeLister;
     }
 
+    /**
+     * genère la methode editer d'un controller
+     *
+     * @param Array $config
+     * @return void
+     */
     private function genererMethodeEditer($config) {
         // TO DO
     }
 
+    /**
+     * genère la methode supprimer d'un controller
+     *
+     * @param Array $config
+     * @return void
+     */
     private function genererMethodeSupprimer($config) {
         // TO DO
     }

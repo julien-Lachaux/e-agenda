@@ -39,6 +39,12 @@ abstract class Model
         return true;
     }
 
+    /**
+     * supprime l'element cibler
+     *
+     * @param Integer $id
+     * @return Boolean
+     */
     public static function supprimer($id) {
         $table = static::$table;
         $test = Base::getInstance()->query("SELECT * FROM {$table} WHERE id={$id}");;

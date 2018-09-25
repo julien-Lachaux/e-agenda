@@ -1,5 +1,8 @@
 const contacts = {
 
+    /**
+     * @description ouvre la modal de creation de contact
+     */
     nouveauContactModal() {
         let modals = $("#modals")
         app.get("/contacts/formulaire", (reponse) => {
@@ -8,6 +11,9 @@ const contacts = {
         })
     },
 
+    /**
+     * @description ajout un nouveau contact
+     */
     nouveauContact() {
         let modals = $("#modals")
         let modal = $("#modalContact")
@@ -20,12 +26,19 @@ const contacts = {
         })
     },
 
+    /**
+     * @description renvois au contact de l'utilisateur apres la creation d'un contact
+     */
     nouveauContactCreer() {
         app.get("/utilisateur/contacts", (reponse) => {
             $(".contenu").html(reponse)
         })
     },
 
+    /**
+     * @description ouvre la modal d'edition d'un contact
+     * @param {integer} contactId 
+     */
     editerContactModal(contactId) {
         let modals = $("#modals")
         app.get("/contacts/formulaire/" + contactId, (reponse) => {
@@ -35,6 +48,9 @@ const contacts = {
         })
     },
 
+    /**
+     * @description edite le contact
+     */
     editerContact() {
         let modals = $("#modals")
         let modal = $("#modalContact")
@@ -47,6 +63,10 @@ const contacts = {
         })
     },
 
+    /**
+     * @description supprime le contact
+     * @param {integer} contactId 
+     */
     supprimerContact(contactId) {
         app.get("/contacts/supprimer/" + contactId, (reponse) => {
 
@@ -63,6 +83,9 @@ const contacts = {
         })
     },
 
+    /**
+     * @description valide l'email du contact
+     */
     validerEmail() {
         let contactEmailInput = $("#contact-email");
         let emailAValider = contactEmailInput.val();

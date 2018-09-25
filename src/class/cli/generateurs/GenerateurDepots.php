@@ -6,6 +6,13 @@ use Source\cli\generateurs\Generateur;
 
 class GenerateurDepots extends Generateur
 {
+
+    /**
+     * genère un depot pour un module
+     *
+     * @param Array $config
+     * @return void
+     */
     public function genererDepots($config) {
         foreach ($config["tables"] as $i => $table) {
             // on recupère le nom du depots à partir du nom de la table
@@ -23,4 +30,5 @@ class GenerateurDepots extends Generateur
             Utils::consoleLog("Depot generer avec succes: {$nomDepot}");
         }
     }
+
 }

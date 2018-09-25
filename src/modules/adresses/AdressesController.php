@@ -14,10 +14,10 @@ class AdressesController extends Controller
 	/**
 	 * Creer un nouveau: adresse
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function creer($requete) {
+	public function creer(Requete $requete) {
 		$adresseData = $requete->getBody();
 		if (Adresse::valider($requete->getBody())) {
 			$Adresse = new Adresse($adresseData);
@@ -38,10 +38,10 @@ class AdressesController extends Controller
 	/**
 	 * Afficher les informations d'un adresse
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function afficher($requete) {
+	public function afficher(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$adresse_id = $urlParams[0];
@@ -62,10 +62,10 @@ class AdressesController extends Controller
 	/**
 	 * Afficher la liste des adresses
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function lister($requete) {
+	public function lister(Requete $requete) {
 		$Adresses = new Adresses();
 		$data = $Adresses->findAll();
 		if ($data !== false) {
@@ -79,10 +79,10 @@ class AdressesController extends Controller
 	/**
 	 * Afficher la liste des adresses
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function editer($requete) {
+	public function editer(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$adresse_id = $urlParams[0];
@@ -127,10 +127,10 @@ class AdressesController extends Controller
 	/**
 	 * Supprime un utilisateur
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function supprimer($requete) {
+	public function supprimer(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$id = $urlParams[0];
@@ -152,7 +152,7 @@ class AdressesController extends Controller
 		));
 	}
 
-	public function formulaire($requete) {
+	public function formulaire(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) { // c'est une edition
 			$id = $urlParams[0];

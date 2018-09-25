@@ -108,6 +108,11 @@ class Utils
         }
     }
 
+    /**
+     * recupère les variables d'environnements et les definis en variables global
+     *
+     * @return void
+     */
     static function recupererEnvVar() {
         $envFile = Utils::recupererContenuFichier(__DIR__ . "/../../.env");
         $envFileLine = explode("\n", $envFile);

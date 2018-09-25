@@ -7,6 +7,12 @@ use Source\Controller;
 
 class ValidateursController extends Controller {
 
+    /**
+     * Valide un email
+     *
+     * @param Requete $requete
+     * @return JSON
+     */
     public static function validateurEmail(Requete $requete) {
         $body = $requete->getBody();
         

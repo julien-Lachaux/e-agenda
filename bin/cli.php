@@ -4,6 +4,7 @@ require('src/class/Autoloader.php');
 use Source\Utils;
 use Source\Autoloader;
 
+// configuration 
 Autoloader::register();
 $cliParametre = Utils::recupererCliArgs($argv);
 

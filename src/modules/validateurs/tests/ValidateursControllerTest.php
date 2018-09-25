@@ -15,6 +15,7 @@ use Modules\validateurs\ValidateursController;
 class ValidateursControllerTest extends TestCase {
 
     /**
+     * test validateurEmail avec un paramètre n'implementant pas la class Requete
      * @expectedException TypeError
      */
     public function testValidateurEmailTypeError() {
@@ -23,6 +24,9 @@ class ValidateursControllerTest extends TestCase {
         $ValidateursController->validateurEmail($parametreInvalide);
     }
 
+    /**
+     * test validateurEmail sans email
+     */
     public function testValidateurEmailSansEmail() {
         $requete = new Requete(array(
             "requestMethod" => "POST",
@@ -35,6 +39,9 @@ class ValidateursControllerTest extends TestCase {
         $this->assertJsonStringEqualsJsonString($reponsePattern, $ValidateursController->validateurEmail($requete));
     }
 
+    /**
+     * test validateurEmail avec un email invalide
+     */
     public function testValidateurEmailEmailInvalide() {
         $requete = new Requete(array(
             "requestMethod" => "POST",
@@ -50,6 +57,9 @@ class ValidateursControllerTest extends TestCase {
         $this->assertJsonStringEqualsJsonString($reponsePattern, $ValidateursController->validateurEmail($requete));
     }
 
+    /**
+     * test validateurEmail avec un email valide
+     */
     public function testValidateurEmailEmailValide() {
         $requete = new Requete(array(
             "requestMethod" => "POST",

@@ -10,6 +10,13 @@ abstract class Controller implements ReponseInterface
     
     public $module;
     
+    /**
+     * rend un template mustache
+     *
+     * @param String $cheminDeLaVue
+     * @param Array|Object $data
+     * @return HTML
+     */
     public function render($cheminDeLaVue, $data) {
 
         $m = new Mustache_Engine(array(

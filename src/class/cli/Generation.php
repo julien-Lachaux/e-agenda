@@ -11,6 +11,11 @@ use Source\cli\generateurs\GenerateurControllers;
 class Generation extends Generateur
 {
 
+    /**
+     * genère les modules gràces au fichhier @base.json
+     *
+     * @return void
+     */
     public function generer() {
         Utils::consoleLog("DEBUT DE LA GENERATIONS DES CLASSES", "title");
         
@@ -36,6 +41,11 @@ class Generation extends Generateur
         Utils::consoleLog("FIN DE LA GENERATION", "title");
     }
 
+    /**
+     * recupère la configuration des tables a creer pour les modules
+     *
+     * @return void
+     */
     private function recupererConfig() {
         // on recupere la configuration de la base
         $baseJson = Utils::recupererContenuFichier($this->cheminDossierConfig . "/@base.json");

@@ -14,10 +14,10 @@ class ContactsController extends Controller
 	/**
 	 * Creer un nouveau: contact
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function creer($requete) {
+	public function creer(Requete $requete) {
 		$contactData = $requete->getBody();
 		if (Contact::valider($requete->getBody())) {
 			$contactData["utilisateurs_id"] = $_SESSION["utilisateur"]->id;
@@ -39,10 +39,10 @@ class ContactsController extends Controller
 	/**
 	 * Afficher les informations d'un contact
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function afficher($requete) {
+	public function afficher(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$contact_id = $urlParams[0];
@@ -63,10 +63,10 @@ class ContactsController extends Controller
 	/**
 	 * Afficher la liste des contacts
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function lister($requete) {
+	public function lister(Requete $requete) {
 		$Contacts = new Contacts();
 		$data = $Contacts->findAll();
 		if ($data !== false) {
@@ -80,10 +80,10 @@ class ContactsController extends Controller
 	/**
 	 * Afficher la liste des contacts
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function editer($requete) {
+	public function editer(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$id = $urlParams[0];
@@ -125,10 +125,10 @@ class ContactsController extends Controller
 	/**
 	 * Supprime un utilisateur
 	 *
-	 * @param Object $requete
-	 * @return String
+	 * @param Requete $requete
+	 * @return HTML
 	 */
-	public function supprimer($requete) {
+	public function supprimer(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$id = $urlParams[0];
@@ -150,7 +150,13 @@ class ContactsController extends Controller
 		));
 	}
 
-	public function formulaire($requete) {
+	/**
+	 * renvoie le formulaire d'edition et de creation de contact
+	 *
+	 * @param Requete $requete
+	 * @return HTML
+	 */
+	public function formulaire(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) { // c'est une edition
 			$id = $urlParams[0];
@@ -166,7 +172,13 @@ class ContactsController extends Controller
 		return $this->render("formulaire", []);
 	}
 
-	public function contactAdresses($requete) {
+	/**
+	 * renvoie les adresses d'un contact
+	 *
+	 * @param Requete $requete
+	 * @return HTML
+	 */
+	public function contactAdresses(Requete $requete) {
 		$urlParams = $requete->getUrlParams();
 		if (isset($urlParams[0]) && is_numeric($urlParams[0])) {
 			$contactId = $urlParams[0];

@@ -104,10 +104,21 @@ class Router
         $this->resoudre();
     }
 
+    /**
+     * getter requete
+     *
+     * @return String
+     */
     public function getRequete() {
         return $this->requete;
     }
 
+    /**
+     * recupère les routes dans le fichier @json d'un modules
+     *
+     * @param String $nomModule
+     * @return void
+     */
     public function recupererRoutesModule($nomModule) {
         $routesJson = json_decode(utf8_encode(Utils::recupererContenuFichier(__DIR__ . "/../modules/{$nomModule}/@routes.json")), false);
         $controlleurs = [];

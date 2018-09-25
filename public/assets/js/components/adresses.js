@@ -1,11 +1,19 @@
 const adresses = {
 
+    /**
+     * @description recupère la liste des adresses d'un contact
+     * @param {string} cible 
+     * @param {integer} contactId 
+     */
     contactAdressesListe(cible, contactId) {
         app.get("/contact/adresses/" + contactId, (reponse) => {
             $(cible).html(reponse)
         })
     },
 
+    /**
+     * @description ouvre la modal de creation d'adresse
+     */
     nouvelleAdresseModal() {
         app.get("/adresses/formulaire", (reponse) => {
             let modalContact = $("#modalContact")
@@ -16,6 +24,9 @@ const adresses = {
         })
     },
 
+    /**
+     * @description ajoute la nouvelle adresse
+     */
     nouvelleAdresse() {
         let modal = $("#modalAdresse")
         let contactId = $("#contactId").val()
@@ -31,6 +42,10 @@ const adresses = {
         })
     },
 
+    /**
+     * @description ouvre la modal d'edition d'adresse
+     * @param {integer} adresseId 
+     */
     editerAdresseModal(adresseId) {
         app.get("/adresses/formulaire/" + adresseId, (reponse) => {
             let modalContact = $("#modalContact")
@@ -41,6 +56,9 @@ const adresses = {
         })
     },
 
+    /**
+     * @description edite l'adresse
+     */
     editerAdresse() {
         let modal = $("#modalAdresse")
         let contactId = $("#contactId").val()
@@ -56,6 +74,9 @@ const adresses = {
         })
     },
 
+    /**
+     * @description renvoie au contact de l'adresse
+     */
     retourAuContact() {
         let contactId = $("#contactId").val()
         let modalContact = $("#modalContact")
@@ -68,6 +89,10 @@ const adresses = {
         modalContact.modal("show")
     },
 
+    /**
+     * @description supprime une adresse
+     * @param {integer} adresseId 
+     */
     supprimerAdresse(adresseId) {
         app.get("/adresses/supprimer/" + adresseId, (reponse) => {
             let contactId = $("#contactId").val()

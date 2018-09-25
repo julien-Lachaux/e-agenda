@@ -9,7 +9,12 @@ class Requete implements requeteInterface
 
   private $requeteManuel = false;
 
-  function __construct($requeteManuel)
+  /**
+   * Constructeur
+   *
+   * @param Array|NULL $requeteManuel
+   */
+  function __construct($requeteManuel = NULL)
   {
     if ($requeteManuel === NULL) {
       $this->bootstrapSelf();
@@ -20,6 +25,12 @@ class Requete implements requeteInterface
       }
     }
   }
+
+  /**
+   * recupère les variables $_SERVER en attribut
+   *
+   * @return void
+   */
   private function bootstrapSelf()
   {
     foreach($_SERVER as $key => $value)
@@ -27,6 +38,13 @@ class Requete implements requeteInterface
       $this->{$this->toCamelCase($key)} = $value;
     }
   }
+
+  /**
+   * camelCase une chaine de caractère
+   *
+   * @param String $chaine
+   * @return String
+   */
   private function toCamelCase($chaine)
   {
     $resultat = strtolower($chaine);
@@ -39,6 +57,12 @@ class Requete implements requeteInterface
     }
     return $resultat;
   }
+
+  /**
+   * retourne les $_POST
+   *
+   * @return void
+   */
   public function getBody()
   {
     if($this->requestMethod === "GET")
@@ -58,6 +82,12 @@ class Requete implements requeteInterface
     
     return $body;
   }
+
+  /**
+   * recupère les paramètre de l'url
+   *
+   * @return void
+   */
   public function getUrlParams() {
     $urlParams = explode("/", $this->requestUri);
 

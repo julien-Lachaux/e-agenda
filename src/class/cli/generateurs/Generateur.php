@@ -18,6 +18,16 @@ abstract class Generateur {
         $this->cheminDossierModule = __DIR__ . "/../../../modules";
     }
     
+    /**
+     * genère le header d'une class php
+     *
+     * @param String $nomClass
+     * @param String $nomModule
+     * @param String|Boolean $abstract
+     * @param String|Boolean $interface
+     * @param String|Boolean $dependances
+     * @return String
+     */
     protected function genererClassHeader($nomClass, $nomModule, $abstract = false, $interface = false, $dependances = false) {
         $classHeader  = $this->ajouterLignePhp("<?php", 0, 2);
         $classHeader .= $this->ajouterLignePhp("namespace Modules\\{$nomModule};", 0, 2);
@@ -41,6 +51,14 @@ abstract class Generateur {
         return $classHeader;
     }
 
+    /**
+     * genère le commentaire d'une methode php
+     *
+     * @param [type] $description
+     * @param array $params
+     * @param [type] $retour
+     * @return String
+     */
     protected function genererCommentaireMethode($description, $params = [], $retour = NULL) {
         $commentaire  = $this->ajouterLignePhp("/**", 1);
         $commentaire .= $this->ajouterLignePhp(" * {$description}", 1);
@@ -57,6 +75,12 @@ abstract class Generateur {
         return $commentaire;
     }
 
+    /**
+     * convertit un type sql en type php
+     *
+     * @param String $sqlType
+     * @return String
+     */
     protected function convertirTypeSqlVersPhp($sqlType) {
         switch ($sqlType) {
 
@@ -81,6 +105,14 @@ abstract class Generateur {
         return $phpType;
     }
 
+    /**
+     * Convertit une chaine en ligne indenté et avec saut de ligne réglables
+     *
+     * @param String $ligne
+     * @param integer $indentation
+     * @param integer $sautDeLigne
+     * @return String
+     */
     protected function ajouterLignePhp($ligne, $indentation = 0, $sautDeLigne = 1) {
         $indentationTexte = "";
         for ($i=0; $i < $indentation; $i++) { 

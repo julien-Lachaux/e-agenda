@@ -7,7 +7,13 @@ class PagesController extends Controller
 {
     public $module = 'pages';
     
-    public function accueil($requete) {
+    /**
+     * renvoie la page d'accueil
+     *
+     * @param Requete $requete
+     * @return HTML
+     */
+    public function accueil(Requete $requete) {
         return $this->render('templates/avecNavbar', [
             "page" => [
                 "nom"       => "accueil",
@@ -17,17 +23,13 @@ class PagesController extends Controller
         ]);
     }
 
-    public function utilisateurs($requete) {
-        return $this->render('templates/avecNavbar', [
-            "page" => [
-                "nom"       => "utilisateurs",
-                "titre"     => "Les utilisateurs",
-                "scripts"   => [ "pages/utilisateurs/liste" ],
-            ]
-        ]);
-    }
-
-    public function connexion($requete) {
+    /**
+     * renvoie la pge de connecxion
+     *
+     * @param Requete $requete
+     * @return HTML
+     */
+    public function connexion(Requete $requete) {
         return $this->render('templates/base', [
             "page" => [
                 "nom"       => "connexion",
@@ -37,7 +39,13 @@ class PagesController extends Controller
         ]);
     }
 
-    public function utilisateurContacts($requete) {
+    /**
+     * renvois la pages mes contacts
+     *
+     * @param Requete $requete
+     * @return HTML
+     */
+    public function utilisateurContacts(Requete $requete) {
         return $this->render('templates/avecNavbar', [
             "page" => [
                 "nom"       => "contacts",
@@ -51,7 +59,13 @@ class PagesController extends Controller
         ]);
     }
 
-    public function utilisateurProfile($requete) {
+    /**
+     * renvoie la page mon profile
+     *
+     * @param Requete $requete
+     * @return HTML
+     */
+    public function utilisateurProfile(Requete $requete) {
         return $this->render('templates/avecNavbar', [
             "page" => [
                 "nom"       => "profile",
@@ -63,7 +77,13 @@ class PagesController extends Controller
         ]);
     }
 
-    public function erreur404($requete) {
+    /**
+     * renvoie la page erreur 404
+     *
+     * @param Requete $requete
+     * @return HTML
+     */
+    public function erreur404(Requete $requete) {
         return $this->render('erreurs/404', [
             "page" => [
                 "nom"       => "erreur404",
