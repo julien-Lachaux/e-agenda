@@ -27,7 +27,7 @@ composer install
 Puis effectuer la migration de la base de données
 
 ```bash
-php bin/cli.php migrations lancer
+php bin/cli.php Migration effectuer
 ```
 
 Et voila c'est déjà fini
