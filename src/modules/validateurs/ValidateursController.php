@@ -9,7 +9,7 @@ class ValidateursController extends Controller {
 
     public static function validateurEmail(Requete $requete) {
         $body = $requete->getBody();
-
+        
         if (isset($body["email"]) && !empty($body["email"])) {
             $email = $body["email"];
             $validation = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -27,7 +27,9 @@ class ValidateursController extends Controller {
         } else {
             $reponse = [ "erreur" => "requete invalide" ];
         }
-
+        
+        header("Content-type:application/json");
+        
         return json_encode($reponse, JSON_FORCE_OBJECT);
     }
 

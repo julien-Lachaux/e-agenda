@@ -4,9 +4,9 @@
             "methodeHTTP": "post",
             "route": "/validateurs/email",
             "controller": "ValidateursController",
-            "methode": "afficher",
+            "methode": "validateurEmail",
             "active": true,
-            "connexionRequise": true
+            "connexionRequise": false
         }
     ]
 }
