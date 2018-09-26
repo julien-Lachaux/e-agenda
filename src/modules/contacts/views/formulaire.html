@@ -78,6 +78,7 @@
 
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger position-absolute left-1 ml-1" onclick="contacts.supprimerContact({{ data.contact.id }});">Supprimer</button>
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Annuler</button>
                     <button type="button" class="btn btn-primary" onclick="{{#data.contact}}contacts.editerContact(){{/data.contact}}{{^data.contact}}contacts.nouveauContact(){{/data.contact}};">Valider</button>
                 </div>

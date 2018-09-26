@@ -1,0 +1,42 @@
+<div class="modal fade" role="dialog" id="modalContact" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Détail d'un contact</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/contacts/{{#data.contact}}editer/{{ id }}{{/data.contact}}{{^data.contact}}creer{{/data.contact}}" method="post" id="formContact">
+                        <div class="form-row">
+                            {{#data.contact}}<input type="text" class="form-control" name="id" id="contactId" hidden value="{{ id }}">{{/data.contact}}
+                            <div class="form-group col-md-6">
+                                <label for="nom">Nom</label>
+                                <input type="text" class="form-control" name="nom" placeholder="Nom" {{#data.contact}}value="{{nom}}"{{/data.contact}} disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="prenom">Prenom</label>
+                                <input type="text" class="form-control" name="prenom" placeholder="Prenom" {{#data.contact}}value="{{prenom}}"{{/data.contact}} disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Email" id="contact-email" aria-describedby="email-validateur" {{#data.contact}}value="{{email}}"{{/data.contact}} disabled>
+                        </div>
+                    </form>
+
+                    <div id="contactAdresses"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Retour aux contacts</button>
+                    <button type="button" class="btn btn-primary" onclick="contacts.editerContactModal({{ data.contact.id }});">Modifier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('[data-toggle="tooltip"]').tooltip()
+    </script>

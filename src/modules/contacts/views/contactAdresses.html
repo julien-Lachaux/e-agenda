@@ -1,7 +1,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col" colspan="6" class="text-center">Adresses</th>
+            <th scope="col" colspan="6" class="text-center">Adresses <button class="btn btn-primary btn-sm position-absolute right-1" onclick="adresses.nouvelleAdresseModal();" data-toggle="tooltip" data-placement="left" title="Ajouter une adresse"><span class="oi oi-plus"></span></button></th>
         </tr>
         <tr class="text-sm">
             <th scope="Col">Pays</th>
@@ -27,7 +27,6 @@
         {{/data.adresses}}
     </tbody>
 </table>
-<button class="btn btn-primary d-block mx-auto" onclick="adresses.nouvelleAdresseModal();" data-toggle="tooltip" data-placement="bottom" title="Ajouter une adresse"><span class="oi oi-plus"></span></button>
 
 <script>
     $('[data-toggle="tooltip"]').tooltip()

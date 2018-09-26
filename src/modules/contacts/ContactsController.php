@@ -50,7 +50,7 @@ class ContactsController extends Controller
 			$Contacts = new Contacts();
 			$data = $Contacts->findById($contact_id);
 			if ($data !== false) {
-				return $this->render("affichage", array("contact" => $data));
+				return $this->render("detail", array("contact" => $data));
 			}
 			return $this->render("affichage", array(
 				"erreur" => ["message" => "contact inconnue"]

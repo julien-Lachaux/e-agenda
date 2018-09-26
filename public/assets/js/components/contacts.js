@@ -1,6 +1,18 @@
 const contacts = {
 
     /**
+     * @description ouvre la modal de detail d'contact
+     */
+    detailsContactModal(contactId) {
+        let modals = $("#modals")
+        app.get("/contacts/details/" + contactId, (reponse) => {
+            modals.html(reponse)
+            adresses.contactAdressesListe("#contactAdresses", contactId)
+            $("#modalContact").modal("show")
+        })
+    },
+
+    /**
      * @description ouvre la modal de creation de contact
      */
     nouveauContactModal() {
@@ -42,6 +54,9 @@ const contacts = {
     editerContactModal(contactId) {
         let modals = $("#modals")
         app.get("/contacts/formulaire/" + contactId, (reponse) => {
+            let modal = $("#modalContact")
+            modal.remove()
+            $(".modal-backdrop").remove()
             modals.html(reponse)
             adresses.contactAdressesListe("#contactAdresses", contactId)
             $("#modalContact").modal("show")
@@ -71,6 +86,9 @@ const contacts = {
         app.get("/contacts/supprimer/" + contactId, (reponse) => {
 
             app.get("/utilisateur/contacts", (sousReponse) => {
+                let modal = $("#modalContact")
+                modal.remove()
+                $(".modal-backdrop").remove()
                 $(".contenu").html(sousReponse)
                 $("#alertes").html(reponse)
                 setTimeout(() => {

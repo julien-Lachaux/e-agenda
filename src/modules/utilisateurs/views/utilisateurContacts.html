@@ -7,57 +7,20 @@
     
     <table class="table table-striped table-hover">
         <thead>
-            <tr>
-                <th colspan="5" class="text-center">Mes contacts</th>
-            </tr>
             <tr class="text-center">
-                <th scope="col" class="p-1 align-middle">Nom</th>
-                <th scope="col" class="p-1 align-middle">Prenom</th>
-                <th scope="col" class="p-1 align-middle">Email</th>
-                <th scope="col" class="p-1 align-middle">
-                    <div class="text-center p-1">Adresses</div>
-                    <div class="text-sm text-monospace d-flex flex-row justify-content-around">
-                        <div scope="Col">Pays</div>
-                        <div>Ville</div>
-                        <div>Code Postale</div>
-                        <div>Adresse</div>
-                        <div>Complément d'addresse</div>
-                    </div>
-                </span>
-                <th></th>
+                <th colspan="2" class="text-center">Mes contacts<button class="btn btn-primary btn-sm position-absolute right-1" onclick="contacts.nouveauContactModal();" data-toggle="tooltip" data-placement="left" title="Ajouter un contact"><span class="oi oi-plus"></span></button></th>
             </tr>
         </thead>
         <tbody>
             {{#contacts}}
-                <tr class="text-center">
-                    <th scope="row" class="align-middle">{{ nom }}</th>
-                    <td class="align-middle">{{ prenom }}</td>
-                    <td class="align-middle">{{ email }}</td>
-                    <td>
-                        <table class="text-sm w-100 text-monospace">
-                            <tbody>
-                                {{#adresses}}
-                                    <tr class="text-sm">
-                                        <th scope="row">{{ pays }}</th>
-                                        <td>{{ ville }}</td>
-                                        <td>{{ codePostal }}</td>
-                                        <td>{{ adresse }}</td>
-                                        <td>{{ complementAdresse }}</td>
-                                    </tr>
-                                {{/adresses}}
-                            </tbody>
-                        </table>
-                    </td>
-                    <td class="text-right align-middle">
-                        <button class="btn btn-primary" onclick="contacts.editerContactModal({{ id }});" data-toggle="tooltip" data-placement="left" title="éditer le contact"><span class="oi oi-pencil"></span></button>
-                        <button class="btn btn-danger" onclick="contacts.supprimerContact({{ id }});" data-toggle="tooltip" data-placement="left" title="supprimer le contact"><span class="oi oi-trash"></span></button>
-                    </td>
+                <tr class="hover-cursor" onclick="contacts.detailsContactModal({{ id }});">
+                    <td scope="row" class="align-middle pl-3">{{ prenom }} <strong>{{ nom }}</strong></td>
+                    <td scope="row" class="align-middle text-truncate">{{ email }}</td>
                 </tr>
             {{/contacts}}
         </tbody>
     </table>
-    <button class="btn btn-primary d-block mx-auto" onclick="contacts.nouveauContactModal();" data-toggle="tooltip" data-placement="bottom" title="Ajouter un contact"><span class="oi oi-plus"></span></button>
-
+    
     <script>
         $('[data-toggle="tooltip"]').tooltip()
     </script>
