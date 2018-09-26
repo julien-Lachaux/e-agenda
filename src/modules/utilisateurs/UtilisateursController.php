@@ -289,7 +289,8 @@ class UtilisateursController extends Controller
 				)); // user editer avec succes
 			}
 			return $this->render("profile", array(
-				"utilisateur"	=> $utilisateurActuel
+				"utilisateur"	=> $utilisateurActuel,
+				"erreur"		=> [ "message" => "informations invalide" ]
 			)); 
 		} else {
 			return $this->render("profile", array(

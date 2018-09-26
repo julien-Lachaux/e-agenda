@@ -1,24 +1,69 @@
+
+{{#data.editionReussi}}
+    <div class="alert alert-success alert-dismissible fade show position-absolute position-absolute w-100" role="alert" id="alerteProfile">
+        <p>Profile édité avec succès {{ utilisateur.prenom }} {{ utilisateur.nom }} !!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <script>
+    $("#alertes").append($("#alerteProfile"))
+        setTimeout(() => {
+            $("#alerteProfile").alert("close")
+            setTimeout(() => {
+                $("#alerteProfile").remove()
+            }, 1500);
+        }, 2500);
+    </script>
+{{/data.editionReussi}}
+
+{{#data.erreur}}
+    <div class="alert alert-danger alert-dismissible fade show position-absolute position-absolute w-100" role="alert" id="alerteProfile">
+        <h4 class="alert-heading">Erreur</h4>
+        <p>{{message}}</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <script>
+    $("#alertes").append($("#alerteProfile"))
+        setTimeout(() => {
+            $("#alerteProfile").alert("close")
+            setTimeout(() => {
+                $("#alerteProfile").remove()
+            }, 1500);
+        }, 2500);
+    </script>
+{{/data.erreur}}
+
 {{#data.utilisateur}}
-    <form action="/utilisateurs/editerUtilisateurActuel" method="post" id="formProfile">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="nom">Nom</label>
-                <input type="text" class="form-control" name="nom" placeholder="Nom" value="{{ nom }}">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="prenom">Prenom</label>
-                <input type="text" class="form-control" name="prenom" placeholder="Prenom" value="{{prenom}}">
-            </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="/utilisateurs/editerUtilisateurActuel" method="post" id="formProfile" class="w-50 mx-auto py-5">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control" name="nom" placeholder="Nom" value="{{ nom }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="prenom">Prenom</label>
+                        <input type="text" class="form-control" name="prenom" placeholder="Prenom" value="{{prenom}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Login</label>
+                    <input type="email" class="form-control" name="login" placeholder="Login (doit être un email valide)" value="{{login}}">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" name="password" placeholder="Mot de passe">
+                </div>
+                <a type="button" class="btn btn-outline-dark" href="/contacts">Annuler</a>
+                <button type="button" class="btn btn-primary" onclick="app.ajaxForm('#formProfile', (reponse) => {$('.contenu').html(reponse)});">Valider</button>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="email">Login</label>
-            <input type="email" class="form-control" name="login" placeholder="Login (doit être un email valide)" value="{{login}}">
-        </div>
-        <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" class="form-control" name="password" placeholder="Mot de passe">
-        </div>
-        <a type="button" class="btn btn-outline-dark" href="/contacts">Annuler</a>
-        <button type="button" class="btn btn-primary" onclick="app.ajaxForm('#formProfile', (reponse) => {$('.contenu').html(reponse)});">Valider</button>
-    </form>
+    </div>
+</div>
 {{/data.utilisateur}}
