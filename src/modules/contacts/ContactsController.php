@@ -25,8 +25,7 @@ class ContactsController extends Controller
 			$Contact = new Contact($contactData);
 			$data = $Contact->creer();
 			if ($data !== false) {
-				return $this->render("formulaire", array("creationReussi" => true)
-				);
+				return $this->render("formulaire", array("creationReussi" => true));
 			}
 			return $this->render("formulaire", array(
 				"erreur" => ["message" => "contacts inconnue"]

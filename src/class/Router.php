@@ -90,7 +90,12 @@ class Router
         } else {
             $instruction = $methodDictionary[$formatedRoute];
             if (isset($instruction->redirection)) {
-                header("Location: {$instruction->redirection}");
+                if (HTTP_PROXY === true) {
+                    $newLocation = HTTP_PROXY_HOST . $instruction->redirection;
+                } else {
+                    $newLocation = $instruction->redirection;
+                }
+                header("Location: {$newLocation}");
             }
             $reponse = $instruction->controller->{$instruction->methode}($this->requete);
             echo $reponse;
