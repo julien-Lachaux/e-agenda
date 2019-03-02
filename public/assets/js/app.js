@@ -4,8 +4,8 @@ const app = {
      * proxy pour les requetes
      * /!\ DOIT ETRE SET DANS LE HTML DE BASE /!\
      */
-    withProxy = false,
-    proxy_host = null,
+    withProxy: false,
+    proxy_host: null,
 
     /**
      * @description effectue une requete ajax get avec la gestion d'erreur
