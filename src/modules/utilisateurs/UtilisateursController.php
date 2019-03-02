@@ -166,7 +166,12 @@ class UtilisateursController extends Controller
 	public function deconnexion(Requete $requete) {
 		if (isset($_SESSION["utilisateur"])) {
 			session_destroy();
-			header("Location: /connexion");
+			if (HTTP_PROXY === true) {
+				$newLocation = HTTP_PROXY_HOST . "/connexion";
+			} else {
+				$newLocation = "/connexion";
+			}
+			header("Location: {$newLocation}");
 		}
 		return $this->render("connexion", array(
 			"erreur" => ["message" => "email inconnue !"]

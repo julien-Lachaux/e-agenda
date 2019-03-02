@@ -8,10 +8,10 @@
     <title>{{ page.titre }}</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="/assets/vendor/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/app.css">
+    <link href="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}assets/vendor/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}assets/css/app.css">
     {{#page.style}}
-        <link rel="stylesheet" href="assets/css/{{.}}.css">
+        <link rel="stylesheet" href="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}assets/css/{{.}}.css">
     {{/page.style}}
 </head>
 <body>
@@ -40,15 +40,18 @@
         
     </div>
 
-    <div id="alertes"></div>
-    <div id="modals"></div>
-
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="/assets/js/app.js"></script>
+    <script>
+        {{#withProxy}}
+            const WITH_PROXY = true;
+            const PROXY_HOST = '{{ proxyHost }}';
+        {{/withProxy}}
+    </script>
+    <script src="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}assets/js/app.js"></script>
     {{#page.scripts}}
-        <script src="/assets/js/{{.}}.js"></script>
+        <script src="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}assets/js/{{.}}.js"></script>
     {{/page.scripts}}
 </body>
 </html>
