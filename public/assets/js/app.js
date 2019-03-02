@@ -1,6 +1,13 @@
 const app = {
 
     /**
+     * proxy pour les requetes
+     * /!\ DOIT ETRE SET DANS LE HTML DE BASE /!\
+     */
+    withProxy = false,
+    proxy_host = null,
+
+    /**
      * @description effectue une requete ajax get avec la gestion d'erreur
      * @param {string} url url à appelé en ajax
      * @param {funtion} callback fonction de callback

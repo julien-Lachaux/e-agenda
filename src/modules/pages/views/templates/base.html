@@ -28,6 +28,12 @@
     {{#page.scripts}}
         <script src="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}assets/js/{{.}}.js"></script>
     {{/page.scripts}}
+    <script>
+        {{#withProxy}}
+            app.withProxy = true;
+            app.proxy_host = {{ proxyHost }};
+        {{/withProxy}}
+    </script>
 </body>
 </html>
 {{/data}}
