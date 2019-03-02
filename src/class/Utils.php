@@ -120,7 +120,20 @@ class Utils
         foreach ($envFileLine as $lineNbr => $line) {
             $envLine = explode("=", $line);
             if (substr($envLine[0], 0, 1) !== "#") {
-                define($envLine[0], $envLine[1]);
+                switch ($envLine[1]) {
+                    case 'true':
+                        $value = true;
+                        break;
+
+                    case 'false':
+                        $value = false;
+                        break;
+                    
+                    default:
+                        $value = $envLine[1];
+                        break;
+                }
+                define($envLine[0], $value);
             }
         }
     }
