@@ -13,6 +13,9 @@ const app = {
      * @param {funtion} callback fonction de callback
      */
     get(url, callback = () => {}) {
+        if (this.withProxy) {
+            url = this.proxy_host + '/' / url
+        }
         $.ajax({
             url: url,
             method: 'GET',
@@ -28,6 +31,9 @@ const app = {
      * @param {function} callback fonction de callback
      */
     post(url, data, callback = () => {}) {
+        if (this.withProxy) {
+            url = this.proxy_host + '/' / url
+        }
         $.post(url, data, (response) => {
             callback(response)
         })
