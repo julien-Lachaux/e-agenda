@@ -7,7 +7,7 @@ const app = {
      */
     get(url, callback = () => {}) {
         if (WITH_PROXY) {
-            url = PROXY_HOST + '/' + url
+            url = PROXY_HOST + url
         }
         $.ajax({
             url: url,
@@ -25,7 +25,7 @@ const app = {
      */
     post(url, data, callback = () => {}) {
         if (WITH_PROXY) {
-            url = PROXY_HOST + '/' + url
+            url = PROXY_HOST + url
         }
         $.post(url, data, (response) => {
             callback(response)
