@@ -45,7 +45,7 @@
                                     <input type="password" name="connexion_password" class="form-control form-control-sm" id="connexion_password" placeholder="Mot de passe">
                                 </div>
                                 <button type="button" class="btn btn-primary w-100 d-block" onclick="app.ajaxForm('#connexionForm', (reponse) => {$('.contenu').html(reponse)});">Se Connecter</button>
-                                <a role="button" class="btn btn-outline-secondary w-100 d-block mt-3" href="{{#withProxy}}{{ proxyHost }}{{/withProxy}}/inscription">S'inscrire</a>
+                                <a role="button" class="btn btn-outline-secondary w-100 d-block mt-3" href="{{#data.withProxy}}{{ data.proxyHost }}{{/data.withProxy}}/inscription">S'inscrire</a>
                             </form>
                         </div>
                     </div>
