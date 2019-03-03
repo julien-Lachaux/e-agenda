@@ -26,13 +26,13 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/contacts">Mes contacts</a>
+                        <a class="nav-link" href="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}/contacts">Mes contacts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Mon Profile</a>
+                        <a class="nav-link" href="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}/profile">Mon Profile</a>
                     </li>
                 </ul>
-                <span class="navbar-text"><a class="nav-link" href="/utilisateurs/deconnexion">Deconnexion</a></span>
+                <span class="navbar-text"><a class="nav-link" href="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}/utilisateurs/deconnexion">Deconnexion</a></span>
             </div>
         </nav>
 

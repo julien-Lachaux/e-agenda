@@ -8,7 +8,7 @@
 {{/data.inscriptionReussi}}
 
 {{#data.connexionReussi}}
-    <script>document.location.href="/contacts"</script>
+    <script>document.location.href="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}/contacts"</script>
 {{/data.connexionReussi}}
 
 {{#data.erreur}}
