@@ -60,7 +60,7 @@
                     <label for="password">Mot de passe</label>
                     <input type="password" class="form-control" name="password" placeholder="Mot de passe">
                 </div>
-                <a type="button" class="btn btn-outline-dark" href="{{#withProxy}}{{ proxyHost }}/{{/withProxy}}/contacts">Annuler</a>
+                <a type="button" class="btn btn-outline-dark" href="{{#withProxy}}{{ proxyHost }}{{/withProxy}}/contacts">Annuler</a>
                 <button type="button" class="btn btn-primary" onclick="app.ajaxForm('#formProfile', (reponse) => {$('.contenu').html(reponse)});">Valider</button>
             </form>
         </div>
