@@ -119,7 +119,7 @@ class Utils
         $env = [];
         foreach ($envFileLine as $lineNbr => $line) {
             $envLine = explode("=", $line);
-            if (substr($envLine[0], 0, 1) !== "#") {
+            if (substr($envLine[0], 0, 1) !== "#" && !empty($envLine[0])) {
                 switch ($envLine[1]) {
                     case 'true':
                         $value = true;
